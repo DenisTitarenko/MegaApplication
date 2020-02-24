@@ -9,8 +9,8 @@ public enum Operations {
     SHOW_SAME(6, "Show names of employees with same salary;"),
     EXIT(0, "Exit.");
 
-    int label;
-    String title;
+    private int label;
+    private String title;
 
     Operations(int label, String title) {
         this.label = label;
@@ -24,5 +24,13 @@ public enum Operations {
             }
         }
         throw new UnsupportedOperationException("Wrong label for Operations");
+    }
+
+    public int getLabel() {
+        return label;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

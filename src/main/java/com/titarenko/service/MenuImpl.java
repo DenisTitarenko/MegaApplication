@@ -2,15 +2,16 @@ package com.titarenko.service;
 
 import com.titarenko.model.Operations;
 
-import java.util.Arrays;
-
 public class MenuImpl implements Menu {
+    public static final ConsoleWriterImpl CONSOLE_WRITER = new ConsoleWriterImpl();
     boolean isContinue = true;
     EmployeeService service = new EmployeeServiceImpl();
 
     @Override
     public void show() {
-        System.out.println(Arrays.toString(Operations.values()));
+        for (Operations operation : Operations.values()) {
+            CONSOLE_WRITER.writeToOutputStream(operation.getLabel() + ". " + operation.getTitle());
+        }
     }
 
     @Override
