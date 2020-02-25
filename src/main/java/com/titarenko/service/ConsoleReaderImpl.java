@@ -46,7 +46,7 @@ public class ConsoleReaderImpl implements Reader {
         try {
             result = Integer.parseInt(scanner.nextLine());
         } catch (InputMismatchException | NumberFormatException e) {
-            System.out.println("This field should contain only integer. Try again: ");
+            consoleWriter.writeToOutputStream("This field should contain only integer. Try again: ");
             readInt();
         }
         return result;
@@ -83,11 +83,7 @@ public class ConsoleReaderImpl implements Reader {
 
         while (b) {
             String date = readLine();
-            List<Character> dateList = date.chars()
-                    .mapToObj(c -> (char) c)
-                    .collect(Collectors.toList());
-
-            if (dateList.size() == 10 && dateList.get(2) == '.' && dateList.get(5) == '.') {
+            if (date.length() == 10 && date.charAt(2) == '.' && date.charAt(5) == '.') {
                 b = false;
                 try {
                     ld = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
