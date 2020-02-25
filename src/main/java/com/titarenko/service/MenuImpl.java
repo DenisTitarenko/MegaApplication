@@ -18,7 +18,7 @@ public class MenuImpl implements Menu {
     public void perform(int label) {
         switch (Operations.getByLabel(label)) {
             case ADD:
-                service.create(ReadFromConsole.readEmployee());
+                service.create(new ConsoleReaderImpl().readEmployee());
                 break;
             case SHOW:
                 break;

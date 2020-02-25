@@ -1,8 +1,8 @@
 package com.titarenko;
 
+import com.titarenko.service.ConsoleReaderImpl;
 import com.titarenko.service.Menu;
 import com.titarenko.service.MenuImpl;
-import com.titarenko.service.ReadFromConsole;
 
 public class Begin {
 
@@ -10,7 +10,7 @@ public class Begin {
         Menu menu = new MenuImpl();
         while (menu.isContinue()) {
             menu.show();
-            menu.perform(ReadFromConsole.nextInt());
+            menu.perform(new ConsoleReaderImpl().readInt());
         }
     }
 
