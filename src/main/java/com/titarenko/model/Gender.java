@@ -1,9 +1,9 @@
 package com.titarenko.model;
 
 public enum Gender {
-    M("M"),
-    F("F"),
-    OTHER("OTHER");
+    M("male"),
+    F("female"),
+    OTHER("other");
 
     private String code;
 

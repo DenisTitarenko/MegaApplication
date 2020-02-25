@@ -8,7 +8,7 @@ public class Employee {
     private String name;
     private Gender sex; // enum
     private String position;
-    private double salary;
+    private int salary;
     private LocalDate dateOfHire;
 
     public String getName() {
@@ -35,11 +35,11 @@ public class Employee {
         this.position = position;
     }
 
-    public double getSalary() {
+    public int getSalary() {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(int salary) {
         this.salary = salary;
     }
 
@@ -60,7 +60,7 @@ public class Employee {
             return false;
         }
         Employee empl = (Employee) obj;
-        return Double.compare(empl.salary, salary) == 0 &&
+        return empl.salary == salary &&
                 Objects.equals(name, empl.name) &&
                 Objects.equals(sex, empl.sex)&&
                 Objects.equals(position, empl.position) &&

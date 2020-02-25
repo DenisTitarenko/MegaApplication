@@ -5,6 +5,7 @@ import com.titarenko.model.Gender;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -21,16 +22,16 @@ public class ConsoleReaderImpl implements Reader {
         Employee employee = new Employee();
 
         consoleWriter.writeToOutputStream("name: ");
-        employee.setName(scanner.nextLine());
+        employee.setName(readLine());
 
         consoleWriter.writeToOutputStream("sex (M, F or OTHER): ");
         employee.setSex(readGender());
 
         consoleWriter.writeToOutputStream("position: ");
-        employee.setPosition(scanner.nextLine());
+        employee.setPosition(readLine());
 
-        consoleWriter.writeToOutputStream("salary (in $): ");
-        employee.setSalary(Double.parseDouble(scanner.nextLine()));
+        consoleWriter.writeToOutputStream("salary : ");
+        employee.setSalary(readInt());
 
         consoleWriter.writeToOutputStream("date (dd.mm.yyyy): ");
         employee.setDateOfHire(readDate());
@@ -38,14 +39,34 @@ public class ConsoleReaderImpl implements Reader {
         return employee;
     }
 
-    private Gender readGender() {
+
+    @Override
+    public Integer readInt() {
+        int result = 0;
+        try {
+            result = Integer.parseInt(scanner.nextLine());
+        } catch (InputMismatchException | NumberFormatException e) {
+            System.out.println("This field should contain only integer. Try again: ");
+            readInt();
+        }
+        return result;
+    }
+
+    @Override
+    public String readLine() {
+        return scanner.nextLine();
+    }
+
+    @Override
+    public Gender readGender() {
         String gender = null;
         boolean bool = true;
         List<String> list = Arrays.stream(Gender.values())
                 .map(Enum::toString)
                 .collect(Collectors.toList());
+
         while (bool) {
-            gender = scanner.nextLine().toUpperCase();
+            gender = readLine().toUpperCase();
             if (list.contains(gender)) {
                 bool = false;
             } else {
@@ -55,37 +76,29 @@ public class ConsoleReaderImpl implements Reader {
         return Gender.valueOf(gender);
     }
 
-    private LocalDate readDate() {
-        String date = null;
+    @Override
+    public LocalDate readDate() {
+        LocalDate ld = null;
         boolean b = true;
 
         while (b) {
-            date = scanner.nextLine();
-            List<Character> list = date.chars()
+            String date = readLine();
+            List<Character> dateList = date.chars()
                     .mapToObj(c -> (char) c)
                     .collect(Collectors.toList());
-            if (list.size() == 10 && list.get(2) == '.' && list.get(5) == '.') {
+
+            if (dateList.size() == 10 && dateList.get(2) == '.' && dateList.get(5) == '.') {
                 b = false;
+                try {
+                    ld = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+                } catch (DateTimeParseException e) {
+                    b = true;
+                    consoleWriter.writeToOutputStream("Such a date does not exist. Try again:");
+                }
             } else {
                 consoleWriter.writeToOutputStream("Date field must be in format \"dd.mm.yyyy\". Try again:");
             }
         }
-        return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-    }
-
-    @Override
-    public Integer readInt() {
-        int result = 0;
-        try {
-            result = scanner.nextInt();
-        } catch (InputMismatchException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    @Override
-    public String readLine() {
-        return scanner.nextLine();
+        return ld;
     }
 }
