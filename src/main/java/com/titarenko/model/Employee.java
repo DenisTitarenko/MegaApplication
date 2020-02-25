@@ -1,14 +1,15 @@
 package com.titarenko.model;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Employee {
-    String name;
-    Gender sex; // enum
-    String position;
-    double salary;
-    Calendar dateOfHire;
+    private String name;
+    private Gender sex; // enum
+    private String position;
+    private double salary;
+    private LocalDate dateOfHire;
 
     public String getName() {
         return name;
@@ -42,11 +43,11 @@ public class Employee {
         this.salary = salary;
     }
 
-    public Calendar getDateOfHire() {
+    public LocalDate getDateOfHire() {
         return dateOfHire;
     }
 
-    public void setDateOfHire(Calendar dateOfHire) {
+    public void setDateOfHire(LocalDate dateOfHire) {
         this.dateOfHire = dateOfHire;
     }
 
@@ -60,22 +61,15 @@ public class Employee {
         }
         Employee empl = (Employee) obj;
         return Double.compare(empl.salary, salary) == 0 &&
-                name.equals(empl.name) &&
-                sex == empl.sex &&
-                position.equals(empl.position) &&
+                Objects.equals(name, empl.name) &&
+                Objects.equals(sex, empl.sex)&&
+                Objects.equals(position, empl.position) &&
                 Objects.equals(dateOfHire, empl.dateOfHire);
     }
 
     @Override
     public int hashCode() {
-        final int PRIME = 17;
-        int result = 1;
-        result = PRIME * result + name.hashCode();
-        result = PRIME * result + position.hashCode();
-        result = PRIME * result + sex.hashCode();
-        result = (int) (PRIME * result + salary);
-        result = PRIME * result + dateOfHire.hashCode();
-        return result;
+        return Objects.hash(salary, name, sex, position,dateOfHire);
     }
 
     @Override
@@ -84,8 +78,6 @@ public class Employee {
                 sex.getCode() + "\t\t" +
                 position + "\t\t" +
                 salary + "$\t\t" +
-                dateOfHire.get(Calendar.DATE) + "." +
-                (dateOfHire.get(Calendar.MONTH) + 1) + "." +
-                dateOfHire.get(Calendar.YEAR);
+                dateOfHire.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 }
