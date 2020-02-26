@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class ConsoleReaderImpl implements Reader {
 
     Scanner scanner = new Scanner(System.in);
-    ConsoleWriterImpl consoleWriter = new ConsoleWriterImpl();
+    Writer consoleWriter = new ConsoleWriterImpl();
 
     @Override
     public Employee readEmployee() {
@@ -43,11 +43,14 @@ public class ConsoleReaderImpl implements Reader {
     @Override
     public Integer readInt() {
         int result = 0;
-        try {
-            result = Integer.parseInt(scanner.nextLine());
-        } catch (InputMismatchException | NumberFormatException e) {
-            consoleWriter.writeToOutputStream("This field should contain only integer. Try again: ");
-            readInt();
+        boolean b = true;
+        while (b) {
+            try {
+                result = Integer.parseInt(scanner.nextLine());
+                b = false;
+            } catch (InputMismatchException | NumberFormatException e) {
+                consoleWriter.writeToOutputStream("This field should contain only integer. Try again: ");
+            }
         }
         return result;
     }

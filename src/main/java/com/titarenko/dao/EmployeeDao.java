@@ -1,8 +1,8 @@
-package com.titarenko.service;
+package com.titarenko.dao;
 
 import com.titarenko.model.Employee;
 
-public interface EmployeeService {
+public interface EmployeeDao {
 
     /**
      * return new id
