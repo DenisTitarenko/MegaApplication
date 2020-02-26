@@ -30,7 +30,7 @@ public class ConsoleReaderImpl implements Reader {
         consoleWriter.writeToOutputStream("position: ");
         employee.setPosition(readLine());
 
-        consoleWriter.writeToOutputStream("salary : ");
+        consoleWriter.writeToOutputStream("salary: ");
         employee.setSalary(readInt());
 
         consoleWriter.writeToOutputStream("date (dd.mm.yyyy): ");

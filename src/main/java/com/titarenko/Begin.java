@@ -1,5 +1,6 @@
 package com.titarenko;
 
+import com.titarenko.service.ConsoleWriterImpl;
 import com.titarenko.service.Menu;
 import com.titarenko.service.MenuImpl;
 
@@ -11,6 +12,7 @@ public class Begin {
         while (menu.isContinue()) {
             menu.show();
             menu.perform();
+            new ConsoleWriterImpl().writeToOutputStream("\n");
         }
     }
 

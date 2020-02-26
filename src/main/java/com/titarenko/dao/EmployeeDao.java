@@ -2,6 +2,8 @@ package com.titarenko.dao;
 
 import com.titarenko.model.Employee;
 
+import java.util.List;
+
 public interface EmployeeDao {
 
     /**
@@ -14,4 +16,6 @@ public interface EmployeeDao {
     boolean delete(String name);
 
     Employee get(String name);
+
+    List<Employee> getAll();
 }

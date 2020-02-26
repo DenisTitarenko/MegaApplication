@@ -4,6 +4,8 @@ import com.titarenko.dao.EmployeeDao;
 import com.titarenko.dao.JdbcEmployeeDaoImpl;
 import com.titarenko.model.Operations;
 
+import java.util.stream.Collectors;
+
 public class MenuImpl implements Menu {
     public static final Writer CONSOLE_WRITER = new ConsoleWriterImpl();
     public static final Reader CONSOLE_READER = new ConsoleReaderImpl();
@@ -27,6 +29,12 @@ public class MenuImpl implements Menu {
             case FIND:
                 CONSOLE_WRITER.writeToOutputStream("Enter the name of the employee you want to find: ");
                 CONSOLE_WRITER.writeToOutputStream(employeeDao.get(CONSOLE_READER.readLine()).toString());
+                break;
+            case GET_ALL:
+                CONSOLE_WRITER.writeToOutputStream(employeeDao.getAll()
+                        .stream()
+                        .map(Object::toString)
+                        .collect(Collectors.joining("\n")));
                 break;
             case UPDATE:
                 CONSOLE_WRITER.writeToOutputStream("Enter the id of the employee you want to update: ");
