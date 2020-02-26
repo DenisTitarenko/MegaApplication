@@ -2,11 +2,12 @@ package com.titarenko.model;
 
 public enum Operations {
     ADD(1, "Add employee to DB;"),
-    SHOW(2, "Show all employees group by department & date of start work;"),
-    FIND(3, "Find employee by name;"),
+    FIND(2, "Find employee by name;"),
+    UPDATE(3, "Update employee info;"),
     DELETE(4, "Delete employee by name;"),
-    INCREASE(5, "Increase someone's salary;"),
-    SHOW_SAME(6, "Show names of employees with same salary;"),
+    SHOW(5, "Show all employees group by department & date of start work;"),
+    INCREASE(6, "Increase someone's salary;"),
+    SHOW_SAME(7, "Show names of employees with same salary;"),
     EXIT(0, "Exit.");
 
     private int label;

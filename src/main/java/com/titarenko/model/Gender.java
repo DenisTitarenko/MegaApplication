@@ -11,8 +11,13 @@ public enum Gender {
         this.code = code;
     }
 
+    public static Gender getGender (String code) {
+        return "male".equals(code) ? Gender.M : "female".equals(code) ? Gender.F : Gender.OTHER;
+    }
+
     public String getCode() {
         return code;
     }
+
 
 }

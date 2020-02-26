@@ -1,26 +1,38 @@
 package com.titarenko.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import com.titarenko.service.ConsoleWriterImpl;
+import com.titarenko.service.Writer;
+
+import java.sql.*;
 
 public class JdbcConnection {
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/database1";
+    private static final String URL = "jdbc:postgresql://localhost:5432/megaAppDb";
     private static final String USER = "postgres";
     private static final String PASSWORD = "root";
-    Connection connection;
 
-    public void setConnection() {
+   private Connection connection;
+    private Writer consoleWriter = new ConsoleWriterImpl();
+
+    public JdbcConnection() {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
             if (connection != null) {
-                System.out.println("\nConnected to DB");
+                consoleWriter.writeToOutputStream("\nConnected to DB\n");
             } else {
-                System.out.println("Failed to connect to DB");
+                consoleWriter.writeToOutputStream("Failed to connect to DB");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public Statement createStatement() throws SQLException {
+        return connection.createStatement();
+    }
+
+    public PreparedStatement prepareStatement(String query) throws SQLException {
+        return connection.prepareStatement(query);
     }
 }
