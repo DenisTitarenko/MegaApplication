@@ -1,22 +1,18 @@
 package com.titarenko.service;
 
 import com.titarenko.model.Employee;
-import java.time.ZoneId;
+import java.time.LocalDate;
 
-public class EmployeeValidator implements Validator{
+public class EmployeeValidator implements Validator {
+
+    public boolean isValidName(String name) {
+        return name.matches("([A-Za-z\\s])+");
+    }
 
     @Override
     public boolean isValidEmployee(Employee employee) {
-        int checkName = 0;
-        for (char c : employee.getName().toCharArray()) {
-            if (Character.isLetter(c))
-                checkName++;
-        }
-        long timeInMillis = employee.getDateOfHire().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        int salary = employee.getSalary();
-
-        return (checkName == employee.getName().length()
-                && timeInMillis < System.currentTimeMillis()
-                && salary >= 0);
+        return (isValidName(employee.getName())
+                && employee.getDateOfHire().isBefore(LocalDate.now())
+                && employee.getSalary() >= 0);
     }
 }
