@@ -5,9 +5,10 @@ public enum Operations {
     FIND(2, "Find employee by name;"),
     UPDATE(3, "Update employee info;"),
     DELETE(4, "Delete employee by name;"),
-    SHOW(5, "Show all employees group by department & date of start work;"),
-    INCREASE(6, "Increase someone's salary;"),
+    GET_ALL(5, "Get all employees;"),
+    SHOW(6, "Show all employees group by position & date of start work;"),
     SHOW_SAME(7, "Show names of employees with same salary;"),
+    INCREASE(8, "Increase someone's salary;"),
     EXIT(0, "Exit.");
 
     private int label;

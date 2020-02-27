@@ -2,5 +2,5 @@ package com.titarenko.service;
 
 public interface Writer {
 
-    void writeToOutputStream (String text);
+    void writeToOutputStream(String text);
 }
