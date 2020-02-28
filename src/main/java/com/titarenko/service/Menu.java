@@ -2,7 +2,7 @@ package com.titarenko.service;
 
 public interface Menu {
 
-    void show();
-    void perform();
+    String show();
+    String perform();
     boolean isContinue();
 }
