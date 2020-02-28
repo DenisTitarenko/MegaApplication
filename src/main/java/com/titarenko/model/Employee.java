@@ -1,5 +1,6 @@
 package com.titarenko.model;
 
+import java.io.PrintStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -83,10 +84,15 @@ public class Employee {
 
     @Override
     public String toString() {
-        return name + "\t\t" +
-                sex.getCode() + "\t\t" +
-                position + "\t\t" +
-                salary + "$\t\t" +
-                dateOfHire.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        String format = "%5d %25s %25s %25s %25d$ %25s";
+        return String.format(
+                format,
+                getId(),
+                getName(),
+                getSex().getCode(),
+                getPosition(),
+                getSalary(),
+                getDateOfHire().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+        );
     }
 }
