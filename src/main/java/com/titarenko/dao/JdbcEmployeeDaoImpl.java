@@ -109,7 +109,7 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
     @Override
     public List<Employee> getEmployeesWithSameSalary() {
         String query =
-                "SELECT * FROM employees " +
+                "SELECT name, salary FROM employees " +
                         "WHERE salary IN " +
                         "(SELECT salary FROM employees " +
                         "GROUP by salary " +

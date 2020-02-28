@@ -1,49 +1,72 @@
 package com.titarenko.service;
 
-import com.titarenko.dao.EmployeeDao;
-import com.titarenko.dao.JdbcEmployeeDaoImpl;
 import com.titarenko.model.Operations;
 
-public class MenuImpl implements Menu {
-    public static final Writer CONSOLE_WRITER = new ConsoleWriterImpl();
-    public static final Reader CONSOLE_READER = new ConsoleReaderImpl();
-    boolean isContinue = true;
-    EmployeeDao employeeDao = new JdbcEmployeeDaoImpl();
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
-    @Override
-    public void show() {
-        for (Operations operation : Operations.values()) {
-            CONSOLE_WRITER.writeToOutputStream(operation.getLabel() + ". " + operation.getTitle());
+public class MenuImpl implements Menu {
+    private static final Writer CONSOLE_WRITER = new ConsoleWriterImpl();
+    private static final Reader CONSOLE_READER = new ConsoleReaderImpl();
+    private EmployeeService employeeService = new EmployeeService();
+    private boolean isContinue = true;
+
+    public MenuImpl() {
+        while (isContinue()) {
+            CONSOLE_WRITER.writeToOutputStream(show());
+            CONSOLE_WRITER.writeToOutputStream(perform());
+            CONSOLE_WRITER.writeToOutputStream("\n");
         }
     }
 
     @Override
-    public void perform() {
-        switch (Operations.getByLabel(new ConsoleReaderImpl().readInt())) {
+    public String show() {
+        return Arrays.stream(Operations.values())
+                .map(operation -> operation.getLabel() + ". " + operation.getTitle())
+                .reduce((s1, s2) -> s1 + "\n" + s2)
+                .orElse("");
+    }
+
+    @Override
+    public String perform() {
+        switch (Operations.getByLabel(CONSOLE_READER.readInt())) {
             case ADD:
                 CONSOLE_WRITER.writeToOutputStream("Enter info about the new employee: ");
-                employeeDao.create(CONSOLE_READER.readEmployee());
-                break;
+                return String.valueOf(employeeService.create(CONSOLE_READER.readEmployee()));
             case FIND:
                 CONSOLE_WRITER.writeToOutputStream("Enter the name of the employee you want to find: ");
-                CONSOLE_WRITER.writeToOutputStream(employeeDao.get(CONSOLE_READER.readLine()).toString());
-                break;
+                return employeeService.get(CONSOLE_READER.readLine()).toString();
             case UPDATE:
                 CONSOLE_WRITER.writeToOutputStream("Enter the id of the employee you want to update: ");
-                employeeDao.update(CONSOLE_READER.readInt(), CONSOLE_READER.readEmployee());
-                break;
+                return String.valueOf(employeeService.update(CONSOLE_READER.readInt(), CONSOLE_READER.readEmployee()));
             case DELETE:
                 CONSOLE_WRITER.writeToOutputStream("Enter the name of the employee you want to delete: ");
-                employeeDao.delete(CONSOLE_READER.readLine());
-                break;
+                return String.valueOf(employeeService.delete(CONSOLE_READER.readLine()));
+            case GET_ALL:
+                return employeeService.getAll()
+                        .stream()
+                        .map(Object::toString)
+                        .collect(Collectors.joining("\n"));
             case SHOW:
-                break;
-            case INCREASE:
-                break;
+                return employeeService.getAllGroupByPositionAndDate()
+                        .stream()
+                        .map(Object::toString)
+                        .collect(Collectors.joining("\n"));
             case SHOW_SAME:
-                break;
+                return employeeService.getEmployeesWithSameSalary()
+                        .stream()
+                        .map(Object::toString)
+                        .collect(Collectors.joining("\n"));
+            case INCREASE:
+                CONSOLE_WRITER.writeToOutputStream("Enter the id of the employee you want to update salary: ");
+                int id = CONSOLE_READER.readInt();
+                CONSOLE_WRITER.writeToOutputStream("How much must be increased");
+                int plusSalary = CONSOLE_READER.readInt();
+                return String.valueOf(employeeService.increaseSalary(id, plusSalary));
             case EXIT:
                 isContinue = false;
+            default:
+                return "exit";
         }
     }
 
