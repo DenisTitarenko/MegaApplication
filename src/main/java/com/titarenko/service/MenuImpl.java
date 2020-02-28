@@ -6,9 +6,10 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class MenuImpl implements Menu {
-    public static final Writer CONSOLE_WRITER = new ConsoleWriterImpl();
-    public static final Reader CONSOLE_READER = new ConsoleReaderImpl();
-    boolean isContinue = true;
+    private static final Writer CONSOLE_WRITER = new ConsoleWriterImpl();
+    private static final Reader CONSOLE_READER = new ConsoleReaderImpl();
+    private EmployeeService employeeService = new EmployeeService();
+    private boolean isContinue = true;
 
     public MenuImpl() {
         while (isContinue()) {
@@ -17,8 +18,6 @@ public class MenuImpl implements Menu {
             CONSOLE_WRITER.writeToOutputStream("\n");
         }
     }
-
-    EmployeeService employeeService = new EmployeeService();
 
     @Override
     public String show() {
