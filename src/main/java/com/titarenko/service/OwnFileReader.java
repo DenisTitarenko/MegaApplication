@@ -11,47 +11,32 @@ import java.util.Scanner;
 
 public class OwnFileReader {
 
-    Writer writer = new ConsoleWriterImpl();
+    private static final String CREATE_TABLE_URL = "src/main/resources/create_table.sql";
+    private static final String TABLE_INITIALIZER_URL = "src/main/resources/init_insert.sql";
+    private Connection connection;
 
-    public static final String CREATE_TABLE_URL = "src/main/resources/create_table.sql";
-    public static final String TABLE_INITIALIZER_URL = "src/main/resources/init_insert.sql";
-
-    public void createTable(Connection connection) throws FileNotFoundException, SQLException {
-        StringBuilder stringBuilder = new StringBuilder();
-        Scanner scanner = new Scanner(new FileReader(new File(CREATE_TABLE_URL)));
-        while (scanner.hasNextLine()) {
-            stringBuilder.append(scanner.nextLine());
-        }
-        Statement statement = connection.createStatement();
-        statement.execute(stringBuilder.toString());
-
-
+    public OwnFileReader(Connection connection) {
+        this.connection = connection;
     }
 
-    public void tableInitializer(Connection connection) throws SQLException, FileNotFoundException {
+    public void createTable() throws FileNotFoundException, SQLException {
+        connection.createStatement().execute(readSql(CREATE_TABLE_URL));
+    }
+
+    public void tableInitializer() throws SQLException, FileNotFoundException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM employees");
         if (!resultSet.isBeforeFirst()) {
-            writer.writeToOutputStream("Do you want to fill the table automatically? [y/n]");
-            String input = null;
-            while (!("y".equals(input) || "n".equals(input))) {
-                input = new Scanner(System.in).nextLine();
-            }
-            if ("y".equals(input)) {
-                Scanner scanner = new Scanner(new FileReader(new File(TABLE_INITIALIZER_URL)));
-                StringBuilder stringBuilder = new StringBuilder();
-                while (scanner.hasNextLine()) {
-                    stringBuilder.append(scanner.nextLine());
-                }
-                statement.execute(stringBuilder.toString());
-            }
+            statement.execute(readSql(TABLE_INITIALIZER_URL));
         }
     }
+
+    private String readSql(String filePath) throws FileNotFoundException {
+        StringBuilder stringBuilder = new StringBuilder();
+        Scanner scanner = new Scanner(new FileReader(new File(filePath)));
+        while (scanner.hasNextLine()) {
+            stringBuilder.append(scanner.nextLine());
+        }
+        return stringBuilder.toString();
+    }
 }
-
-
-
-
-
-
-

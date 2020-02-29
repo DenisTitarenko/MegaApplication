@@ -14,24 +14,23 @@ public class JdbcConnection {
     private static final String PASSWORD = "root";
 
     private Connection connection;
-    private Writer consoleWriter = new ConsoleWriterImpl();
-    private OwnFileReader fileReader = new OwnFileReader();
 
     public JdbcConnection() {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            Writer consoleWriter = new ConsoleWriterImpl();
             if (connection != null) {
                 consoleWriter.writeToOutputStream("\nConnected to DB\n");
+                OwnFileReader fileReader = new OwnFileReader(connection);
+                fileReader.createTable();
+                fileReader.tableInitializer();
             } else {
                 consoleWriter.writeToOutputStream("Failed to connect to DB");
             }
-            fileReader.createTable(connection);
-            fileReader.tableInitializer(connection);
         } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-
 
     public Statement createStatement() throws SQLException {
         return connection.createStatement();
