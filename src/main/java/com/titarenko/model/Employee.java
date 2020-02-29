@@ -3,6 +3,7 @@ package com.titarenko.model;
 import com.titarenko.service.JsonParser;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Employee {
@@ -84,6 +85,15 @@ public class Employee {
 
     @Override
     public String toString() {
-        return new JsonParser().toJson(this);
+//        return new JsonParser().toJson(this);
+        return String.format(
+                "%5d %25s %25s %25s %25d$ %25s",
+                getId(),
+                getName(),
+                getSex().getCode(),
+                getPosition(),
+                getSalary(),
+                getDateOfHire().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+        );
     }
 }
