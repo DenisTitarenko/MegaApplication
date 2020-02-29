@@ -1,8 +1,10 @@
 package com.titarenko.dao;
 
 import com.titarenko.service.ConsoleWriterImpl;
+import com.titarenko.service.OwnFileReader;
 import com.titarenko.service.Writer;
 
+import java.io.FileNotFoundException;
 import java.sql.*;
 
 public class JdbcConnection {
@@ -11,22 +13,24 @@ public class JdbcConnection {
     private static final String USER = "postgres";
     private static final String PASSWORD = "root";
 
-   private Connection connection;
-    private Writer consoleWriter = new ConsoleWriterImpl();
+    private Connection connection;
 
     public JdbcConnection() {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            Writer consoleWriter = new ConsoleWriterImpl();
             if (connection != null) {
                 consoleWriter.writeToOutputStream("\nConnected to DB\n");
+                OwnFileReader fileReader = new OwnFileReader(connection);
+                fileReader.createTable();
+                fileReader.tableInitializer();
             } else {
                 consoleWriter.writeToOutputStream("Failed to connect to DB");
             }
-        } catch (SQLException e) {
+        } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-
 
     public Statement createStatement() throws SQLException {
         return connection.createStatement();

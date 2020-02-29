@@ -9,7 +9,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class JdbcEmployeeDaoImpl implements EmployeeDao {
 
@@ -109,7 +108,7 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
     @Override
     public List<Employee> getEmployeesWithSameSalary() {
         String query =
-                "SELECT name, salary FROM employees " +
+                "SELECT * FROM employees " +
                         "WHERE salary IN " +
                         "(SELECT salary FROM employees " +
                         "GROUP by salary " +
