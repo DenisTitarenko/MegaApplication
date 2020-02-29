@@ -1,8 +1,8 @@
 package com.titarenko.model;
 
-import java.io.PrintStream;
+import com.titarenko.service.JsonParser;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Employee {
@@ -84,15 +84,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        String format = "%5d %25s %25s %25s %25d$ %25s";
-        return String.format(
-                format,
-                getId(),
-                getName(),
-                getSex().getCode(),
-                getPosition(),
-                getSalary(),
-                getDateOfHire().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-        );
+        return new JsonParser().toJson(this);
     }
 }
