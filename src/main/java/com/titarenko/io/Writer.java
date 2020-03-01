@@ -1,4 +1,4 @@
-package com.titarenko.service;
+package com.titarenko.io;
 
 public interface Writer {
 

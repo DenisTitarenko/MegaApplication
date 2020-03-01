@@ -1,13 +1,16 @@
 package com.titarenko.service;
 
+import com.titarenko.Begin;
+import com.titarenko.io.Reader;
+import com.titarenko.io.Writer;
 import com.titarenko.model.Operations;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class MenuImpl implements Menu {
-    private static final Writer CONSOLE_WRITER = new ConsoleWriterImpl();
-    private static final Reader CONSOLE_READER = new ConsoleReaderImpl();
+    private static final Writer CONSOLE_WRITER = Begin.getWriter();
+    private static final Reader CONSOLE_READER = Begin.getReader();
     private EmployeeService employeeService = new EmployeeService();
     private boolean isContinue = true;
 

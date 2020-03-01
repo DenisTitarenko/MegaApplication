@@ -1,6 +1,8 @@
 package com.titarenko.service;
 
+import com.titarenko.Begin;
 import com.titarenko.dao.JdbcEmployeeDaoImpl;
+import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
 
 import java.util.List;
@@ -9,7 +11,7 @@ public class EmployeeService {
 
     JdbcEmployeeDaoImpl employeeDao = new JdbcEmployeeDaoImpl();
     EmployeeValidator validator = new EmployeeValidator();
-    Writer writer = new ConsoleWriterImpl();
+    Writer writer = Begin.getWriter();
 
     public Integer create(Employee employee) {
         int result;
