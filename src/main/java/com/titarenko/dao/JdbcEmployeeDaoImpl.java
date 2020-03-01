@@ -1,9 +1,9 @@
 package com.titarenko.dao;
 
+import com.titarenko.Begin;
+import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
 import com.titarenko.model.Gender;
-import com.titarenko.service.ConsoleWriterImpl;
-import com.titarenko.service.Writer;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ import java.util.List;
 public class JdbcEmployeeDaoImpl implements EmployeeDao {
 
     private JdbcConnection connection = new JdbcConnection();
-    private Writer writer = new ConsoleWriterImpl();
+    private Writer writer = Begin.getWriter();
 
     @Override
     public Integer create(Employee employee) {

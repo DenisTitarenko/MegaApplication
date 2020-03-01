@@ -1,8 +1,8 @@
 package com.titarenko.dao;
 
-import com.titarenko.service.ConsoleWriterImpl;
-import com.titarenko.service.OwnFileReader;
-import com.titarenko.service.Writer;
+import com.titarenko.Begin;
+import com.titarenko.io.OwnFileReader;
+import com.titarenko.io.Writer;
 
 import java.io.FileNotFoundException;
 import java.sql.*;
@@ -18,7 +18,7 @@ public class JdbcConnection {
     public JdbcConnection() {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            Writer consoleWriter = new ConsoleWriterImpl();
+            Writer consoleWriter = Begin.getWriter();
             if (connection != null) {
                 consoleWriter.writeToOutputStream("\nConnected to DB\n");
                 OwnFileReader fileReader = new OwnFileReader(connection);

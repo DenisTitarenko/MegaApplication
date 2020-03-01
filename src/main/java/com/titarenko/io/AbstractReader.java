@@ -1,5 +1,6 @@
-package com.titarenko.service;
+package com.titarenko.io;
 
+import com.titarenko.Begin;
 import com.titarenko.model.Employee;
 import com.titarenko.model.Gender;
 
@@ -9,13 +10,11 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class ConsoleReaderImpl implements Reader {
+public abstract class AbstractReader implements Reader{
 
-    Scanner scanner = new Scanner(System.in);
-    Writer consoleWriter = new ConsoleWriterImpl();
+    Writer consoleWriter = Begin.getWriter();
 
     @Override
     public Employee readEmployee() {
@@ -39,25 +38,19 @@ public class ConsoleReaderImpl implements Reader {
         return employee;
     }
 
-
     @Override
     public Integer readInt() {
         int result = 0;
         boolean b = true;
         while (b) {
             try {
-                result = Integer.parseInt(scanner.nextLine());
+                result = Integer.parseInt(readLine());
                 b = false;
             } catch (InputMismatchException | NumberFormatException e) {
                 consoleWriter.writeToOutputStream("This field should contain only integer. Try again: ");
             }
         }
         return result;
-    }
-
-    @Override
-    public String readLine() {
-        return scanner.nextLine();
     }
 
     @Override
