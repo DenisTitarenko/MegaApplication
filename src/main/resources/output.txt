@@ -1,3 +1,6 @@
+
+Connected to DB
+
 1. Add employee to DB;
 2. Find employee by name;
 3. Update employee info;

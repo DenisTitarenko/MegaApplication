@@ -1,7 +1,6 @@
 package com.titarenko.service;
 
 import com.titarenko.Begin;
-import com.titarenko.io.FileWriterImpl;
 import com.titarenko.io.Reader;
 import com.titarenko.io.Writer;
 import com.titarenko.model.Operations;
@@ -17,9 +16,6 @@ public class MenuImpl implements Menu {
     private boolean isContinue = true;
 
     public MenuImpl() {
-        if (WRITER instanceof FileWriterImpl) {
-            ((FileWriterImpl) WRITER).clearFile();
-        }
         while (isContinue()) {
             WRITER.writeToOutputStream(show());
             WRITER.writeToOutputStream(perform());

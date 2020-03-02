@@ -9,6 +9,11 @@ public class FileWriterImpl implements Writer {
     private static final FileWriterImpl INSTANCE = new FileWriterImpl();
 
     private FileWriterImpl() {
+        try (FileWriter writer = new FileWriter(FILE_WRITER_URL)) {
+            writer.write("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static FileWriterImpl getInstance() {
@@ -17,22 +22,10 @@ public class FileWriterImpl implements Writer {
 
     @Override
     public void writeToOutputStream(String text) {
-        try {
-            FileWriter writer = new FileWriter(FILE_WRITER_URL, true);
+        try (FileWriter writer = new FileWriter(FILE_WRITER_URL, true)) {
             writer.write(text);
             writer.append("\n");
-            writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void clearFile() {
-        try {
-            FileWriter writer = new FileWriter(FILE_WRITER_URL);
-            writer.write("");
-            writer.close();
-        } catch (Exception e) {
             e.printStackTrace();
         }
     }
