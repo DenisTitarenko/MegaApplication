@@ -9,11 +9,17 @@
 0. Exit.
 1
 Enter info about the new employee: 
+name: 
 Stephen King
+sex (M, F or OTHER): 
 M
+position: 
 writer
+salary: 
 400
+date (dd.mm.yyyy): 
 17.05.2004
+Employee Stephen King added
 7
 
 
@@ -28,12 +34,18 @@ writer
 0. Exit.
 1
 Enter info about the new employee: 
+name: 
 Joanne Rowling
+sex (M, F or OTHER): 
 f
+position: 
 writer
+salary: 
 525
+date (dd.mm.yyyy): 
 20.11.2011
-2
+Employee Joanne Rowling added
+8
 
 
 1. Add employee to DB;
@@ -95,30 +107,6 @@ writer
   "dateOfHire" : "27 Mar 2014"
 }
 {
-  "id" : 2,
-  "name" : "Joanne Rowling",
-  "sex" : "female",
-  "position" : "writer",
-  "salary" : 525,
-  "dateOfHire" : "20 Nov 2011"
-}
-{
-  "id" : 4,
-  "name" : "Joanne Rowling",
-  "sex" : "female",
-  "position" : "writer",
-  "salary" : 525,
-  "dateOfHire" : "20 Nov 2011"
-}
-{
-  "id" : 6,
-  "name" : "Joanne Rowling",
-  "sex" : "female",
-  "position" : "writer",
-  "salary" : 525,
-  "dateOfHire" : "20 Nov 2011"
-}
-{
   "id" : 7,
   "name" : "Stephen King",
   "sex" : "male",
@@ -150,6 +138,7 @@ Enter the id of the employee you want to update salary:
 14
 How much must be increased
 200
+Employee with such id doesn't exist
 false
 
 
@@ -165,6 +154,7 @@ false
 4
 Enter the name of the employee you want to delete: 
 Stephen King
+1 row(s) deleted
 true
 
 

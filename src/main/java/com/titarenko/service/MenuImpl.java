@@ -1,25 +1,29 @@
 package com.titarenko.service;
 
-import com.titarenko.io.FileReaderImpl;
+import com.titarenko.Begin;
 import com.titarenko.io.FileWriterImpl;
+import com.titarenko.io.Reader;
+import com.titarenko.io.Writer;
 import com.titarenko.model.Operations;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class FileMenuImpl implements Menu {
+public class MenuImpl implements Menu {
 
-    private static final FileWriterImpl FILE_WRITER = new FileWriterImpl();
-    private static final FileReaderImpl FILE_READER = new FileReaderImpl();
+    private static final Writer WRITER = Begin.getWriter();
+    private static final Reader READER = Begin.getReader();
     private EmployeeService employeeService = new EmployeeService();
     private boolean isContinue = true;
 
-    public FileMenuImpl() {
-        FILE_WRITER.clearFile();
+    public MenuImpl() {
+        if (WRITER instanceof FileWriterImpl) {
+            ((FileWriterImpl) WRITER).clearFile();
+        }
         while (isContinue()) {
-            FILE_WRITER.writeToOutputStream(show());
-            FILE_WRITER.writeToOutputStream(perform());
-            FILE_WRITER.writeToOutputStream("\n");
+            WRITER.writeToOutputStream(show());
+            WRITER.writeToOutputStream(perform());
+            WRITER.writeToOutputStream("\n");
         }
     }
 
@@ -28,24 +32,23 @@ public class FileMenuImpl implements Menu {
         return Arrays.stream(Operations.values())
                 .map(operation -> operation.getLabel() + ". " + operation.getTitle())
                 .reduce((s1, s2) -> s1 + "\n" + s2)
-                .orElse("");
-    }
+                .orElse("");    }
 
     @Override
     public String perform() {
-        switch (Operations.getByLabel(Integer.parseInt(FILE_READER.readLine()))) {
+        switch (Operations.getByLabel(READER.readInt())) {
             case ADD:
-                FILE_WRITER.writeToOutputStream("Enter info about the new employee: ");
-                return String.valueOf(employeeService.create(FILE_READER.readEmployee()));
+                WRITER.writeToOutputStream("Enter info about the new employee: ");
+                return String.valueOf(employeeService.create(READER.readEmployee()));
             case FIND:
-                FILE_WRITER.writeToOutputStream("Enter the name of the employee you want to find: ");
-                return employeeService.get(FILE_READER.readLine()).toString();
+                WRITER.writeToOutputStream("Enter the name of the employee you want to find: ");
+                return employeeService.get(READER.readLine()).toString();
             case UPDATE:
-                FILE_WRITER.writeToOutputStream("Enter the id of the employee you want to update: ");
-                return String.valueOf(employeeService.update(FILE_READER.readInt(), FILE_READER.readEmployee()));
+                WRITER.writeToOutputStream("Enter the id of the employee you want to update: ");
+                return String.valueOf(employeeService.update(READER.readInt(), READER.readEmployee()));
             case DELETE:
-                FILE_WRITER.writeToOutputStream("Enter the name of the employee you want to delete: ");
-                return String.valueOf(employeeService.delete(FILE_READER.readLine()));
+                WRITER.writeToOutputStream("Enter the name of the employee you want to delete: ");
+                return String.valueOf(employeeService.delete(READER.readLine()));
             case GET_ALL:
                 return employeeService.getAll()
                         .stream()
@@ -62,10 +65,10 @@ public class FileMenuImpl implements Menu {
                         .map(Object::toString)
                         .collect(Collectors.joining("\n"));
             case INCREASE:
-                FILE_WRITER.writeToOutputStream("Enter the id of the employee you want to update salary: ");
-                int id = FILE_READER.readInt();
-                FILE_WRITER.writeToOutputStream("How much must be increased");
-                int plusSalary = FILE_READER.readInt();
+                WRITER.writeToOutputStream("Enter the id of the employee you want to update salary: ");
+                int id = READER.readInt();
+                WRITER.writeToOutputStream("How much must be increased");
+                int plusSalary = READER.readInt();
                 return String.valueOf(employeeService.increaseSalary(id, plusSalary));
             case EXIT:
                 isContinue = false;

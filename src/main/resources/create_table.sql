@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS employees
 (
-    id         SERIAL,
+    id         SERIAL PRIMARY KEY,
     name       varchar,
     sex        varchar,
     position   varchar,

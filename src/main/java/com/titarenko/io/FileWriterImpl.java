@@ -6,6 +6,14 @@ import java.io.IOException;
 public class FileWriterImpl implements Writer {
 
     private static final String FILE_WRITER_URL = "src/main/resources/output.txt";
+    private static final FileWriterImpl INSTANCE = new FileWriterImpl();
+
+    private FileWriterImpl() {
+    }
+
+    public static FileWriterImpl getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public void writeToOutputStream(String text) {
@@ -18,7 +26,6 @@ public class FileWriterImpl implements Writer {
             e.printStackTrace();
         }
     }
-
 
     public void clearFile() {
         try {
