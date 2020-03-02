@@ -3,9 +3,8 @@ package com.titarenko.io;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class FileReaderImpl extends AbstractReader {
 
@@ -15,8 +14,8 @@ public class FileReaderImpl extends AbstractReader {
 
     private FileReaderImpl() {
         try {
-            String input = new String(Files.readAllBytes(Paths.get(FILE_READER_URL)));
-            list = Stream.of(input.split("[\\r\\n|]+")).collect(Collectors.toCollection(LinkedList::new));
+            String input = Files.readString(Paths.get(FILE_READER_URL));
+            list = new LinkedList<>(Arrays.asList(input.split("[\\r\\n|]+")));
         } catch (IOException e) {
             e.printStackTrace();
         }
