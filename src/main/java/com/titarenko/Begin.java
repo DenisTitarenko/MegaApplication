@@ -1,15 +1,13 @@
 package com.titarenko;
 
-import com.titarenko.io.ConsoleReaderImpl;
-import com.titarenko.io.ConsoleWriterImpl;
-import com.titarenko.io.Reader;
-import com.titarenko.io.Writer;
-import com.titarenko.service.MenuImpl;
+import com.titarenko.io.*;
+import com.titarenko.service.ConsoleMenuImpl;
+import com.titarenko.service.FileMenuImpl;
 
 public class Begin {
 
     public static void main(String[] args) {
-        new MenuImpl();
+        new FileMenuImpl();
     }
 
     public static Reader getReader() {
