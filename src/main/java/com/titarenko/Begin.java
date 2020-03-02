@@ -1,9 +1,6 @@
 package com.titarenko;
 
-import com.titarenko.io.ConsoleReaderImpl;
-import com.titarenko.io.ConsoleWriterImpl;
-import com.titarenko.io.Reader;
-import com.titarenko.io.Writer;
+import com.titarenko.io.*;
 import com.titarenko.service.MenuImpl;
 
 public class Begin {
@@ -13,11 +10,13 @@ public class Begin {
     }
 
     public static Reader getReader() {
-        return ConsoleReaderImpl.getInstance();
+//        return ConsoleReaderImpl.getInstance();
+        return FileReaderImpl.getInstance();
     }
 
     public static Writer getWriter() {
-        return ConsoleWriterImpl.getInstance();
+//        return ConsoleWriterImpl.getInstance();
+        return FileWriterImpl.getInstance();
     }
 
 }

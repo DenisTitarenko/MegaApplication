@@ -1,0 +1,32 @@
+package com.titarenko.io;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.LinkedList;
+
+public class FileReaderImpl extends AbstractReader {
+
+    private static final String FILE_READER_URL = "src/main/resources/input.txt";
+    private static final FileReaderImpl INSTANCE = new FileReaderImpl();
+    private LinkedList<String> list = new LinkedList<>();
+
+    private FileReaderImpl() {
+        try {
+            String input = Files.readString(Paths.get(FILE_READER_URL));
+            list = new LinkedList<>(Arrays.asList(input.split("[\\r\\n|]+")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static FileReaderImpl getInstance() {
+        return INSTANCE;
+    }
+
+    @Override
+    public String readLine() {
+        return list.pollFirst();
+    }
+}

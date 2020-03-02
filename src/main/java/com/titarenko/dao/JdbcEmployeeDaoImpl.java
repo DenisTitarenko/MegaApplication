@@ -17,7 +17,8 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public Integer create(Employee employee) {
-        String query = "INSERT INTO employees VALUES(DEFAULT, ?, ?, ?, ?, ?)";
+//        String query = "INSERT INTO employees VALUES(DEFAULT, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO employees(name, sex, position, salary, dateOfHire) VALUES(?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employee.getName());
