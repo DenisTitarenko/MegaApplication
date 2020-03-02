@@ -10,20 +10,14 @@ Connected to DB
 7. Show employees with same salary;
 8. Increase someone's salary;
 0. Exit.
-1
 Enter info about the new employee: 
 name: 
-Stephen King
 sex (M, F or OTHER): 
-M
 position: 
-writer
 salary: 
-400
 date (dd.mm.yyyy): 
-17.05.2004
 Employee Stephen King added
-7
+21
 
 
 1. Add employee to DB;
@@ -35,18 +29,12 @@ Employee Stephen King added
 7. Show employees with same salary;
 8. Increase someone's salary;
 0. Exit.
-1
 Enter info about the new employee: 
 name: 
-Joanne Rowling
 sex (M, F or OTHER): 
-f
 position: 
-writer
 salary: 
-525
 date (dd.mm.yyyy): 
-20.11.2011
 Employee Joanne Rowling added
 8
 
@@ -60,7 +48,6 @@ Employee Joanne Rowling added
 7. Show employees with same salary;
 8. Increase someone's salary;
 0. Exit.
-5
 {
   "id" : 1,
   "name" : "Zinedine Zidane",
@@ -110,7 +97,63 @@ Employee Joanne Rowling added
   "dateOfHire" : "27 Mar 2014"
 }
 {
-  "id" : 7,
+  "id" : 8,
+  "name" : "Joanne Rowling",
+  "sex" : "female",
+  "position" : "writer",
+  "salary" : 525,
+  "dateOfHire" : "20 Nov 2011"
+}
+{
+  "id" : 10,
+  "name" : "Joanne Rowling",
+  "sex" : "female",
+  "position" : "writer",
+  "salary" : 525,
+  "dateOfHire" : "20 Nov 2011"
+}
+{
+  "id" : 12,
+  "name" : "Joanne Rowling",
+  "sex" : "female",
+  "position" : "writer",
+  "salary" : 525,
+  "dateOfHire" : "20 Nov 2011"
+}
+{
+  "id" : 16,
+  "name" : "Joanne Rowling",
+  "sex" : "female",
+  "position" : "writer",
+  "salary" : 525,
+  "dateOfHire" : "20 Nov 2011"
+}
+{
+  "id" : 18,
+  "name" : "Joanne Rowling",
+  "sex" : "female",
+  "position" : "writer",
+  "salary" : 525,
+  "dateOfHire" : "20 Nov 2011"
+}
+{
+  "id" : 20,
+  "name" : "Joanne Rowling",
+  "sex" : "female",
+  "position" : "writer",
+  "salary" : 525,
+  "dateOfHire" : "20 Nov 2011"
+}
+{
+  "id" : 14,
+  "name" : "Joanne Rowling",
+  "sex" : "female",
+  "position" : "writer",
+  "salary" : 1325,
+  "dateOfHire" : "20 Nov 2011"
+}
+{
+  "id" : 21,
   "name" : "Stephen King",
   "sex" : "male",
   "position" : "writer",
@@ -118,7 +161,7 @@ Employee Joanne Rowling added
   "dateOfHire" : "17 May 2004"
 }
 {
-  "id" : 8,
+  "id" : 22,
   "name" : "Joanne Rowling",
   "sex" : "female",
   "position" : "writer",
@@ -136,13 +179,10 @@ Employee Joanne Rowling added
 7. Show employees with same salary;
 8. Increase someone's salary;
 0. Exit.
-8
 Enter the id of the employee you want to update salary: 
-14
 How much must be increased
-200
-Employee with such id doesn't exist
-false
+1 row(s) updated
+true
 
 
 1. Add employee to DB;
@@ -154,9 +194,7 @@ false
 7. Show employees with same salary;
 8. Increase someone's salary;
 0. Exit.
-4
 Enter the name of the employee you want to delete: 
-Stephen King
 1 row(s) deleted
 true
 
@@ -170,7 +208,6 @@ true
 7. Show employees with same salary;
 8. Increase someone's salary;
 0. Exit.
-0
 exit
 
 

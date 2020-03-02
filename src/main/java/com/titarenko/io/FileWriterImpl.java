@@ -9,8 +9,7 @@ public class FileWriterImpl implements Writer {
     private static final FileWriterImpl INSTANCE = new FileWriterImpl();
 
     private FileWriterImpl() {
-        try (FileWriter writer = new FileWriter(FILE_WRITER_URL)) {
-            writer.write("");
+        try (FileWriter ignored = new FileWriter(FILE_WRITER_URL)) {
         } catch (Exception e) {
             e.printStackTrace();
         }
