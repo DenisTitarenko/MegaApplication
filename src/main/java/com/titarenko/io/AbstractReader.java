@@ -12,30 +12,30 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class AbstractReader implements Reader{
+public abstract class AbstractReader implements Reader {
 
     Writer consoleWriter = Begin.getWriter();
 
     @Override
     public Employee readEmployee() {
-        Employee employee = new Employee();
+        Employee.Builder builder = new Employee.Builder();
 
         consoleWriter.writeToOutputStream("name: ");
-        employee.setName(readLine());
+        builder.withName(readLine());
 
         consoleWriter.writeToOutputStream("sex (M, F or OTHER): ");
-        employee.setSex(readGender());
+        builder.withSex(readGender());
 
         consoleWriter.writeToOutputStream("position: ");
-        employee.setPosition(readLine());
+        builder.withPosition(readLine());
 
         consoleWriter.writeToOutputStream("salary: ");
-        employee.setSalary(readInt());
+        builder.withSalary(readInt());
 
         consoleWriter.writeToOutputStream("date (dd.mm.yyyy): ");
-        employee.setDateOfHire(readDate());
+        builder.withDateOfHire(readDate());
 
-        return employee;
+        return builder.build();
     }
 
     @Override
