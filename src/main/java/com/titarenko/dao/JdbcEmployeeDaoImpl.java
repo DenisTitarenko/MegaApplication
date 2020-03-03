@@ -164,8 +164,6 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
 
 
     private Employee parseEmployeeInfoFromSQLtoJava(ResultSet resultSet) throws SQLException {
-        Employee employee = new Employee();
-
         int id = resultSet.getInt("id");
         String emplName = resultSet.getString("name");
         Gender sex = Gender.getGender(resultSet.getString("sex"));
@@ -173,13 +171,13 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
         int salary = resultSet.getInt("salary");
         LocalDate dateOfHire = resultSet.getDate("dateOfHire").toLocalDate();
 
-        employee.setId(id);
-        employee.setName(emplName);
-        employee.setSex(sex);
-        employee.setPosition(position);
-        employee.setSalary(salary);
-        employee.setDateOfHire(dateOfHire);
-
-        return employee;
+        return new Employee.Builder()
+                .setId(id)
+                .setName(emplName)
+                .setSex(sex)
+                .setPosition(position)
+                .setSalary(salary)
+                .setDateOfHire(dateOfHire)
+                .build();
     }
 }

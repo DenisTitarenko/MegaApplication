@@ -17,48 +17,24 @@ public class Employee {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Gender getSex() {
         return sex;
     }
 
-    public void setSex(Gender sex) {
-        this.sex = sex;
-    }
-
     public String getPosition() {
         return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
     }
 
     public int getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
     public LocalDate getDateOfHire() {
         return dateOfHire;
-    }
-
-    public void setDateOfHire(LocalDate dateOfHire) {
-        this.dateOfHire = dateOfHire;
     }
 
     @Override
@@ -85,5 +61,49 @@ public class Employee {
     @Override
     public String toString() {
         return new JsonParser().toJson(this);
+    }
+
+
+    public static class Builder {
+
+        private Employee newEmployee;
+
+        public Builder() {
+            this.newEmployee = new Employee();
+        }
+
+        public Builder setId(int id) {
+            newEmployee.id = id;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            newEmployee.name = name;
+            return this;
+        }
+
+        public Builder setSex(Gender sex) {
+            newEmployee.sex = sex;
+            return this;
+        }
+
+        public Builder setPosition(String position) {
+            newEmployee.position = position;
+            return this;
+        }
+
+        public Builder setSalary(int salary) {
+            newEmployee.salary = salary;
+            return this;
+        }
+
+        public Builder setDateOfHire(LocalDate dateOfHire) {
+            newEmployee.dateOfHire = dateOfHire;
+            return this;
+        }
+
+        public Employee build() {
+            return newEmployee;
+        }
     }
 }
