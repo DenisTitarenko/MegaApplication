@@ -164,20 +164,23 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
 
 
     private Employee parseEmployeeInfoFromSQLtoJava(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt("id");
-        String emplName = resultSet.getString("name");
-        Gender sex = Gender.getGender(resultSet.getString("sex"));
-        String position = resultSet.getString("position");
-        int salary = resultSet.getInt("salary");
-        LocalDate dateOfHire = resultSet.getDate("dateOfHire").toLocalDate();
+
+//        return new Employee.Builder()
+//                .setId(resultSet.getInt("id"))
+//                .setName(resultSet.getString("name"))
+//                .setSex(Gender.getGender(resultSet.getString("sex"))
+//                .setPosition(resultSet.getString("position"))
+//                .setSalary(resultSet.getInt("salary"))
+//                .setDateOfHire(resultSet.getDate("dateOfHire").toLocalDate())
+//                .build();
 
         return new Employee.Builder()
-                .setId(id)
-                .setName(emplName)
-                .setSex(sex)
-                .setPosition(position)
-                .setSalary(salary)
-                .setDateOfHire(dateOfHire)
+                .withId(resultSet.getInt("id"))
+                .withName(resultSet.getString("name"))
+                .withSex(Gender.getGender(resultSet.getString("sex")))
+                .withPosition(resultSet.getString("position"))
+                .withSalary(resultSet.getInt("salary"))
+                .withDateOfHire(resultSet.getDate("dateOfHire").toLocalDate())
                 .build();
     }
 }

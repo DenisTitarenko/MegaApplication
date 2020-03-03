@@ -13,6 +13,15 @@ public class Employee {
     private int salary;
     private LocalDate dateOfHire;
 
+    private Employee(Builder builder) {
+        id = builder.id;
+        name = builder.name;
+        sex = builder.sex;
+        position = builder.position;
+        salary = builder.salary;
+        dateOfHire = builder.dateOfHire;
+    }
+
     public int getId() {
         return id;
     }
@@ -63,47 +72,49 @@ public class Employee {
         return new JsonParser().toJson(this);
     }
 
-
-    public static class Builder {
-
-        private Employee newEmployee;
+    public static final class Builder {
+        private int id;
+        private String name;
+        private Gender sex;
+        private String position;
+        private int salary;
+        private LocalDate dateOfHire;
 
         public Builder() {
-            this.newEmployee = new Employee();
         }
 
-        public Builder setId(int id) {
-            newEmployee.id = id;
+        public Builder withId(int val) {
+            id = val;
             return this;
         }
 
-        public Builder setName(String name) {
-            newEmployee.name = name;
+        public Builder withName(String val) {
+            name = val;
             return this;
         }
 
-        public Builder setSex(Gender sex) {
-            newEmployee.sex = sex;
+        public Builder withSex(Gender val) {
+            sex = val;
             return this;
         }
 
-        public Builder setPosition(String position) {
-            newEmployee.position = position;
+        public Builder withPosition(String val) {
+            position = val;
             return this;
         }
 
-        public Builder setSalary(int salary) {
-            newEmployee.salary = salary;
+        public Builder withSalary(int val) {
+            salary = val;
             return this;
         }
 
-        public Builder setDateOfHire(LocalDate dateOfHire) {
-            newEmployee.dateOfHire = dateOfHire;
+        public Builder withDateOfHire(LocalDate val) {
+            dateOfHire = val;
             return this;
         }
 
         public Employee build() {
-            return newEmployee;
+            return new Employee(this);
         }
     }
 }
