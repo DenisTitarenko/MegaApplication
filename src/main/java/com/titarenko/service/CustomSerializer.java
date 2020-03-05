@@ -20,15 +20,15 @@ public class CustomSerializer extends StdSerializer<Employee> {
     }
 
     @Override
-    public void serialize(Employee employee, JsonGenerator jgen, SerializerProvider provider) throws IOException {
-        jgen.writeStartObject();
-        jgen.writeNumberField("id", employee.getId());
-        jgen.writeStringField("name", employee.getName());
-        jgen.writeStringField("sex", employee.getSex().getCode());
-        jgen.writeStringField("position", employee.getPosition());
-        jgen.writeNumberField("salary", employee.getSalary());
-        jgen.writeStringField("dateOfHire", employee.getDateOfHire()
+    public void serialize(Employee employee, JsonGenerator generator, SerializerProvider provider) throws IOException {
+        generator.writeStartObject();
+        generator.writeNumberField("id", employee.getId());
+        generator.writeStringField("name", employee.getName());
+        generator.writeStringField("sex", employee.getSex().getCode());
+        generator.writeStringField("position", employee.getPosition());
+        generator.writeNumberField("salary", employee.getSalary());
+        generator.writeStringField("dateOfHire", employee.getDateOfHire()
                 .format(DateTimeFormatter.ofPattern("d MMM yyyy", new Locale("us", "US"))));
-        jgen.writeEndObject();
+        generator.writeEndObject();
     }
 }
