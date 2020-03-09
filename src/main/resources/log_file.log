@@ -18,3 +18,51 @@
 07-03-2020 22:01:58 INFO  service.MenuImpl:63 - View all employees group by position & name
 07-03-2020 22:02:00 INFO  service.MenuImpl:69 - View employees with the same salary
 07-03-2020 22:02:35 INFO  service.MenuImpl:82 - Exit from the program
+09-03-2020 13:50:04 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 13:50:13 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 13:50:42 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 13:50:56 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 13:51:46 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:02:32 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:20:51 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:21:43 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:25:57 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:30:06 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:31:13 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:31:59 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:32:59 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:35:57 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:37:05 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:38:46 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:39:59 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:40:36 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 14:55:39 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 15:03:42 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 15:04:19 INFO  service.EmployeeService:64 - Employee titarenko deleted
+09-03-2020 15:16:24 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 15:17:08 INFO  service.EmployeeService:54 - Employee's info updated
+09-03-2020 15:43:16 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 15:43:22 INFO  service.EmployeeService:54 - Employee's info updated
+09-03-2020 15:44:08 INFO  service.EmployeeService:28 - Employee Tom Cruz added
+09-03-2020 15:44:37 INFO  service.EmployeeService:28 - Employee Tom Cruz added
+09-03-2020 15:44:40 INFO  service.EmployeeService:28 - Employee Tom Cruz added
+09-03-2020 15:44:55 INFO  service.EmployeeService:28 - Employee Tom Cruze added
+09-03-2020 15:45:16 INFO  service.EmployeeService:28 - Employee Tom Cruze added
+09-03-2020 15:45:36 INFO  service.EmployeeService:28 - Employee Tom Cruze added
+09-03-2020 15:46:09 INFO  service.EmployeeService:28 - Employee Tom Cruze added
+09-03-2020 15:46:20 INFO  service.EmployeeService:28 - Employee Tom Cruze added
+09-03-2020 15:46:29 INFO  service.EmployeeService:28 - Employee Tom Cruzee added
+09-03-2020 15:47:16 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 15:51:37 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 15:52:25 INFO  service.EmployeeService:54 - Employee's info updated
+09-03-2020 16:58:33 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 16:59:35 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 17:00:09 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 17:00:28 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 17:01:43 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 17:03:10 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 17:04:22 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 17:06:34 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 17:07:02 INFO  service.EmployeeService:88 - Salary of employee with ID=1 was increased
+09-03-2020 17:12:50 INFO  dao.JdbcConnection:22 - Connected to DB
+09-03-2020 17:13:12 INFO  dao.JdbcConnection:22 - Connected to DB
