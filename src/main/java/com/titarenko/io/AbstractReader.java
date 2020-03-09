@@ -41,11 +41,11 @@ public abstract class AbstractReader implements Reader {
     @Override
     public Integer readInt() {
         int result = 0;
-        boolean b = true;
-        while (b) {
+        boolean bool = true;
+        while (bool) {
             try {
                 result = Integer.parseInt(readLine());
-                b = false;
+                bool = false;
             } catch (InputMismatchException | NumberFormatException e) {
                 consoleWriter.writeToOutputStream("This field should contain only integer. Try again: ");
             }
@@ -75,16 +75,16 @@ public abstract class AbstractReader implements Reader {
     @Override
     public LocalDate readDate() {
         LocalDate ld = null;
-        boolean b = true;
+        boolean bool = true;
 
-        while (b) {
+        while (bool) {
             String date = readLine();
             if (date.length() == 10 && date.charAt(2) == '.' && date.charAt(5) == '.') {
-                b = false;
+                bool = false;
                 try {
                     ld = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
                 } catch (DateTimeParseException e) {
-                    b = true;
+                    bool = true;
                     consoleWriter.writeToOutputStream("Such a date does not exist. Try again:");
                 }
             } else {

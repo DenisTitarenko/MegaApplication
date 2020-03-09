@@ -27,13 +27,7 @@ public class ServerSocketTest {
 
     @BeforeAll
     static void startApplication() throws InterruptedException {
-        new Thread(() -> {
-            try {
-                Begin.main(null);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+        new Thread(() -> Begin.main(null)).start();
         Thread.sleep(500);
     }
 

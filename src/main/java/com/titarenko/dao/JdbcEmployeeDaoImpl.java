@@ -6,7 +6,6 @@ import com.titarenko.model.Employee;
 import com.titarenko.model.Gender;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,6 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public Integer create(Employee employee) {
-//        String query = "INSERT INTO employees VALUES(DEFAULT, ?, ?, ?, ?, ?)";
         String query = "INSERT INTO employees(name, sex, position, salary, dateOfHire) VALUES(?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -164,16 +162,6 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
 
 
     private Employee parseEmployeeInfoFromSQLtoJava(ResultSet resultSet) throws SQLException {
-
-//        return new Employee.Builder()
-//                .setId(resultSet.getInt("id"))
-//                .setName(resultSet.getString("name"))
-//                .setSex(Gender.getGender(resultSet.getString("sex"))
-//                .setPosition(resultSet.getString("position"))
-//                .setSalary(resultSet.getInt("salary"))
-//                .setDateOfHire(resultSet.getDate("dateOfHire").toLocalDate())
-//                .build();
-
         return new Employee.Builder()
                 .withId(resultSet.getInt("id"))
                 .withName(resultSet.getString("name"))

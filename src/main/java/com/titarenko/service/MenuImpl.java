@@ -28,7 +28,8 @@ public class MenuImpl implements Menu {
         return Arrays.stream(Operations.values())
                 .map(operation -> operation.getLabel() + ". " + operation.getTitle())
                 .reduce((s1, s2) -> s1 + "\n" + s2)
-                .orElse("");    }
+                .orElse("");
+    }
 
     @Override
     public String perform() {
