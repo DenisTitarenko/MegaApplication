@@ -5,29 +5,20 @@ import com.sun.net.httpserver.HttpServer;
 import com.titarenko.model.Employee;
 import com.titarenko.service.EmployeeService;
 import com.titarenko.service.JsonParser;
-import org.apache.log4j.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.regex.Pattern;
-
-import static java.util.stream.Collectors.*;
 
 public class Controller {
 
-    private EmployeeService service = new EmployeeService();
+    private EmployeeService service;
     private JsonParser parser = new JsonParser();
 
-    public static void main(String[] args) {
-        new Controller();
-    }
-
-    public Controller() {
+    public Controller(EmployeeService service) {
+        this.service = service;
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress(1408), 0);
             server.createContext("/employee/add", this::add);
@@ -169,14 +160,20 @@ public class Controller {
         if (query == null || "".equals(query)) {
             return Collections.emptyMap();
         }
-
-        return Pattern.compile("&").splitAsStream(query)
-                .map(s -> Arrays.copyOf(s.split("="), 2))
-                .collect(groupingBy(s -> decode(s[0]), mapping(s -> decode(s[1]), toList())));
-
-    }
-
-    private static String decode(final String encoded) {
-        return encoded == null ? null : URLDecoder.decode(encoded, StandardCharsets.UTF_8);
+        Map<String, List<String>> query_pairs = new HashMap<>();
+        String[] pairs = query.split("&");
+        for (String pair : pairs) {
+            int index = pair.indexOf("=");
+            String key = pair.substring(0, index);
+            String val = pair.substring(index + 1);
+            if (!query_pairs.containsKey(key)) {
+                List<String> list = new ArrayList<>();
+                list.add(val);
+                query_pairs.put(key, list);
+            } else {
+                query_pairs.get(key).add(val);
+            }
+        }
+        return query_pairs;
     }
 }
