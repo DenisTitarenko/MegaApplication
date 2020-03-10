@@ -1,79 +1,24 @@
 package com.titarenko.service;
 
-import com.titarenko.Begin;
-import com.titarenko.dao.JdbcEmployeeDaoImpl;
-import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
 
 import java.util.List;
 
-public class EmployeeService {
+public interface EmployeeService {
 
-    JdbcEmployeeDaoImpl employeeDao = new JdbcEmployeeDaoImpl();
-    EmployeeValidator validator = new EmployeeValidator();
-    Writer writer = Begin.getWriter();
+    Integer create(Employee employee);
 
-    public Integer create(Employee employee) {
-        int result;
-        if (validator.isValidEmployee(employee)) {
-            result = employeeDao.create(employee);
-        } else {
-            writer.writeToOutputStream("Oops.. Seems like input data wasn't correct");
-            return null;
-        }
-        return result;
-    }
+    Employee get(String name);
 
-    public Employee get(String name) {
-        if (!validator.isValidName(name)) {
-            writer.writeToOutputStream("Oops.. Seems like input name wasn't correct");
-            return null;
-        }
-        return employeeDao.get(name);
-    }
+    Employee update(Integer id, Employee employee);
 
-    public Employee update(Integer id, Employee employee) {
-        if (employeeDao.getListOfId().contains(id)) {
-            if (validator.isValidEmployee(employee)) {
-                employeeDao.update(id, employee);
-            } else {
-                writer.writeToOutputStream("Oops.. Seems like input data wasn't correct");
-                return null;
-            }
-        } else {
-            writer.writeToOutputStream("Employee with such id doesn't exist");
-            return null;
-        }
-        return employee;
-    }
+    boolean delete(String name);
 
-    public boolean delete(String name) {
-        if (!validator.isValidName(name)) {
-            writer.writeToOutputStream("Oops.. Seems like input name wasn't correct");
-            return false;
-        }
-        return employeeDao.delete(name);
-    }
+    List<Employee> getAll();
 
-    public List<Employee> getAll() {
-        return employeeDao.getAll();
-    }
+    List<Employee> getAllGroupByPositionAndDate();
 
-    public List<Employee> getAllGroupByPositionAndDate() {
-        return employeeDao.getAllGroupByPositionAndDate();
-    }
+    List<Employee> getEmployeesWithSameSalary();
 
-    public List<Employee> getEmployeesWithSameSalary() {
-        return employeeDao.getEmployeesWithSameSalary();
-    }
-
-    public boolean increaseSalary(int id, int plusSalary) {
-        if (employeeDao.getListOfId().contains(id)) {
-            employeeDao.increaseSalary(id, plusSalary);
-        } else {
-            writer.writeToOutputStream("Employee with such id doesn't exist");
-            return false;
-        }
-        return true;
-    }
+    boolean increaseSalary(int id, int plusSalary);
 }

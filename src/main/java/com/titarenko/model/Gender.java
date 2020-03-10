@@ -18,6 +18,4 @@ public enum Gender {
     public String getCode() {
         return code;
     }
-
-
 }
