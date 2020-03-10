@@ -1,8 +1,12 @@
 package com.titarenko.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.titarenko.service.JsonParser;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Employee {
@@ -11,7 +15,13 @@ public class Employee {
     private Gender sex; // enum
     private String position;
     private int salary;
+    // next annotations uses for serialize/deserialize objects with LocalDate type
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dateOfHire;
+
+    public Employee() {
+    }
 
     private Employee(Builder builder) {
         id = builder.id;
@@ -26,24 +36,48 @@ public class Employee {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Gender getSex() {
         return sex;
     }
 
+    public void setSex(Gender sex) {
+        this.sex = sex;
+    }
+
     public String getPosition() {
         return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public int getSalary() {
         return salary;
     }
 
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
     public LocalDate getDateOfHire() {
         return dateOfHire;
+    }
+
+    public void setDateOfHire(LocalDate dateOfHire) {
+        this.dateOfHire = dateOfHire;
     }
 
     @Override
@@ -69,16 +103,16 @@ public class Employee {
 
     @Override
     public String toString() {
-//        return new JsonParser().toJson(this);
-        return String.format(
-                "%5d %25s %25s %25s %25d$ %25s",
-                getId(),
-                getName(),
-                getSex().getCode(),
-                getPosition(),
-                getSalary(),
-                getDateOfHire().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-        );
+        return new JsonParser().serialize(this);
+//        return String.format(
+//                "%5d %25s %25s %25s %25d$ %25s",
+//                getId(),
+//                getName(),
+//                getSex().getCode(),
+//                getPosition(),
+//                getSalary(),
+//                getDateOfHire().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+//        );
     }
 
     public static final class Builder {
