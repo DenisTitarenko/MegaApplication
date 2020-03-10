@@ -130,8 +130,8 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
         return false;
     }
 
-
-    private List<Employee> getListEmployees(String query) {
+    @Override
+    public List<Employee> getListEmployees(String query) {
         List<Employee> list = new ArrayList<>();
         try {
             ResultSet resultSet = connection.createStatement().executeQuery(query);
@@ -145,6 +145,7 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
         return list;
     }
 
+    @Override
     public List<Integer> getListOfId() {
         String query = "SELECT * FROM employees";
         List<Integer> list = new ArrayList<>();
@@ -159,7 +160,6 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
         }
         return list;
     }
-
 
     private Employee parseEmployeeInfoFromSQLtoJava(ResultSet resultSet) throws SQLException {
         return new Employee.Builder()

@@ -22,4 +22,8 @@ public interface EmployeeDao {
 
     boolean increaseSalary(int id, int plusSalary);
 
+    List<Employee> getListEmployees(String query);
+
+    List<Integer> getListOfId();
+
 }
