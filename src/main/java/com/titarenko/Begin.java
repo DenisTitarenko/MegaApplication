@@ -1,8 +1,10 @@
 package com.titarenko;
 
+import com.titarenko.dao.JdbcEmployeeDaoImpl;
 import com.titarenko.io.*;
 import com.titarenko.rest.Controller;
 import com.titarenko.rest.Server;
+import com.titarenko.service.EmployeeServiceImpl;
 import com.titarenko.service.MenuImpl;
 
 import java.net.Socket;
@@ -12,9 +14,9 @@ public class Begin {
     private static String response = "";
 
     public static void main(String[] args) {
-//        new MenuImpl();
+//        new MenuImpl(new EmployeeServiceImpl(new JdbcEmployeeDaoImpl()));
 //        new Server(new Socket()).up(response);'
-        new Controller();
+        new Controller(new EmployeeServiceImpl(new JdbcEmployeeDaoImpl()));
     }
 
     public static Reader getReader() {
