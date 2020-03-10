@@ -1,24 +1,41 @@
 package com.titarenko.rest;
 
-import com.titarenko.model.Operations;
-
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
 
-public class Server {
-    public void start() {
-        try (ServerSocket serverSocket = new ServerSocket(1408); Socket socket = serverSocket.accept()) {
-            socket.getOutputStream().write(("HTTP 200 OK\r\n\r\n" + getOperations()).getBytes());
-        } catch (Exception e) {
+public class Server implements Runnable {
+
+    private Socket socket;
+    private String response;
+
+    public Server(Socket socket) {
+        this.socket = socket;
+    }
+
+    public void up(String response) {
+        try {
+            this.response = response;
+            ServerSocket serverSocket = new ServerSocket(1408);
+            while (true) {
+                Socket socket = serverSocket.accept();
+                System.out.println("Connected");
+                new Thread(new Server(socket)).start();
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private String getOperations() {
-        return Arrays.stream(Operations.values())
-                .map(operation -> operation.getLabel() + ". " + operation.getTitle())
-                .reduce((s1, s2) -> s1 + "\n" + s2)
-                .orElse("");
+    @Override
+    public void run() {
+        try (PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true)) {
+            printWriter.println("HTTP/1.1 200 OK");
+            printWriter.println(response);
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

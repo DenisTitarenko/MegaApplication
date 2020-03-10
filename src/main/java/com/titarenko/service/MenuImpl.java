@@ -14,10 +14,11 @@ public class MenuImpl implements Menu {
     private static final Logger LOGGER = Logger.getLogger(MenuImpl.class);
     private static final Writer WRITER = Begin.getWriter();
     private static final Reader READER = Begin.getReader();
-    private EmployeeService employeeService = new EmployeeService();
     private boolean isContinue = true;
+    private EmployeeService service;
 
-    public MenuImpl() {
+    public MenuImpl(EmployeeService service) {
+        this.service = service;
         while (isContinue()) {
             WRITER.writeToOutputStream(show());
             WRITER.writeToOutputStream(perform());
@@ -40,34 +41,34 @@ public class MenuImpl implements Menu {
             case ADD:
                 LOGGER.info("Attempt to add employee");
                 WRITER.writeToOutputStream("Enter info about the new employee: ");
-                return String.valueOf(employeeService.create(READER.readEmployee()));
+                return String.valueOf(service.create(READER.readEmployee()));
             case FIND:
                 LOGGER.info("Search employee by name");
                 WRITER.writeToOutputStream("Enter the name of the employee you want to find: ");
-                return employeeService.get(READER.readLine()).toString();
+                return service.get(READER.readLine()).toString();
             case UPDATE:
                 LOGGER.info("Attempt to update info about employee");
                 WRITER.writeToOutputStream("Enter the id of the employee you want to update: ");
-                return String.valueOf(employeeService.update(READER.readInt(), READER.readEmployee()));
+                return String.valueOf(service.update(READER.readInt(), READER.readEmployee()));
             case DELETE:
                 LOGGER.info("Attempt to delete employee");
                 WRITER.writeToOutputStream("Enter the name of the employee you want to delete: ");
-                return String.valueOf(employeeService.delete(READER.readLine()));
+                return String.valueOf(service.delete(READER.readLine()));
             case GET_ALL:
                 LOGGER.info("View all employees");
-                return employeeService.getAll()
+                return service.getAll()
                         .stream()
                         .map(Object::toString)
                         .collect(Collectors.joining("\n"));
             case SHOW:
                 LOGGER.info("View all employees group by position & name");
-                return employeeService.getAllGroupByPositionAndDate()
+                return service.getAllGroupByPositionAndDate()
                         .stream()
                         .map(Object::toString)
                         .collect(Collectors.joining("\n"));
             case SHOW_SAME:
                 LOGGER.info("View employees with the same salary");
-                return employeeService.getEmployeesWithSameSalary()
+                return service.getEmployeesWithSameSalary()
                         .stream()
                         .map(Object::toString)
                         .collect(Collectors.joining("\n"));
@@ -77,7 +78,7 @@ public class MenuImpl implements Menu {
                 int id = READER.readInt();
                 WRITER.writeToOutputStream("How much must be increased");
                 int plusSalary = READER.readInt();
-                return String.valueOf(employeeService.increaseSalary(id, plusSalary));
+                return String.valueOf(service.increaseSalary(id, plusSalary));
             case EXIT:
                 LOGGER.info("Exit from the program");
                 isContinue = false;
