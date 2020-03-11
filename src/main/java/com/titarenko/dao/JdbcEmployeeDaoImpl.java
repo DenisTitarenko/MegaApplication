@@ -53,6 +53,26 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
+    public Employee get(int id) {
+        String query = "SELECT * FROM employees WHERE id = ?";
+        Employee employee = null;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.isBeforeFirst()) {
+                resultSet.next();
+                employee = parseEmployeeInfoFromSQLtoJava(resultSet);
+            } else {
+                writer.writeToOutputStream("Employee with such id doesn't exist");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employee;
+    }
+
+    @Override
     public Employee update(Integer id, Employee employee) {
         String query = "UPDATE employees SET " +
                 "name = ?, " +
@@ -61,7 +81,15 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
                 "salary = ?, " +
                 "dateOfHire = ? " +
                 "WHERE id = ?";
+        Employee newEmployee = null;
         try {
+            newEmployee = get(id);
+            newEmployee.setName(employee.getName());
+            newEmployee.setSex(employee.getSex());
+            newEmployee.setPosition(employee.getPosition());
+            newEmployee.setSalary(employee.getSalary());
+            newEmployee.setDateOfHire(employee.getDateOfHire());
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getSex().getCode());
@@ -73,7 +101,7 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return employee;
+        return newEmployee;
     }
 
     @Override
@@ -99,12 +127,6 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public List<Employee> getAllGroupByPositionAndDate() {
-        String query = "SELECT * FROM employees ORDER BY position, dateOfHire DESC";
-        return getListEmployees(query);
-    }
-
-    @Override
     public List<Employee> getEmployeesWithSameSalary() {
         String query =
                 "SELECT * FROM employees " +
@@ -116,21 +138,6 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
         return getListEmployees(query);
     }
 
-    @Override
-    public boolean increaseSalary(int id, int plusSalary) {
-        String query = "UPDATE employees SET salary = salary + ? WHERE id = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, plusSalary);
-            preparedStatement.setInt(2, id);
-            writer.writeToOutputStream(preparedStatement.executeUpdate() + " row(s) updated");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
     public List<Employee> getListEmployees(String query) {
         List<Employee> list = new ArrayList<>();
         try {
@@ -138,22 +145,6 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
             while (resultSet.next()) {
                 Employee employee = parseEmployeeInfoFromSQLtoJava(resultSet);
                 list.add(employee);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    @Override
-    public List<Integer> getListOfId() {
-        String query = "SELECT * FROM employees";
-        List<Integer> list = new ArrayList<>();
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            while (resultSet.next()) {
-                list.add(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

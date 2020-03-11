@@ -72,13 +72,6 @@ public class MenuImpl implements Menu {
                         .stream()
                         .map(Object::toString)
                         .collect(Collectors.joining("\n"));
-            case INCREASE:
-                LOGGER.info("Attempt to increase employee's salary");
-                WRITER.writeToOutputStream("Enter the id of the employee you want to update salary: ");
-                int id = READER.readInt();
-                WRITER.writeToOutputStream("How much must be increased");
-                int plusSalary = READER.readInt();
-                return String.valueOf(service.increaseSalary(id, plusSalary));
             case EXIT:
                 LOGGER.info("Exit from the program");
                 isContinue = false;

@@ -9,7 +9,7 @@ import com.titarenko.service.JsonParser;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Employee {
+public class Employee implements Comparable<Employee> {
     private int id;
     private String name;
     private Gender sex; // enum
@@ -78,6 +78,11 @@ public class Employee {
 
     public void setDateOfHire(LocalDate dateOfHire) {
         this.dateOfHire = dateOfHire;
+    }
+
+    @Override
+    public int compareTo(Employee o) {
+        return 0;
     }
 
     @Override

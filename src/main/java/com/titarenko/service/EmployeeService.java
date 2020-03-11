@@ -19,6 +19,4 @@ public interface EmployeeService {
     List<Employee> getAllGroupByPositionAndDate();
 
     List<Employee> getEmployeesWithSameSalary();
-
-    boolean increaseSalary(int id, int plusSalary);
 }

@@ -10,20 +10,14 @@ public interface EmployeeDao {
 
     Employee get(String name);
 
+    Employee get(int id);
+
     Employee update(Integer id, Employee employee);
 
     boolean delete(String name);
 
     List<Employee> getAll();
 
-    List<Employee> getAllGroupByPositionAndDate();
-
     List<Employee> getEmployeesWithSameSalary();
-
-    boolean increaseSalary(int id, int plusSalary);
-
-    List<Employee> getListEmployees(String query);
-
-    List<Integer> getListOfId();
 
 }
