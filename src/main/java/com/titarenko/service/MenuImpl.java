@@ -12,13 +12,15 @@ import java.util.stream.Collectors;
 public class MenuImpl implements Menu {
 
     private static final Logger LOGGER = Logger.getLogger(MenuImpl.class);
-    private static final Writer WRITER = Begin.getWriter();
-    private static final Reader READER = Begin.getReader();
+    private final Writer WRITER;
+    private final Reader READER;
     private boolean isContinue = true;
     private EmployeeService service;
 
-    public MenuImpl(EmployeeService service) {
+    public MenuImpl(EmployeeService service, Reader reader, Writer writer) {
         this.service = service;
+        READER = reader;
+        WRITER = writer;
         while (isContinue()) {
             WRITER.writeToOutputStream(show());
             WRITER.writeToOutputStream(perform());

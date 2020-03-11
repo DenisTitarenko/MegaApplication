@@ -1,5 +1,8 @@
 package com.titarenko.rest;
 
+import com.titarenko.io.AbstractReader;
+import com.titarenko.io.Writer;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -8,15 +11,14 @@ import java.net.Socket;
 public class Server implements Runnable {
 
     private Socket socket;
-    private String response;
+    private static String response = "";
 
     public Server(Socket socket) {
         this.socket = socket;
     }
 
-    public void up(String response) {
+    public void up() {
         try {
-            this.response = response;
             ServerSocket serverSocket = new ServerSocket(1408);
             while (true) {
                 Socket socket = serverSocket.accept();
@@ -30,12 +32,35 @@ public class Server implements Runnable {
 
     @Override
     public void run() {
+        String httpResponse = """
+                HTTP/1.1 200 OK
+                Content-Length: %s
+                Content-Type: text/plain; charset=utf-8
+                Server: MegaApplication
+
+                %s
+                """.formatted(response.length(), response);
         try (PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true)) {
-            printWriter.println("HTTP/1.1 200 OK");
-            printWriter.println(response);
+            printWriter.println(httpResponse);
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public static class SocketReader extends AbstractReader {
+        @Override
+        public String readLine() {
+            return "0";
+        }
+    }
+
+
+    public static class SocketWriter implements Writer {
+        @Override
+        public void writeToOutputStream(String text) {
+            response += text + System.lineSeparator();
         }
     }
 }
