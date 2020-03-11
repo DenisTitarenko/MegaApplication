@@ -8,6 +8,7 @@ public enum Operations {
     GET_ALL(5, "Get all employees;"),
     SHOW(6, "Show all employees group by position & date of start work;"),
     SHOW_SAME(7, "Show employees with same salary;"),
+    INCREASE(8, "Increase someone's salary;"),
     EXIT(0, "Exit.");
 
     private int label;

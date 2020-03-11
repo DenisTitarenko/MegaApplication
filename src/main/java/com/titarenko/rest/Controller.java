@@ -28,6 +28,7 @@ public class Controller {
             server.createContext("/employee/all", this::getAll);
             server.createContext("/employee/show_grouped", this::getAllGroupByPositionAndDate);
             server.createContext("/employee/show_same", this::getEmployeesWithSameSalary);
+            server.createContext("/employee/increase/", this::increaseSalary);
             server.setExecutor(null); // creates a default executor
             server.start();
         } catch (IOException e) {
@@ -128,6 +129,23 @@ public class Controller {
     private void getEmployeesWithSameSalary(HttpExchange exchange) throws IOException {
         if ("GET".equals(exchange.getRequestMethod())) {
             String resp = service.getEmployeesWithSameSalary().toString();
+            exchange.sendResponseHeaders(200, resp.length());
+            OutputStream output = exchange.getResponseBody();
+            output.write(resp.getBytes());
+            output.flush();
+        } else {
+            exchange.sendResponseHeaders(405, -1);
+        }
+        exchange.close();
+    }
+
+    private void increaseSalary(HttpExchange exchange) throws IOException {
+        if ("PUT".equals(exchange.getRequestMethod())) {
+            List<String> path = Arrays.asList(exchange.getRequestURI().getPath().split("/"));
+            int id = Integer.parseInt(path.get(path.size() - 1));
+            Map<String, List<String>> params = splitQuery(exchange.getRequestURI().getRawQuery());
+            int salary = Integer.parseInt(params.get("salary").get(0));
+            String resp = String.valueOf(service.increaseSalary(id, salary));
             exchange.sendResponseHeaders(200, resp.length());
             OutputStream output = exchange.getResponseBody();
             output.write(resp.getBytes());

@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
 
     private static final Logger LOGGER = Logger.getLogger(EmployeeServiceImpl.class);
 
@@ -92,6 +92,21 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public List<Employee> getEmployeesWithSameSalary() {
         return employeeDao.getEmployeesWithSameSalary();
+    }
+
+    @Override
+    public boolean increaseSalary(int id, int plusSalary) {
+        if (getListOfId().contains(id)) {
+            Employee newEmpl = employeeDao.get(id);
+            newEmpl.setSalary(employeeDao.get(id).getSalary() + plusSalary);
+            employeeDao.update(id, newEmpl);
+        } else {
+            writer.writeToOutputStream("Employee with such id doesn't exist");
+            LOGGER.error("Employee with such id doesn't exist");
+            return false;
+        }
+        LOGGER.info("Salary of employee with ID=" + id + " was increased");
+        return true;
     }
 
     private List<Integer> getListOfId() {

@@ -81,15 +81,7 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
                 "salary = ?, " +
                 "dateOfHire = ? " +
                 "WHERE id = ?";
-        Employee newEmployee = null;
         try {
-            newEmployee = get(id);
-            newEmployee.setName(employee.getName());
-            newEmployee.setSex(employee.getSex());
-            newEmployee.setPosition(employee.getPosition());
-            newEmployee.setSalary(employee.getSalary());
-            newEmployee.setDateOfHire(employee.getDateOfHire());
-
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getSex().getCode());
@@ -101,7 +93,7 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return newEmployee;
+        return employee;
     }
 
     @Override
