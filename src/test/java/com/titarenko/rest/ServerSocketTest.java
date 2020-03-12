@@ -30,9 +30,9 @@ public class ServerSocketTest {
     static void startApplication() throws InterruptedException {
         new Thread(() -> {
             new MenuImpl(null, new Server.SocketReader(), new Server.SocketWriter());
-            new Server(new Socket()).up();
+            new Server(null).up();
         }).start();
-        Thread.sleep(1500);
+        Thread.sleep(500);
     }
 
     @Test
