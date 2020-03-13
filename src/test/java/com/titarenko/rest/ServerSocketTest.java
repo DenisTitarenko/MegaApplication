@@ -1,10 +1,12 @@
 package com.titarenko.rest;
 
 import com.titarenko.service.MenuImpl;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -45,5 +47,13 @@ public class ServerSocketTest {
         assertNotNull(response);
         assertTrue(response.contains(HTTP_200_OK));
         assertTrue(response.contains(EXPECTED_RESPONSE));
+    }
+
+    @AfterAll
+    static void closeApplication() throws IOException {
+        try (Socket socket = new Socket("localhost", 1408);
+             PrintWriter pw = new PrintWriter(socket.getOutputStream(), true)) {
+            pw.println("bye");
+        }
     }
 }

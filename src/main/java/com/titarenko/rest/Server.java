@@ -2,14 +2,17 @@ package com.titarenko.rest;
 
 import com.titarenko.io.AbstractReader;
 import com.titarenko.io.Writer;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Server implements Runnable {
 
+    private static final Logger LOGGER = Logger.getLogger(Server.class);
     private Socket socket;
     private static String response = "";
 
@@ -18,13 +21,17 @@ public class Server implements Runnable {
     }
 
     public void up() {
-        try {
-            ServerSocket serverSocket = new ServerSocket(1408);
+        try (ServerSocket serverSocket = new ServerSocket(1408)) {
             while (true) {
                 Socket socket = serverSocket.accept();
-                System.out.println("Connected");
+                LOGGER.info("Connected");
                 new Thread(new Server(socket)).start();
+                Scanner request = new Scanner(socket.getInputStream()).useDelimiter("\\A");
+                if (request.hasNext() && "bye\n".equals(request.next())) {
+                    break;
+                }
             }
+            LOGGER.info("close");
         } catch (IOException e) {
             e.printStackTrace();
         }
