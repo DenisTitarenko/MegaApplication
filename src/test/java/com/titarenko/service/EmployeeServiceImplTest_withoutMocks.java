@@ -153,7 +153,6 @@ public class EmployeeServiceImplTest_withoutMocks {
                 .withDateOfHire(LocalDate.parse("2010-10-10"))
                 .build();
         assertEquals(newEmpl, employeeService.update(1, newEmpl));
-        System.out.println(database.toString());
     }
 
     @Test
