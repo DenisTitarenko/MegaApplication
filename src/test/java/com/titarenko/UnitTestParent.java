@@ -22,7 +22,7 @@ public class UnitTestParent {
             .build();
     public Employee petr = new Employee.Builder()
             .withId(2)
-            .withName("Petr")
+            .withName("Petr Ovich")
             .withSex(Gender.M)
             .withPosition("position2")
             .withSalary(150)
@@ -31,7 +31,7 @@ public class UnitTestParent {
     public Employee stepa = new Employee.Builder()
             .withId(3)
             .withName("Stepa")
-            .withSex(Gender.M)
+            .withSex(Gender.OTHER)
             .withPosition("position")
             .withSalary(200)
             .withDateOfHire(LocalDate.parse("2013-10-10"))
@@ -76,9 +76,7 @@ public class UnitTestParent {
 
         @Override
         public boolean delete(String name) {
-            int initSize = database.size();
-            database.remove(get(name));
-            return initSize == database.size() + 1;
+            return database.remove(get(name));
         }
 
         @Override

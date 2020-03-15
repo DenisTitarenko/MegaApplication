@@ -17,8 +17,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HttpControllerTest_withoutMocks extends UnitTestParent {
 
@@ -59,14 +58,15 @@ public class HttpControllerTest_withoutMocks extends UnitTestParent {
         HttpResponse<String> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
         assertEquals(200, response.statusCode());
         assertEquals(initSize + 1, database.size());
-        assertEquals(response.body(), String.valueOf(database.get(database.size() - 1).getId()));
+        assertEquals("10", response.body());
+        assertTrue(database.contains(JSON_PARSER.deserialize(incomingJson)));
     }
 
     @Test
     public void testHttpGet() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://localhost:1408/employee/get?name=Petr"))
+                .uri(URI.create("http://localhost:1408/employee/get?name=Petr_Ovich"))
                 .build();
         HttpResponse<String> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
         assertEquals(200, response.statusCode());
@@ -92,11 +92,13 @@ public class HttpControllerTest_withoutMocks extends UnitTestParent {
     public void testHttpDelete() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .DELETE()
-                .uri(URI.create("http://localhost:1408/employee/delete?name=Petr"))
+                .uri(URI.create("http://localhost:1408/employee/delete?name=Petr_Ovich"))
                 .build();
         HttpResponse<String> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
         assertEquals(200, response.statusCode());
         assertEquals("true", response.body());
+        assertEquals(2, database.size());
+        assertFalse(database.contains(petr));
     }
 
     @Test
@@ -137,7 +139,7 @@ public class HttpControllerTest_withoutMocks extends UnitTestParent {
         HttpResponse<String> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
         assertEquals(200, response.statusCode());
         assertEquals("true", response.body());
-        assertEquals(database.get(0).getSalary(), vasil.getSalary());
+        assertEquals(150 + 849, vasil.getSalary());
     }
 
     @Test

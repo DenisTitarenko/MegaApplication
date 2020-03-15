@@ -25,8 +25,8 @@ public class Server implements Runnable {
             while (true) {
                 Socket socket = serverSocket.accept();
                 LOGGER.info("Connected");
-                new Thread(new Server(socket)).start();
                 Scanner request = new Scanner(socket.getInputStream()).useDelimiter("\\A");
+                new Thread(new Server(socket)).start();
                 if (request.hasNext() && "bye\n".equals(request.next())) {
                     break;
                 }

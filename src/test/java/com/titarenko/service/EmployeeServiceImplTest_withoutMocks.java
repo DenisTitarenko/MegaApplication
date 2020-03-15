@@ -34,6 +34,8 @@ public class EmployeeServiceImplTest_withoutMocks extends UnitTestParent {
                 .withDateOfHire(LocalDate.parse("2010-10-10"))
                 .build();
         assertEquals(newEmpl.getId(), employeeService.create(newEmpl));
+        assertEquals(4, database.size());
+        assertTrue(database.contains(newEmpl));
     }
 
     @Test
@@ -57,6 +59,8 @@ public class EmployeeServiceImplTest_withoutMocks extends UnitTestParent {
     @Test
     public void testDelete() {
         assertTrue(employeeService.delete("Vasil"));
+        assertEquals(2, database.size());
+        assertFalse(database.contains(vasil));
     }
 
     @Test
@@ -70,9 +74,9 @@ public class EmployeeServiceImplTest_withoutMocks extends UnitTestParent {
 
     @Test
     public void testGetEmployeesWithSameSalary() {
-        List<Employee> withSameSalary = Arrays.asList(vasil, petr);
-        assertNotEquals(Collections.emptyList(), employeeService.getEmployeesWithSameSalary());
-        assertEquals(withSameSalary, employeeService.getEmployeesWithSameSalary());
+        List<Employee> employeesWithSameSalary = employeeService.getEmployeesWithSameSalary();
+        assertFalse(employeesWithSameSalary.isEmpty());
+        assertEquals(Arrays.asList(vasil, petr), employeesWithSameSalary);
     }
 
     @Test
