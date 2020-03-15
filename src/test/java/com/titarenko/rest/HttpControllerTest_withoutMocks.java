@@ -134,9 +134,10 @@ public class HttpControllerTest_withoutMocks extends UnitTestParent {
                 .PUT(HttpRequest.BodyPublishers.ofString(incomingJson))
                 .uri(URI.create("http://localhost:1408/employee/increase/1?salary=849"))
                 .build();
-
         HttpResponse<String> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
-        assertEquals(database.get(0).getSalary(), vasil.getSalary() + 849);
+        assertEquals(200, response.statusCode());
+        assertEquals("true", response.body());
+        assertEquals(database.get(0).getSalary(), vasil.getSalary());
     }
 
     @Test
@@ -148,6 +149,7 @@ public class HttpControllerTest_withoutMocks extends UnitTestParent {
 
         HttpResponse<String> response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
         List<Employee> employeeList = JSON_PARSER.deserializeList(response.body());
+        assertEquals(200, response.statusCode());
         assertEquals(Arrays.asList(stepa, vasil, petr), employeeList);
     }
 }
