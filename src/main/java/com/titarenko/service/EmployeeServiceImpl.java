@@ -98,7 +98,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public boolean increaseSalary(int id, int plusSalary) {
         if (getListOfId().contains(id)) {
             Employee newEmpl = employeeDao.get(id);
-            newEmpl.setSalary(employeeDao.get(id).getSalary() + plusSalary);
+            newEmpl.setSalary(newEmpl.getSalary() + plusSalary);
             employeeDao.update(id, newEmpl);
         } else {
             writer.writeToOutputStream("Employee with such id doesn't exist");
