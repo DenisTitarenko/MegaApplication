@@ -1,0 +1,14 @@
+import org.postgresql.core.JavaVersion
+
+apply plugin: 'java'
+sourceCompatibility = 13.0
+targetCompatibility = 13.0
+
+dependencies {
+    compile "org.postgresql:postgresql:42.2.5"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.10.0"
+    compile "org.junit.jupiter:junit-jupiter:5.6.0"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.4.0"
+    compile "log4j:log4j:1.2.17"
+    testCompile "org.mockito:mockito-junit-jupiter:3.2.4"
+}
