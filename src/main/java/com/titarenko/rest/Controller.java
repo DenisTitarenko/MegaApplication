@@ -16,11 +16,12 @@ public class Controller {
 
     private EmployeeService service;
     private JsonParser parser = new JsonParser();
+    private HttpServer server;
 
     public Controller(EmployeeService service) {
         this.service = service;
         try {
-            HttpServer server = HttpServer.create(new InetSocketAddress(1408), 0);
+            server = HttpServer.create(new InetSocketAddress(1408), 0);
             server.createContext("/employee/add", this::add);
             server.createContext("/employee/get", this::get);
             server.createContext("/employee/update", this::update);
@@ -34,6 +35,10 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void close() {
+        server.stop(0);
     }
 
     private void add(HttpExchange exchange) throws IOException {

@@ -1,64 +1,93 @@
 package com.titarenko.service;
 
-import com.titarenko.dao.EmployeeDao;
+import com.titarenko.UnitTestParent;
 import com.titarenko.model.Employee;
+import com.titarenko.model.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class EmployeeServiceImplTest_withoutMocks {
+public class EmployeeServiceImplTest_withoutMocks extends UnitTestParent {
 
     private EmployeeServiceImpl employeeService;
-    private Employee vasil = new Employee.Builder().withName("Vasil").withSalary(150).build();
 
     @BeforeEach
     public void setup() {
-        employeeService = new EmployeeServiceImpl(new EmployeeDao() {
-            @Override
-            public Integer create(Employee employee) {
-                return null;
-            }
+        Collections.addAll(database, vasil, petr, stepa);
+        employeeService = new EmployeeServiceImpl(employeeDao);
+    }
 
-            @Override
-            public Employee get(String name) {
-                return null;
-            }
+    @Test
+    public void testCreate() {
+        Employee newEmpl = new Employee.Builder()
+                .withId(4)
+                .withName("new")
+                .withSex(Gender.F)
+                .withPosition("new")
+                .withSalary(2000)
+                .withDateOfHire(LocalDate.parse("2010-10-10"))
+                .build();
+        assertEquals(newEmpl.getId(), employeeService.create(newEmpl));
+        assertEquals(4, database.size());
+        assertTrue(database.contains(newEmpl));
+    }
 
-            @Override
-            public Employee get(int id) {
-                return null;
-            }
+    @Test
+    public void testGet() {
+        Employee employee = employeeService.get("Vasil");
+        assertEquals(employee, vasil);
+    }
 
-            @Override
-            public Employee update(Integer id, Employee employee) {
-                return null;
-            }
+    @Test
+    public void testUpdate() {
+        Employee newEmpl = new Employee.Builder()
+                .withName("new")
+                .withSex(Gender.M)
+                .withPosition("new")
+                .withSalary(2000)
+                .withDateOfHire(LocalDate.parse("2010-10-10"))
+                .build();
+        assertEquals(newEmpl, employeeService.update(1, newEmpl));
+    }
 
-            @Override
-            public boolean delete(String name) {
-                return false;
-            }
-
-            @Override
-            public List<Employee> getAll() {
-                return Collections.singletonList(vasil);
-            }
-
-            @Override
-            public List<Employee> getEmployeesWithSameSalary() {
-                return null;
-            }
-        });
+    @Test
+    public void testDelete() {
+        assertTrue(employeeService.delete("Vasil"));
+        assertEquals(2, database.size());
+        assertFalse(database.contains(vasil));
     }
 
     @Test
     public void testGetAll() {
         List<Employee> all = employeeService.getAll();
-        assertEquals(1, all.size());
+        assertEquals(database.size(), all.size());
         assertEquals(vasil, all.get(0));
+        assertEquals(petr, all.get(1));
+        assertEquals(stepa, all.get(2));
+    }
+
+    @Test
+    public void testGetEmployeesWithSameSalary() {
+        List<Employee> employeesWithSameSalary = employeeService.getEmployeesWithSameSalary();
+        assertFalse(employeesWithSameSalary.isEmpty());
+        assertEquals(Arrays.asList(vasil, petr), employeesWithSameSalary);
+    }
+
+    @Test
+    public void testGetAllGroupByPositionAndDate() {
+        assertEquals(Arrays.asList(stepa, vasil, petr), employeeService.getAllGroupByPositionAndDate());
+    }
+
+    @Test
+    public void testIncreaseSalary() {
+        int initSalary = database.get(0).getSalary();
+        assertTrue(employeeService.increaseSalary(1, 849));
+        assertEquals(initSalary + 849, database.get(0).getSalary());
     }
 }

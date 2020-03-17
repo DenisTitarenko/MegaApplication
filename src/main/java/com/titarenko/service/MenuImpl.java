@@ -1,6 +1,5 @@
 package com.titarenko.service;
 
-import com.titarenko.Begin;
 import com.titarenko.io.Reader;
 import com.titarenko.io.Writer;
 import com.titarenko.model.Operations;

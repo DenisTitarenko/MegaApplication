@@ -14,9 +14,9 @@ public class Begin {
     private static String response = "";
 
     public static void main(String[] args) {
-//        new MenuImpl(new EmployeeServiceImpl(new JdbcEmployeeDaoImpl()));
-//        new Server(new Socket()).up(response);'
-        new Controller(new EmployeeServiceImpl(new JdbcEmployeeDaoImpl()));
+        new MenuImpl(new EmployeeServiceImpl(new JdbcEmployeeDaoImpl()), getReader(), getWriter());
+//        new Server(new Socket()).up();
+//        new Controller(new EmployeeServiceImpl(new JdbcEmployeeDaoImpl()));
     }
 
     public static Reader getReader() {
