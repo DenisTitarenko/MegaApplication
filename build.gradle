@@ -1,8 +1,15 @@
-import org.postgresql.core.JavaVersion
+plugins {
+    id 'java'
+}
 
-apply plugin: 'java'
+group 'org.example'
+version '1.0-SNAPSHOT'
+
 sourceCompatibility = 13.0
-targetCompatibility = 13.0
+
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     compile "org.postgresql:postgresql:42.2.5"
