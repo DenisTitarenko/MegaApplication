@@ -14,17 +14,7 @@ public class Server implements Runnable {
 
     private static final Logger LOGGER = Logger.getLogger(Server.class);
     private Socket socket;
-    private static String response = """
-            1. Add employee to DB;
-            2. Find employee by name;
-            3. Update employee info;
-            4. Delete employee by name;
-            5. Get all employees;
-            6. Show all employees group by position & date of start work;
-            7. Show employees with same salary;
-            8. Increase someone's salary;
-            0. Exit.
-            """;
+    private static String response = "";
 
     public Server(Socket socket) {
         this.socket = socket;
@@ -77,7 +67,7 @@ public class Server implements Runnable {
     public static class SocketWriter implements Writer {
         @Override
         public void writeToOutputStream(String text) {
-            response += text + System.lineSeparator();
+            response += text + "\n";
         }
     }
 }
