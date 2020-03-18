@@ -67,7 +67,7 @@ public class Server implements Runnable {
     public static class SocketWriter implements Writer {
         @Override
         public void writeToOutputStream(String text) {
-            response += text + System.lineSeparator();
+            response += text + "\n";
         }
     }
 }
