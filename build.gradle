@@ -19,3 +19,12 @@ dependencies {
     compile "log4j:log4j:1.2.17"
     testCompile "org.mockito:mockito-junit-jupiter:3.2.4"
 }
+
+tasks.withType(JavaCompile).each {
+    it.options.compilerArgs.add('--enable-preview')
+}
+
+test {
+    jvmArgs(['--enable-preview'])
+    useJUnitPlatform()
+}
