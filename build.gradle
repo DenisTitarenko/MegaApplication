@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'org.example'
+group 'com.titarenko'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 13.0
