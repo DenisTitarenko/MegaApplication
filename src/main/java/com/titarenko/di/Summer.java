@@ -45,10 +45,14 @@ public class Summer {
             for (Field field : entry.getKey().getDeclaredFields()) {
                 if (field.isAnnotationPresent(InsertPlease.class)) {
                     field.setAccessible(true);
-                    Class<?> type = field.getType();
-                    field.set(entry.getValue(), bricks.get(type));
+                    field.set(entry.getValue(), getInstance(field));
                 }
             }
         }
+    }
+
+    private static Object getInstance(Field field) {
+        return field.getType().isInterface() ? bricks.get(field.getAnnotation(InsertPlease.class).what())
+                : bricks.get(field.getType());
     }
 }
