@@ -5,80 +5,43 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.titarenko.service.JsonParser;
+import lombok.*;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(name = "employees")
 public class Employee {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sex")
     private Gender sex; // enum
+
+    @Column(name = "position")
     private String position;
+
+    @Column(name = "salary")
     private int salary;
+
+    @Column(name = "dateOfHire")
     // next annotations uses for serialize/deserialize objects with LocalDate type
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dateOfHire;
-
-    public Employee() {
-    }
-
-    private Employee(Builder builder) {
-        id = builder.id;
-        name = builder.name;
-        sex = builder.sex;
-        position = builder.position;
-        salary = builder.salary;
-        dateOfHire = builder.dateOfHire;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Gender getSex() {
-        return sex;
-    }
-
-    public void setSex(Gender sex) {
-        this.sex = sex;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
-    public LocalDate getDateOfHire() {
-        return dateOfHire;
-    }
-
-    public void setDateOfHire(LocalDate dateOfHire) {
-        this.dateOfHire = dateOfHire;
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -113,51 +76,5 @@ public class Employee {
 //                getSalary(),
 //                getDateOfHire().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 //        );
-    }
-
-    public static final class Builder {
-        private int id;
-        private String name;
-        private Gender sex;
-        private String position;
-        private int salary;
-        private LocalDate dateOfHire;
-
-        public Builder() {
-        }
-
-        public Builder withId(int val) {
-            id = val;
-            return this;
-        }
-
-        public Builder withName(String val) {
-            name = val;
-            return this;
-        }
-
-        public Builder withSex(Gender val) {
-            sex = val;
-            return this;
-        }
-
-        public Builder withPosition(String val) {
-            position = val;
-            return this;
-        }
-
-        public Builder withSalary(int val) {
-            salary = val;
-            return this;
-        }
-
-        public Builder withDateOfHire(LocalDate val) {
-            dateOfHire = val;
-            return this;
-        }
-
-        public Employee build() {
-            return new Employee(this);
-        }
     }
 }

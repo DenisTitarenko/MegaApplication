@@ -18,22 +18,22 @@ public abstract class AbstractReader implements Reader {
 
     @Override
     public Employee readEmployee() {
-        Employee.Builder builder = new Employee.Builder();
+        Employee.EmployeeBuilder builder = Employee.builder();
 
         consoleWriter.writeToOutputStream("name: ");
-        builder.withName(readLine());
+        builder.name(readLine());
 
         consoleWriter.writeToOutputStream("sex (M, F or OTHER): ");
-        builder.withSex(readGender());
+        builder.sex(readGender());
 
         consoleWriter.writeToOutputStream("position: ");
-        builder.withPosition(readLine());
+        builder.position(readLine());
 
         consoleWriter.writeToOutputStream("salary: ");
-        builder.withSalary(readInt());
+        builder.salary(readInt());
 
         consoleWriter.writeToOutputStream("date (dd.mm.yyyy): ");
-        builder.withDateOfHire(readDate());
+        builder.dateOfHire(readDate());
 
         return builder.build();
     }

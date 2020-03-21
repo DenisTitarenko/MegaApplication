@@ -1,5 +1,6 @@
 package com.titarenko;
 
+import com.titarenko.dao.HibernateEmployeeDaoImpl;
 import com.titarenko.dao.JdbcEmployeeDaoImpl;
 import com.titarenko.io.*;
 import com.titarenko.rest.Controller;
@@ -14,7 +15,8 @@ public class Begin {
     private static String response = "";
 
     public static void main(String[] args) {
-        new MenuImpl(new EmployeeServiceImpl(new JdbcEmployeeDaoImpl()), getReader(), getWriter());
+//        new MenuImpl(new EmployeeServiceImpl(new JdbcEmployeeDaoImpl()), getReader(), getWriter());
+        new MenuImpl(new EmployeeServiceImpl(new HibernateEmployeeDaoImpl()), getReader(), getWriter());
 //        new Server(new Socket()).up();
 //        new Controller(new EmployeeServiceImpl(new JdbcEmployeeDaoImpl()));
     }

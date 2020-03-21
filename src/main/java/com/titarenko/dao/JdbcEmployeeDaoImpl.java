@@ -73,7 +73,7 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public Employee update(Integer id, Employee employee) {
+    public Employee update(int id, Employee employee) {
         String query = "UPDATE employees SET " +
                 "name = ?, " +
                 "sex = ?, " +
@@ -145,13 +145,13 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
     }
 
     private Employee parseEmployeeInfoFromSQLtoJava(ResultSet resultSet) throws SQLException {
-        return new Employee.Builder()
-                .withId(resultSet.getInt("id"))
-                .withName(resultSet.getString("name"))
-                .withSex(Gender.getGender(resultSet.getString("sex")))
-                .withPosition(resultSet.getString("position"))
-                .withSalary(resultSet.getInt("salary"))
-                .withDateOfHire(resultSet.getDate("dateOfHire").toLocalDate())
+        return Employee.builder()
+                .id(resultSet.getInt("id"))
+                .name(resultSet.getString("name"))
+                .sex(Gender.getGender(resultSet.getString("sex")))
+                .position(resultSet.getString("position"))
+                .salary(resultSet.getInt("salary"))
+                .dateOfHire(resultSet.getDate("dateOfHire").toLocalDate())
                 .build();
     }
 }
