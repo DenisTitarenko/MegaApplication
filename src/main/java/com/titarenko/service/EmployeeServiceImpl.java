@@ -2,22 +2,31 @@ package com.titarenko.service;
 
 import com.titarenko.Begin;
 import com.titarenko.dao.EmployeeDao;
+import com.titarenko.dao.JdbcEmployeeDaoImpl;
+import com.titarenko.di.annotation.Brick;
+import com.titarenko.di.annotation.InsertPlease;
 import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
 import org.apache.log4j.Logger;
 
 import java.util.Collections;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Brick
 public class EmployeeServiceImpl implements EmployeeService {
 
     private static final Logger LOGGER = Logger.getLogger(EmployeeServiceImpl.class);
 
+    @InsertPlease(what = JdbcEmployeeDaoImpl.class)
     private EmployeeDao employeeDao;
     private EmployeeValidator validator = new EmployeeValidator();
     private Writer writer = Begin.getWriter();
+
+    public EmployeeServiceImpl() {
+    }
 
     public EmployeeServiceImpl(EmployeeDao employeeDao) {
         this.employeeDao = employeeDao;

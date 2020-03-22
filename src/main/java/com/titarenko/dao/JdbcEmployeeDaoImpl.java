@@ -1,6 +1,7 @@
 package com.titarenko.dao;
 
 import com.titarenko.Begin;
+import com.titarenko.di.annotation.Brick;
 import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
 import com.titarenko.model.Gender;
@@ -9,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Brick
 public class JdbcEmployeeDaoImpl implements EmployeeDao {
 
     private JdbcConnection connection = new JdbcConnection();
