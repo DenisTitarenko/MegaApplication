@@ -67,7 +67,7 @@ public class UnitTestParent {
         }
 
         @Override
-        public Employee update(Integer id, Employee employee) {
+        public Employee update(int id, Employee employee) {
             employee.setId(id);
             int index = database.indexOf(get(id));
             database.set(index, employee);

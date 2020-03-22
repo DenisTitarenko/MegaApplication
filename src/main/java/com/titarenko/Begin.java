@@ -1,15 +1,10 @@
 package com.titarenko;
 
-import com.titarenko.dao.HibernateEmployeeDaoImpl;
-import com.titarenko.dao.JdbcEmployeeDaoImpl;
 import com.titarenko.di.Summer;
-import com.titarenko.io.*;
-import com.titarenko.rest.Controller;
-import com.titarenko.rest.Server;
-import com.titarenko.service.EmployeeServiceImpl;
-import com.titarenko.service.MenuImpl;
-
-import java.net.Socket;
+import com.titarenko.io.ConsoleReaderImpl;
+import com.titarenko.io.ConsoleWriterImpl;
+import com.titarenko.io.Reader;
+import com.titarenko.io.Writer;
 
 public class Begin {
 
@@ -18,9 +13,9 @@ public class Begin {
     }
 
     public static Reader getReader() {
-        return ConsoleReaderImpl.getInstance();
-//        return FileReaderImpl.getInstance();
-//        return new AbstractReader() {
+        return ConsoleReaderImpl.getInstance();         // for work with console
+//        return FileReaderImpl.getInstance();          // for work with files
+//        return new AbstractReader() {                 // for work with web
 //            @Override
 //            public String readLine() {
 //                return "0";
@@ -29,8 +24,8 @@ public class Begin {
     }
 
     public static Writer getWriter() {
-        return ConsoleWriterImpl.getInstance();
-//        return FileWriterImpl.getInstance();
-//        return text -> response += text + "\n";
+        return ConsoleWriterImpl.getInstance();         // for work with console
+//        return FileWriterImpl.getInstance();          // for work with files
+//        return text -> response += text + "\n";       // for work with web
     }
 }

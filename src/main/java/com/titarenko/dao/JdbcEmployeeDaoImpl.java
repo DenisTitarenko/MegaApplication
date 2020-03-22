@@ -22,7 +22,7 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employee.getName());
-            preparedStatement.setString(2, employee.getSex().getCode());
+            preparedStatement.setString(2, employee.getSex().toString());
             preparedStatement.setString(3, employee.getPosition());
             preparedStatement.setInt(4, employee.getSalary());
             preparedStatement.setDate(5, Date.valueOf(employee.getDateOfHire()));
@@ -86,7 +86,7 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, employee.getName());
-            preparedStatement.setString(2, employee.getSex().getCode());
+            preparedStatement.setString(2, employee.getSex().toString());
             preparedStatement.setString(3, employee.getPosition());
             preparedStatement.setInt(4, employee.getSalary());
             preparedStatement.setDate(5, Date.valueOf(employee.getDateOfHire()));
