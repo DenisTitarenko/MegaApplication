@@ -1,6 +1,7 @@
 package com.titarenko;
 
 import com.titarenko.dao.JdbcEmployeeDaoImpl;
+import com.titarenko.di.Summer;
 import com.titarenko.io.*;
 import com.titarenko.rest.Controller;
 import com.titarenko.rest.Server;
@@ -11,12 +12,8 @@ import java.net.Socket;
 
 public class Begin {
 
-    private static String response = "";
-
     public static void main(String[] args) {
-        new MenuImpl(new EmployeeServiceImpl(new JdbcEmployeeDaoImpl()), getReader(), getWriter());
-//        new Server(new Socket()).up();
-//        new Controller(new EmployeeServiceImpl(new JdbcEmployeeDaoImpl()));
+        Summer.go("src/main/java/com/titarenko");
     }
 
     public static Reader getReader() {
