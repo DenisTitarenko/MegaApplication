@@ -20,11 +20,12 @@ import java.util.Objects;
 @Table(name = "employees")
 
 @NamedQuery(name = "Employee_getEmployeesWithSameSalary",
-        query = "FROM Employee " +
-                "WHERE salary " +
-                "IN (SELECT salary FROM Employee GROUP by salary HAVING count(*) > 1) " +
-                "ORDER BY salary DESC")
-
+        query = """
+                FROM Employee
+                WHERE salary
+                IN (SELECT salary FROM Employee GROUP by salary HAVING count(*) > 1)
+                ORDER BY salary DESC
+                """)
 public class Employee {
 
     @Id
