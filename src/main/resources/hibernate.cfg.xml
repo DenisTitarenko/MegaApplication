@@ -8,14 +8,8 @@
         <property name="connection.driver_class">org.postgresql.Driver</property>       <!-- DB Driver -->
         <property name="connection.username">postgres</property>                        <!-- DB User -->
         <property name="connection.password">root</property>                            <!-- DB Password -->
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
-
         <property name="hbm2ddl.auto">update</property>                         <!-- create / create-drop / update -->
-
-        <property name="show_sql">false</property>                              <!-- Show SQL in console -->
+        <property name="show_sql">true</property>                               <!-- Show SQL in console -->
         <property name="format_sql">true</property>                             <!-- Show SQL formatted -->
-
-        <mapping class="com.titarenko.model.Employee"/>
-
     </session-factory>
 </hibernate-configuration>

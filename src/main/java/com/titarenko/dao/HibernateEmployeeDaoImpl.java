@@ -1,14 +1,15 @@
 package com.titarenko.dao;
 
+import com.titarenko.di.annotation.Brick;
 import com.titarenko.model.Employee;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
-
+@Brick
 public class HibernateEmployeeDaoImpl implements EmployeeDao {
 
     private Session session;
@@ -19,18 +20,15 @@ public class HibernateEmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public Integer create(Employee employee) {
-        Transaction transaction = session.beginTransaction();
-        session.save(employee);
-        transaction.commit();
-        session.close();
-        return employee.getId();
+        return (Integer) session.save(employee);
     }
 
     @Override
     public Employee get(String name) {
-        Criteria criteria = session.createCriteria(Employee.class);
-        criteria.add(Restrictions.eq("name", name));
-        return (Employee) criteria.uniqueResult();
+        CriteriaQuery<Employee> criteria = session.getCriteriaBuilder().createQuery(Employee.class);
+        Root<Employee> root = criteria.from(Employee.class);
+        criteria.select(root).where(session.getCriteriaBuilder().equal(root.get("name"), name));
+        return session.createQuery(criteria).uniqueResult();
     }
 
     @Override
@@ -40,13 +38,8 @@ public class HibernateEmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public Employee update(int id, Employee employee) {
-        Transaction tx1 = session.beginTransaction();
-        Employee old = session.load(Employee.class, id);
-        updateEmployeeInfo(old, employee);
-        session.update(old);
-        tx1.commit();
-        session.close();
-        return get(1);
+        employee.setId(id);
+        return (Employee) session.merge(employee);
     }
 
     @Override
@@ -54,7 +47,6 @@ public class HibernateEmployeeDaoImpl implements EmployeeDao {
         Transaction tx1 = session.beginTransaction();
         session.delete(get(name));
         tx1.commit();
-        session.close();
         return true;
     }
 
@@ -72,13 +64,5 @@ public class HibernateEmployeeDaoImpl implements EmployeeDao {
                 "HAVING count(*) > 1) " +
                 "ORDER BY salary DESC";
         return session.createQuery(query, Employee.class).list();
-    }
-
-    private void updateEmployeeInfo(Employee old, Employee updated) {
-        old.setName(updated.getName());
-        old.setDateOfHire(updated.getDateOfHire());
-        old.setPosition(updated.getPosition());
-        old.setSalary(updated.getSalary());
-        old.setSex(updated.getSex());
     }
 }

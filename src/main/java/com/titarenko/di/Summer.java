@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class Summer {
 
     private final static String SRC_PATH = "src/main/java/";
-    private static final String SEPARATOR = File.separator;
+    private static final String SEPARATOR = File.separator.replace("\\","\\\\");
     private static Map<Class<?>, Object> bricks = new HashMap<>();
 
     /**
