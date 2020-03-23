@@ -1,7 +1,6 @@
 package com.titarenko.dao;
 
 import com.titarenko.model.Employee;
-import com.titarenko.service.HibernateSession;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
