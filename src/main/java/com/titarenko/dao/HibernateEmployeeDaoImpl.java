@@ -57,12 +57,6 @@ public class HibernateEmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public List<Employee> getEmployeesWithSameSalary() {
-        String query = "FROM Employee " +
-                "WHERE salary IN " +
-                "(SELECT salary FROM Employee " +
-                "GROUP by salary " +
-                "HAVING count(*) > 1) " +
-                "ORDER BY salary DESC";
-        return session.createQuery(query, Employee.class).list();
+        return session.createNamedQuery("Employee_getEmployeesWithSameSalary", Employee.class).list();
     }
 }
