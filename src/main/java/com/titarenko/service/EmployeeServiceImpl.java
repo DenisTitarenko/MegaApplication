@@ -2,6 +2,7 @@ package com.titarenko.service;
 
 import com.titarenko.Begin;
 import com.titarenko.dao.EmployeeDao;
+import com.titarenko.dao.HibernateEmployeeDaoImpl;
 import com.titarenko.dao.JdbcEmployeeDaoImpl;
 import com.titarenko.di.annotation.Brick;
 import com.titarenko.di.annotation.InsertPlease;
@@ -20,7 +21,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private static final Logger LOGGER = Logger.getLogger(EmployeeServiceImpl.class);
 
-    @InsertPlease(what = JdbcEmployeeDaoImpl.class)
+    @InsertPlease(what = HibernateEmployeeDaoImpl.class)
     private EmployeeDao employeeDao;
     private EmployeeValidator validator = new EmployeeValidator();
     private Writer writer = Begin.getWriter();

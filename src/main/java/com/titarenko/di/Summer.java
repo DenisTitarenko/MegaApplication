@@ -3,6 +3,7 @@ package com.titarenko.di;
 import com.titarenko.di.annotation.Brick;
 import com.titarenko.di.annotation.InsertPlease;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class Summer {
 
     private final static String SRC_PATH = "src/main/java/";
+    private static final String SEPARATOR = File.separator;
     private static Map<Class<?>, Object> bricks = new HashMap<>();
 
     /**
@@ -33,7 +35,7 @@ public class Summer {
         for (Path path : srcPaths) {
             String packagePath = path.toString()
                     .substring(SRC_PATH.length(), path.toString().lastIndexOf('.'))
-                    .replaceAll("\\\\", ".");
+                    .replaceAll(SEPARATOR, ".");
             if (Class.forName(packagePath).isAnnotationPresent(Brick.class)) {
                 Object o = Class.forName(packagePath).getConstructor().newInstance();   // phase 1
                 bricks.put(o.getClass(), o);
