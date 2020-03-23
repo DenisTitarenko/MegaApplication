@@ -22,13 +22,13 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class EmployeeServiceImplTest extends UnitTestParent {
-    private Employee jerry = new Employee.Builder()
-            .withId(15)
-            .withName("Jerry")
-            .withSex(Gender.M)
-            .withPosition("singer")
-            .withSalary(800)
-            .withDateOfHire(LocalDate.parse("2011-11-11"))
+    private Employee jerry = Employee.builder()
+            .id(15)
+            .name("Jerry")
+            .sex(Gender.M)
+            .position("singer")
+            .salary(800)
+            .dateOfHire(LocalDate.parse("2011-11-11"))
             .build();
 
     @Mock

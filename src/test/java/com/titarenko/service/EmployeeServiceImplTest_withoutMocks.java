@@ -25,13 +25,13 @@ public class EmployeeServiceImplTest_withoutMocks extends UnitTestParent {
 
     @Test
     public void testCreate() {
-        Employee newEmpl = new Employee.Builder()
-                .withId(4)
-                .withName("new")
-                .withSex(Gender.F)
-                .withPosition("new")
-                .withSalary(2000)
-                .withDateOfHire(LocalDate.parse("2010-10-10"))
+        Employee newEmpl = Employee.builder()
+                .id(4)
+                .name("new")
+                .sex(Gender.F)
+                .position("new")
+                .salary(2000)
+                .dateOfHire(LocalDate.parse("2010-10-10"))
                 .build();
         assertEquals(newEmpl.getId(), employeeService.create(newEmpl));
         assertEquals(4, database.size());
@@ -46,12 +46,12 @@ public class EmployeeServiceImplTest_withoutMocks extends UnitTestParent {
 
     @Test
     public void testUpdate() {
-        Employee newEmpl = new Employee.Builder()
-                .withName("new")
-                .withSex(Gender.M)
-                .withPosition("new")
-                .withSalary(2000)
-                .withDateOfHire(LocalDate.parse("2010-10-10"))
+        Employee newEmpl = Employee.builder()
+                .name("new")
+                .sex(Gender.M)
+                .position("new")
+                .salary(2000)
+                .dateOfHire(LocalDate.parse("2010-10-10"))
                 .build();
         assertEquals(newEmpl, employeeService.update(1, newEmpl));
     }

@@ -24,7 +24,7 @@ public class CustomSerializer extends StdSerializer<Employee> {
         generator.writeStartObject();
         generator.writeNumberField("id", employee.getId());
         generator.writeStringField("name", employee.getName());
-        generator.writeStringField("sex", employee.getSex().getCode());
+        generator.writeStringField("sex", employee.getSex().toString());
         generator.writeStringField("position", employee.getPosition());
         generator.writeNumberField("salary", employee.getSalary());
         generator.writeStringField("dateOfHire", employee.getDateOfHire()

@@ -2,6 +2,8 @@ package com.titarenko.rest;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
+import com.titarenko.di.annotation.Brick;
+import com.titarenko.di.annotation.InsertPlease;
 import com.titarenko.model.Employee;
 import com.titarenko.service.EmployeeService;
 import com.titarenko.service.JsonParser;
@@ -12,29 +14,38 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.*;
 
+@Brick
 public class Controller {
 
+    @InsertPlease
     private EmployeeService service;
     private JsonParser parser = new JsonParser();
     private HttpServer server;
 
+    public Controller() {
+    }
+
     public Controller(EmployeeService service) {
         this.service = service;
+        init();
+    }
+
+    public void init() {
         try {
             server = HttpServer.create(new InetSocketAddress(1408), 0);
-            server.createContext("/employee/add", this::add);
-            server.createContext("/employee/get", this::get);
-            server.createContext("/employee/update", this::update);
-            server.createContext("/employee/delete", this::delete);
-            server.createContext("/employee/all", this::getAll);
-            server.createContext("/employee/show_grouped", this::getAllGroupByPositionAndDate);
-            server.createContext("/employee/show_same", this::getEmployeesWithSameSalary);
-            server.createContext("/employee/increase/", this::increaseSalary);
-            server.setExecutor(null); // creates a default executor
-            server.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+        server.createContext("/employee/add", this::add);
+        server.createContext("/employee/get", this::get);
+        server.createContext("/employee/update", this::update);
+        server.createContext("/employee/delete", this::delete);
+        server.createContext("/employee/all", this::getAll);
+        server.createContext("/employee/show_grouped", this::getAllGroupByPositionAndDate);
+        server.createContext("/employee/show_same", this::getEmployeesWithSameSalary);
+        server.createContext("/employee/increase/", this::increaseSalary);
+        server.setExecutor(null); // creates a default executor
+        server.start();
     }
 
     public void close() {
