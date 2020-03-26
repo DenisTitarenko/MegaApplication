@@ -39,14 +39,12 @@ public class Server implements Runnable {
 
     @Override
     public void run() {
-        String httpResponse = """
-                HTTP/1.1 200 OK
-                Content-Length: %s
-                Content-Type: text/plain; charset=utf-8
-                Server: MegaApplication
-
-                %s
-                """.formatted(response.length(), response);
+        String httpResponse =String.format("HTTP/1.1 200 OK\n" +
+                "Content-Length: %s\n" +
+                "Content-Type: text/plain; charset=utf-8\n" +
+                "Server: MegaApplication\n" +
+                "\n" +
+                "%s", response.length(), response);
         try (PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true)) {
             printWriter.println(httpResponse);
             socket.close();
@@ -55,14 +53,12 @@ public class Server implements Runnable {
         }
     }
 
-
     public static class SocketReader extends AbstractReader {
         @Override
         public String readLine() {
             return "0";
         }
     }
-
 
     public static class SocketWriter implements Writer {
         @Override

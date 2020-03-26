@@ -12,51 +12,70 @@ import java.util.List;
 @Brick
 public class HibernateEmployeeDaoImpl implements EmployeeDao {
 
-    private Session session;
-
     public HibernateEmployeeDaoImpl() {
-        session = HibernateSession.getSessionFactory().openSession();
     }
 
     @Override
     public Integer create(Employee employee) {
-        return (Integer) session.save(employee);
+        Session session = HibernateSession.getSessionFactory().openSession();
+        session.save(employee);
+        session.close();
+        return employee.getId();
     }
 
     @Override
     public Employee get(String name) {
+        Session session = HibernateSession.getSessionFactory().openSession();
         CriteriaQuery<Employee> criteria = session.getCriteriaBuilder().createQuery(Employee.class);
         Root<Employee> root = criteria.from(Employee.class);
         criteria.select(root).where(session.getCriteriaBuilder().equal(root.get("name"), name));
-        return session.createQuery(criteria).uniqueResult();
+        Employee returned = session.createQuery(criteria).uniqueResult();
+        session.close();
+        return returned;
     }
 
     @Override
     public Employee get(int id) {
-        return session.get(Employee.class, id);
+        Session session = HibernateSession.getSessionFactory().openSession();
+        Employee returned = session.get(Employee.class, id);
+        session.close();
+        return returned;
     }
 
     @Override
     public Employee update(int id, Employee employee) {
+        Session session = HibernateSession.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
         employee.setId(id);
-        return (Employee) session.merge(employee);
+        session.merge(employee);
+        tx1.commit();
+        session.close();
+        return get(id);
     }
 
     @Override
     public boolean delete(String name) {
+        Session session = HibernateSession.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.delete(get(name));
         tx1.commit();
+        session.close();
         return true;
     }
 
     @Override
     public List<Employee> getAll() {
-        return session.createQuery("from Employee", Employee.class).list();
+        Session session = HibernateSession.getSessionFactory().openSession();
+        List<Employee> returned = session.createQuery("from Employee", Employee.class).list();
+        session.close();
+        return returned;
     }
 
     @Override
     public List<Employee> getEmployeesWithSameSalary() {
-        return session.createNamedQuery("Employee_getEmployeesWithSameSalary", Employee.class).list();
+        Session session = HibernateSession.getSessionFactory().openSession();
+        List<Employee> returned = session.createNamedQuery("Employee_getEmployeesWithSameSalary", Employee.class).list();
+        session.close();
+        return returned;
     }
 }
