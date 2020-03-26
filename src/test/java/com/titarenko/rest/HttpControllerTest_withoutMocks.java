@@ -23,7 +23,7 @@ public class HttpControllerTest_withoutMocks extends UnitTestParent {
 
     private final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
     public final JsonParser JSON_PARSER = new JsonParser();
-    private Controller controller;
+    private HttpController controller;
 
     private String incomingJson =
             "{\n" +
@@ -38,7 +38,7 @@ public class HttpControllerTest_withoutMocks extends UnitTestParent {
     @BeforeEach
     public void startHttpController() {
         Collections.addAll(database, vasil, petr, stepa);
-        controller = new Controller(new EmployeeServiceImpl(employeeDao));
+        controller = new HttpController(new EmployeeServiceImpl(employeeDao));
     }
 
     @AfterEach

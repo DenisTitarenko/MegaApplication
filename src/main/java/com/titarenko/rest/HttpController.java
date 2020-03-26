@@ -5,7 +5,7 @@ import com.sun.net.httpserver.HttpServer;
 import com.titarenko.di.annotation.Brick;
 import com.titarenko.di.annotation.InsertPlease;
 import com.titarenko.model.Employee;
-import com.titarenko.service.EmployeeService;
+import com.titarenko.service.EmployeeServiceImpl;
 import com.titarenko.service.JsonParser;
 
 import java.io.ByteArrayInputStream;
@@ -15,17 +15,17 @@ import java.net.InetSocketAddress;
 import java.util.*;
 
 @Brick
-public class Controller {
+public class HttpController {
 
     @InsertPlease
-    private EmployeeService service;
+    private EmployeeServiceImpl service;
     private JsonParser parser = new JsonParser();
     private HttpServer server;
 
-    public Controller() {
+    public HttpController() {
     }
 
-    public Controller(EmployeeService service) {
+    public HttpController(EmployeeServiceImpl service) {
         this.service = service;
         init();
     }

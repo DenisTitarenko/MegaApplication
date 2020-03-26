@@ -29,8 +29,8 @@ public class ServerSocketTest {
     @BeforeAll
     static void startApplication() throws InterruptedException {
         new Thread(() -> {
-            new MenuImpl(null, new Server.SocketReader(), new Server.SocketWriter());
-            new Server(null).up();
+            new MenuImpl(null, new ClientServerSocket.SocketReader(), new ClientServerSocket.SocketWriter());
+            new ClientServerSocket(null).up();
         }).start();
         Thread.sleep(500);
     }

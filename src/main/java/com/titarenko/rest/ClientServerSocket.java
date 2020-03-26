@@ -10,13 +10,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Server implements Runnable {
+public class ClientServerSocket implements Runnable {
 
-    private static final Logger LOGGER = Logger.getLogger(Server.class);
+    private static final Logger LOGGER = Logger.getLogger(ClientServerSocket.class);
     private Socket socket;
     private static String response = "";
 
-    public Server(Socket socket) {
+    public ClientServerSocket(Socket socket) {
         this.socket = socket;
     }
 
@@ -26,7 +26,7 @@ public class Server implements Runnable {
                 Socket socket = serverSocket.accept();
                 LOGGER.info("Connected");
                 Scanner request = new Scanner(socket.getInputStream()).useDelimiter("\\A");
-                new Thread(new Server(socket)).start();
+                new Thread(new ClientServerSocket(socket)).start();
                 if (request.hasNext() && "bye\n".equals(request.next())) {
                     break;
                 }
