@@ -25,16 +25,15 @@ public class HttpControllerTest_withoutMocks extends UnitTestParent {
     public final JsonParser JSON_PARSER = new JsonParser();
     private HttpController controller;
 
-    private String incomingJson = """
-                {
-                  "id" : 10,
-                  "name" : "Tom Cruz",
-                  "sex" : "M",
-                  "position" : "actor",
-                  "salary" : 350,
-                  "dateOfHire" : "2010-10-10"
-                }
-                """;
+    private String incomingJson =
+            "{\n" +
+            "\"id\" : 10,\n" +
+            "\"name\" : \"Tom Cruz\",\n" +
+            "\"sex\" : \"M\",\n" +
+            "\"position\" : \"actor\",\n" +
+            "\"salary\" : 350,\n" +
+            "\"dateOfHire\" : \"2010-10-10\"\n" +
+            "}";
 
     @BeforeEach
     public void startHttpController() {

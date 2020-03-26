@@ -5,7 +5,7 @@ plugins {
 group 'com.titarenko'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 13.0
+sourceCompatibility = 11.0
 
 repositories {
     mavenCentral()
@@ -18,6 +18,7 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.4.0"
     compile "log4j:log4j:1.2.17"
     compile "org.hibernate:hibernate-core:5.4.12.Final"
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
@@ -26,11 +27,11 @@ dependencies {
     testCompile "org.mockito:mockito-junit-jupiter:3.2.4"
 }
 
-tasks.withType(JavaCompile).each {
-    it.options.compilerArgs.add('--enable-preview')
-}
+//tasks.withType(JavaCompile).each {
+//    it.options.compilerArgs.add('--enable-preview')
+//}
 
 test {
-    jvmArgs(['--enable-preview'])
+//    jvmArgs(['--enable-preview'])
     useJUnitPlatform()
 }

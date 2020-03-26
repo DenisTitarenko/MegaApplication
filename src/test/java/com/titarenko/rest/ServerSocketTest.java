@@ -16,17 +16,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ServerSocketTest {
 
     private static final String HTTP_200_OK = "HTTP/1.1 200 OK";
-    private static final String EXPECTED_RESPONSE = """
-            1. Add employee to DB;
-            2. Find employee by name;
-            3. Update employee info;
-            4. Delete employee by name;
-            5. Get all employees;
-            6. Show all employees group by position & date of start work;
-            7. Show employees with same salary;
-            8. Increase someone's salary;
-            0. Exit.
-            """;
+    private static final String EXPECTED_RESPONSE = "1. Add employee to DB;\n" +
+            "2. Find employee by name;\n" +
+            "3. Update employee info;\n" +
+            "4. Delete employee by name;\n" +
+            "5. Get all employees;\n" +
+            "6. Show all employees group by position & date of start work;\n" +
+            "7. Show employees with same salary;\n" +
+            "8. Increase someone's salary;\n" +
+            "0. Exit.";
 
     @BeforeAll
     static void startApplication() throws InterruptedException {
