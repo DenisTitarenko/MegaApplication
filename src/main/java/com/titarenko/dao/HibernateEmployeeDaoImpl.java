@@ -9,6 +9,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+import static com.titarenko.dao.HibernateSession.createSession;
+
 @Brick
 public class HibernateEmployeeDaoImpl implements EmployeeDao {
 
@@ -17,65 +19,60 @@ public class HibernateEmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public Integer create(Employee employee) {
-        Session session = HibernateSession.getSessionFactory().openSession();
-        session.save(employee);
-        session.close();
-        return employee.getId();
+        try (Session session = createSession()) {
+            return (Integer) session.save(employee);
+        }
     }
 
     @Override
     public Employee get(String name) {
-        Session session = HibernateSession.getSessionFactory().openSession();
-        CriteriaQuery<Employee> criteria = session.getCriteriaBuilder().createQuery(Employee.class);
-        Root<Employee> root = criteria.from(Employee.class);
-        criteria.select(root).where(session.getCriteriaBuilder().equal(root.get("name"), name));
-        Employee returned = session.createQuery(criteria).uniqueResult();
-        session.close();
-        return returned;
+        try (Session session = createSession()) {
+            CriteriaQuery<Employee> criteria = session.getCriteriaBuilder().createQuery(Employee.class);
+            Root<Employee> root = criteria.from(Employee.class);
+            criteria.select(root).where(session.getCriteriaBuilder().equal(root.get("name"), name));
+            return session.createQuery(criteria).uniqueResult();
+        }
     }
 
     @Override
     public Employee get(int id) {
-        Session session = HibernateSession.getSessionFactory().openSession();
-        Employee returned = session.get(Employee.class, id);
-        session.close();
-        return returned;
+        try (Session session = createSession()) {
+            return session.get(Employee.class, id);
+        }
     }
 
     @Override
     public Employee update(int id, Employee employee) {
-        Session session = HibernateSession.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        employee.setId(id);
-        session.merge(employee);
-        tx1.commit();
-        session.close();
-        return get(id);
+        try (Session session = HibernateSession.createSession()) {
+            employee.setId(id);
+            Transaction tx1 = session.beginTransaction();
+            Object updated = session.merge(employee);
+            tx1.commit();
+            return (Employee) updated;
+        }
     }
 
     @Override
     public boolean delete(String name) {
-        Session session = HibernateSession.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(get(name));
-        tx1.commit();
-        session.close();
-        return true;
+        try (Session session = createSession()) {
+            Transaction tx1 = session.beginTransaction();
+            session.delete(get(name));
+            tx1.commit();
+            return true;
+        }
     }
 
     @Override
     public List<Employee> getAll() {
-        Session session = HibernateSession.getSessionFactory().openSession();
-        List<Employee> returned = session.createQuery("from Employee", Employee.class).list();
-        session.close();
-        return returned;
+        try (Session session = createSession()) {
+            return session.createQuery("from Employee", Employee.class).list();
+        }
     }
 
     @Override
     public List<Employee> getEmployeesWithSameSalary() {
-        Session session = HibernateSession.getSessionFactory().openSession();
-        List<Employee> returned = session.createNamedQuery("Employee_getEmployeesWithSameSalary", Employee.class).list();
-        session.close();
-        return returned;
+        try (Session session = createSession()) {
+            return session.createNamedQuery("Employee_getEmployeesWithSameSalary", Employee.class).list();
+        }
     }
 }
