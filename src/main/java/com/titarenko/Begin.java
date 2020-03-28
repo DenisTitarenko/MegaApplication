@@ -5,11 +5,19 @@ import com.titarenko.io.ConsoleReaderImpl;
 import com.titarenko.io.ConsoleWriterImpl;
 import com.titarenko.io.Reader;
 import com.titarenko.io.Writer;
+import com.titarenko.model.Employee;
+import com.titarenko.service.EmployeeServiceImpl;
+import com.titarenko.service.Menu;
+import com.titarenko.service.MenuImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Begin {
 
     public static void main(String[] args) {
-        Summer.go("src/main/java/com/titarenko");
+//        Summer.go("src/main/java/com/titarenko");
+//        ApplicationContext contextForAnnotation = new AnnotationConfigApplicationContext("com/titarenko");
+        ApplicationContext contextForConfigClass = new AnnotationConfigApplicationContext(Config.class);
     }
 
     public static Reader getReader() {

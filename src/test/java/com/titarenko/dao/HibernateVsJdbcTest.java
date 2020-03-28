@@ -1,17 +1,30 @@
 package com.titarenko.dao;
 
+import com.titarenko.Config;
 import com.titarenko.model.Employee;
 import com.titarenko.model.Gender;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
+@ContextConfiguration(classes = { Config.class })
 public class HibernateVsJdbcTest {
     private static final String VAN_DAMME = "Jean Claude Van Damme";
-    private EmployeeDao hibernateDao = new HibernateEmployeeDaoImpl();
-    private EmployeeDao jdbcDao = new JdbcEmployeeDaoImpl();
+    @Autowired
+    @Qualifier(value = "hibernateEmployeeDaoImpl")
+    private EmployeeDao hibernateDao;
+    @Autowired
+    @Qualifier(value = "jdbcEmployeeDaoImpl")
+    private EmployeeDao jdbcDao;
     private Employee vanDamme = Employee.builder()
             .name(VAN_DAMME)
             .sex(Gender.M)

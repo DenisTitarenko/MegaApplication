@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.titarenko.dao.HibernateEmployeeDaoImpl;
 import com.titarenko.model.Employee;
 import com.titarenko.service.EmployeeServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +15,8 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/employee")
 public class Servlet extends HttpServlet {
 
-    private EmployeeServiceImpl service = new EmployeeServiceImpl(new HibernateEmployeeDaoImpl());
+    @Autowired
+    private EmployeeServiceImpl service;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

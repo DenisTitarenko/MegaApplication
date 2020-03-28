@@ -1,16 +1,17 @@
 package com.titarenko.io;
 
 import com.titarenko.di.annotation.Brick;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@Brick
+@Component
 public class ConsoleReaderImpl extends AbstractReader {
 
     private static final ConsoleReaderImpl INSTANCE = new ConsoleReaderImpl();
     private Scanner scanner;
 
-    public ConsoleReaderImpl() {
+    private ConsoleReaderImpl() {
         this.scanner = new Scanner(System.in);
     }
 

@@ -7,6 +7,8 @@ import com.titarenko.service.JsonParser;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,10 +21,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Service
 public class HttpControllerTest_withoutMocks extends UnitTestParent {
 
     private final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
     public final JsonParser JSON_PARSER = new JsonParser();
+    @Autowired
     private HttpController controller;
 
     private String incomingJson =
@@ -38,7 +42,6 @@ public class HttpControllerTest_withoutMocks extends UnitTestParent {
     @BeforeEach
     public void startHttpController() {
         Collections.addAll(database, vasil, petr, stepa);
-        controller = new HttpController(new EmployeeServiceImpl(employeeDao));
     }
 
     @AfterEach

@@ -2,10 +2,12 @@ package com.titarenko.dao;
 
 import com.titarenko.io.OwnFileReader;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import java.io.FileNotFoundException;
 import java.sql.*;
 
+@Repository
 public class JdbcConnection {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/megaAppDb";

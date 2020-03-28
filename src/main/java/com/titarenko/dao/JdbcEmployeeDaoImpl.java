@@ -5,16 +5,24 @@ import com.titarenko.di.annotation.Brick;
 import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
 import com.titarenko.model.Gender;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Brick
+@Repository
 public class JdbcEmployeeDaoImpl implements EmployeeDao {
 
-    private JdbcConnection connection = new JdbcConnection();
+    private final JdbcConnection connection;
     private Writer writer = Begin.getWriter();
+
+    @Autowired
+    public JdbcEmployeeDaoImpl(JdbcConnection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public Integer create(Employee employee) {

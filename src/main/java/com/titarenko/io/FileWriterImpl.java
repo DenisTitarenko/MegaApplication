@@ -1,8 +1,11 @@
 package com.titarenko.io;
 
+import org.springframework.stereotype.Component;
+
 import java.io.FileWriter;
 import java.io.IOException;
 
+@Component
 public class FileWriterImpl implements Writer {
 
     private static final String FILE_WRITER_URL = "src/main/resources/output.txt";

@@ -18,7 +18,6 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "employees")
-
 @NamedQuery(
         name = "Employee_getEmployeesWithSameSalary",
         query = "FROM Employee WHERE salary\n" +
@@ -26,7 +25,6 @@ import java.util.Objects;
                 "ORDER BY salary DESC"
 )
 public class Employee {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -74,14 +72,5 @@ public class Employee {
     @Override
     public String toString() {
         return new JsonParser().serialize(this);
-//        return String.format(
-//                "%5d %25s %25s %25s %25d$ %25s",
-//                getId(),
-//                getName(),
-//                getSex().getCode(),
-//                getPosition(),
-//                getSalary(),
-//                getDateOfHire().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-//        );
     }
 }

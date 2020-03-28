@@ -5,6 +5,7 @@ import com.titarenko.model.Employee;
 import com.titarenko.model.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -13,14 +14,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 public class EmployeeServiceImplTest_withoutMocks extends UnitTestParent {
 
+    @Autowired
     private EmployeeServiceImpl employeeService;
 
     @BeforeEach
     public void setup() {
         Collections.addAll(database, vasil, petr, stepa);
-        employeeService = new EmployeeServiceImpl(employeeDao);
+//        employeeService = new EmployeeServiceImpl(employeeDao);
     }
 
     @Test

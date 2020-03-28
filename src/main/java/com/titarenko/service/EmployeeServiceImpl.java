@@ -8,7 +8,12 @@ import com.titarenko.di.annotation.Brick;
 import com.titarenko.di.annotation.InsertPlease;
 import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
+import lombok.NoArgsConstructor;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
@@ -16,22 +21,17 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Brick
+@NoArgsConstructor
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private static final Logger LOGGER = Logger.getLogger(EmployeeServiceImpl.class);
 
-    @InsertPlease(what = HibernateEmployeeDaoImpl.class)
+    @Autowired
+    @Qualifier(value = "hibernateEmployeeDaoImpl")
     private EmployeeDao employeeDao;
     private EmployeeValidator validator = new EmployeeValidator();
     private Writer writer = Begin.getWriter();
-
-    public EmployeeServiceImpl() {
-    }
-
-    public EmployeeServiceImpl(EmployeeDao employeeDao) {
-        this.employeeDao = employeeDao;
-    }
 
     @Override
     public Integer create(Employee employee) {

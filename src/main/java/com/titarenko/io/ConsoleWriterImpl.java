@@ -1,13 +1,14 @@
 package com.titarenko.io;
 
 import com.titarenko.di.annotation.Brick;
+import org.springframework.stereotype.Component;
 
-@Brick
+@Component
 public class ConsoleWriterImpl implements Writer {
 
     private static final ConsoleWriterImpl INSTANCE = new ConsoleWriterImpl();
 
-    public ConsoleWriterImpl() {
+    private ConsoleWriterImpl() {
     }
 
     public static ConsoleWriterImpl getInstance() {
