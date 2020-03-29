@@ -1,7 +1,6 @@
 package com.titarenko.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.titarenko.dao.HibernateEmployeeDaoImpl;
 import com.titarenko.model.Employee;
 import com.titarenko.service.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,6 @@ public class Servlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        resp.getWriter().print(service.get(req.getParameter("name").replaceAll("_", " ")));
         resp.getWriter().print(service.getAll().toString());
     }
 

@@ -1,6 +1,8 @@
 package com.titarenko.rest;
 
 import com.titarenko.UnitTestParent;
+import com.titarenko.config.SpringConfiguration;
+import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
 import com.titarenko.service.EmployeeServiceImpl;
 import com.titarenko.service.JsonParser;
@@ -8,7 +10,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
 import java.net.URI;
@@ -21,13 +24,15 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Service
+@ContextConfiguration(classes = SpringConfiguration.class)
 public class HttpControllerTest_withoutMocks extends UnitTestParent {
 
     private final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
-    public final JsonParser JSON_PARSER = new JsonParser();
-    @Autowired
+    private final JsonParser JSON_PARSER = new JsonParser();
     private HttpController controller;
+    @Autowired
+    @Qualifier("consoleWriterImpl")
+    private Writer writer;
 
     private String incomingJson =
             "{\n" +
@@ -42,6 +47,7 @@ public class HttpControllerTest_withoutMocks extends UnitTestParent {
     @BeforeEach
     public void startHttpController() {
         Collections.addAll(database, vasil, petr, stepa);
+        controller = new HttpController(new EmployeeServiceImpl(employeeDao, writer));
     }
 
     @AfterEach

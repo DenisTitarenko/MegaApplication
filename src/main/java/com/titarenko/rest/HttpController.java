@@ -3,9 +3,11 @@ package com.titarenko.rest;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import com.titarenko.model.Employee;
-import com.titarenko.service.EmployeeServiceImpl;
+import com.titarenko.service.EmployeeService;
 import com.titarenko.service.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -15,15 +17,16 @@ import java.net.InetSocketAddress;
 import java.util.*;
 
 @Component
+@Profile("default")
 public class HttpController {
 
-    private EmployeeServiceImpl service;
+    private EmployeeService service;
     private JsonParser parser = new JsonParser();
     private HttpServer server;
 
     @Autowired
-    public HttpController(EmployeeServiceImpl employeeServiceImpl) {
-        this.service = employeeServiceImpl;
+    public HttpController(@Qualifier("employeeServiceImpl") EmployeeService service) {
+        this.service = service;
         init();
     }
 

@@ -1,8 +1,9 @@
 package com.titarenko.io;
 
-import com.titarenko.Begin;
 import com.titarenko.model.Employee;
 import com.titarenko.model.Gender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,25 +15,27 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractReader implements Reader {
 
-    Writer consoleWriter = Begin.getWriter();
+    @Autowired
+    @Qualifier("consoleWriterImpl")
+    Writer writer;
 
     @Override
     public Employee readEmployee() {
         Employee.EmployeeBuilder builder = Employee.builder();
 
-        consoleWriter.writeToOutputStream("name: ");
+        writer.writeToOutputStream("name: ");
         builder.name(readLine());
 
-        consoleWriter.writeToOutputStream("sex (M, F or OTHER): ");
+        writer.writeToOutputStream("sex (M, F or OTHER): ");
         builder.sex(readGender());
 
-        consoleWriter.writeToOutputStream("position: ");
+        writer.writeToOutputStream("position: ");
         builder.position(readLine());
 
-        consoleWriter.writeToOutputStream("salary: ");
+        writer.writeToOutputStream("salary: ");
         builder.salary(readInt());
 
-        consoleWriter.writeToOutputStream("date (dd.mm.yyyy): ");
+        writer.writeToOutputStream("date (dd.mm.yyyy): ");
         builder.dateOfHire(readDate());
 
         return builder.build();
@@ -47,7 +50,7 @@ public abstract class AbstractReader implements Reader {
                 result = Integer.parseInt(readLine());
                 bool = false;
             } catch (InputMismatchException | NumberFormatException e) {
-                consoleWriter.writeToOutputStream("This field should contain only integer. Try again: ");
+                writer.writeToOutputStream("This field should contain only integer. Try again: ");
             }
         }
         return result;
@@ -66,7 +69,7 @@ public abstract class AbstractReader implements Reader {
             if (list.contains(gender)) {
                 bool = false;
             } else {
-                consoleWriter.writeToOutputStream("Sex field may contain next values M, F, OTHER. Try again:");
+                writer.writeToOutputStream("Sex field may contain next values M, F, OTHER. Try again:");
             }
         }
         return Gender.valueOf(gender);
@@ -85,10 +88,10 @@ public abstract class AbstractReader implements Reader {
                     ld = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
                 } catch (DateTimeParseException e) {
                     bool = true;
-                    consoleWriter.writeToOutputStream("Such a date does not exist. Try again:");
+                    writer.writeToOutputStream("Such a date does not exist. Try again:");
                 }
             } else {
-                consoleWriter.writeToOutputStream("Date field must be in format \"dd.mm.yyyy\". Try again:");
+                writer.writeToOutputStream("Date field must be in format \"dd.mm.yyyy\". Try again:");
             }
         }
         return ld;

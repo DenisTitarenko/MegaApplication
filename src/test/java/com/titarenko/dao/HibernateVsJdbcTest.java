@@ -1,22 +1,23 @@
 package com.titarenko.dao;
 
-import com.titarenko.Config;
+import com.titarenko.config.SpringConfiguration;
 import com.titarenko.model.Employee;
 import com.titarenko.model.Gender;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
-@ContextConfiguration(classes = { Config.class })
+@ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = SpringConfiguration.class)
 public class HibernateVsJdbcTest {
     private static final String VAN_DAMME = "Jean Claude Van Damme";
     @Autowired

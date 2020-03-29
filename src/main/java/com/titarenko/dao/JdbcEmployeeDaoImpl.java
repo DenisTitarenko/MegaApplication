@@ -1,12 +1,10 @@
 package com.titarenko.dao;
 
-import com.titarenko.Begin;
-import com.titarenko.di.annotation.Brick;
 import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
 import com.titarenko.model.Gender;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -16,12 +14,14 @@ import java.util.List;
 @Repository
 public class JdbcEmployeeDaoImpl implements EmployeeDao {
 
-    private final JdbcConnection connection;
-    private Writer writer = Begin.getWriter();
+    private final Connection connection;
+    private Writer writer;
 
     @Autowired
-    public JdbcEmployeeDaoImpl(JdbcConnection connection) {
+    public JdbcEmployeeDaoImpl(Connection connection,
+                               @Qualifier("consoleWriterImpl") Writer writer) {
         this.connection = connection;
+        this.writer = writer;
     }
 
     @Override

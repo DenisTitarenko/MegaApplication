@@ -6,14 +6,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
 @NoArgsConstructor
-@Component
+@Repository
 public class HibernateEmployeeDaoImpl implements EmployeeDao {
 
     @Autowired
