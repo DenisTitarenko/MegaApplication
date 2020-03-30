@@ -1,10 +1,15 @@
 package com.titarenko.service;
 
 import com.titarenko.UnitTestParent;
+import com.titarenko.config.SpringConfiguration;
+import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
 import com.titarenko.model.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -13,14 +18,17 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ContextConfiguration(classes = SpringConfiguration.class)
 public class EmployeeServiceImplTest_withoutMocks extends UnitTestParent {
 
-    private EmployeeServiceImpl employeeService;
+    @Autowired
+    private Writer writer;
+    private EmployeeService employeeService;
 
     @BeforeEach
     public void setup() {
         Collections.addAll(database, vasil, petr, stepa);
-        employeeService = new EmployeeServiceImpl(employeeDao);
+        employeeService = new EmployeeServiceImpl(employeeDao, writer);
     }
 
     @Test

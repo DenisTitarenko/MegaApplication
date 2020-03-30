@@ -1,9 +1,9 @@
 package com.titarenko.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.titarenko.dao.HibernateEmployeeDaoImpl;
 import com.titarenko.model.Employee;
 import com.titarenko.service.EmployeeServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/employee")
+@WebServlet(name = "firstOwnServlet", urlPatterns = "/employee")
 public class Servlet extends HttpServlet {
 
-    private EmployeeServiceImpl service = new EmployeeServiceImpl(new HibernateEmployeeDaoImpl());
+    @Autowired
+    private EmployeeServiceImpl service;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -25,7 +26,6 @@ public class Servlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        resp.getWriter().print(service.get(req.getParameter("name").replaceAll("_", " ")));
         resp.getWriter().print(service.getAll().toString());
     }
 

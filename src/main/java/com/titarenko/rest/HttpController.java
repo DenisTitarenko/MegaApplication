@@ -2,11 +2,13 @@ package com.titarenko.rest;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import com.titarenko.di.annotation.Brick;
-import com.titarenko.di.annotation.InsertPlease;
 import com.titarenko.model.Employee;
-import com.titarenko.service.EmployeeServiceImpl;
+import com.titarenko.service.EmployeeService;
 import com.titarenko.service.JsonParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -14,18 +16,16 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.*;
 
-@Brick
+@Component
+@Profile("default")
 public class HttpController {
 
-    @InsertPlease
-    private EmployeeServiceImpl service;
+    private EmployeeService service;
     private JsonParser parser = new JsonParser();
     private HttpServer server;
 
-    public HttpController() {
-    }
-
-    public HttpController(EmployeeServiceImpl service) {
+    @Autowired
+    public HttpController(EmployeeService service) {
         this.service = service;
         init();
     }

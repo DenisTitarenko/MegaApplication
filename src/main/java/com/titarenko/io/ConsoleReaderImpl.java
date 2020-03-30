@@ -1,16 +1,13 @@
 package com.titarenko.io;
 
-import com.titarenko.di.annotation.Brick;
-
 import java.util.Scanner;
 
-@Brick
 public class ConsoleReaderImpl extends AbstractReader {
 
     private static final ConsoleReaderImpl INSTANCE = new ConsoleReaderImpl();
     private Scanner scanner;
 
-    public ConsoleReaderImpl() {
+    private ConsoleReaderImpl() {
         this.scanner = new Scanner(System.in);
     }
 

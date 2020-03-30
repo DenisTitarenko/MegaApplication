@@ -39,7 +39,7 @@ public class ClientServerSocket implements Runnable {
 
     @Override
     public void run() {
-        String httpResponse =String.format("HTTP/1.1 200 OK\n" +
+        String httpResponse = String.format("HTTP/1.1 200 OK\n" +
                 "Content-Length: %s\n" +
                 "Content-Type: text/plain; charset=utf-8\n" +
                 "Server: MegaApplication\n" +

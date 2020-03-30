@@ -1,32 +1,28 @@
 package com.titarenko.service;
 
-import com.titarenko.di.annotation.Brick;
-import com.titarenko.di.annotation.InsertPlease;
-import com.titarenko.io.ConsoleReaderImpl;
-import com.titarenko.io.ConsoleWriterImpl;
 import com.titarenko.io.Reader;
 import com.titarenko.io.Writer;
 import com.titarenko.model.Operations;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-@Brick
+@Service
+@Profile("default")
 public class MenuImpl implements Menu {
 
     private static final Logger LOGGER = Logger.getLogger(MenuImpl.class);
-    @InsertPlease(what = ConsoleWriterImpl.class)
     private Writer WRITER;
-    @InsertPlease(what = ConsoleReaderImpl.class)
     private Reader READER;
     private boolean isContinue = true;
-    @InsertPlease(what = EmployeeServiceImpl.class)
     private EmployeeService service;
 
-    public MenuImpl() {
-    }
-
+    @Autowired
     public MenuImpl(EmployeeService service, Reader reader, Writer writer) {
         this.service = service;
         READER = reader;
@@ -34,7 +30,7 @@ public class MenuImpl implements Menu {
         init();
     }
 
-    public void init(){
+    public void init() {
         while (isContinue()) {
             WRITER.writeToOutputStream(show());
             WRITER.writeToOutputStream(perform());
