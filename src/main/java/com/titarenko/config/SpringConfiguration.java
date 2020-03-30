@@ -1,7 +1,6 @@
 package com.titarenko.config;
 
-import com.titarenko.Begin;
-import com.titarenko.io.OwnFileReader;
+import com.titarenko.io.*;
 import com.titarenko.model.Employee;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
@@ -16,7 +15,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 @Configuration
-@ComponentScan(basePackages = "com.titarenko")
+@ComponentScan("com.titarenko")
 public class SpringConfiguration {
 
     private static final Logger LOGGER = Logger.getLogger(SpringConfiguration.class);
@@ -45,6 +44,18 @@ public class SpringConfiguration {
         } catch (SQLException | FileNotFoundException ignored) {}
         LOGGER.error("Failed to connect to DB");
         throw new RuntimeException("Failed to connect to DB");
+    }
+
+    @Bean
+    public Reader reader() {
+        return ConsoleReaderImpl.getInstance();         // for work with console
+//        return FileReaderImpl.getInstance();          // for work with files
+    }
+
+    @Bean
+    public Writer writer() {
+        return ConsoleWriterImpl.getInstance();         // for work with console
+//        return FileWriterImpl.getInstance();          // for work with files
     }
 }
 

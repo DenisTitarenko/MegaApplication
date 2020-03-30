@@ -25,7 +25,7 @@ public class HttpController {
     private HttpServer server;
 
     @Autowired
-    public HttpController(@Qualifier("employeeServiceImpl") EmployeeService service) {
+    public HttpController(EmployeeService service) {
         this.service = service;
         init();
     }

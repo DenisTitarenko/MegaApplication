@@ -1,12 +1,12 @@
 package com.titarenko.io;
 
-import com.titarenko.di.annotation.Brick;
-import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
-
-@Component
-@NoArgsConstructor
 public class ConsoleWriterImpl implements Writer {
+
+    private static final ConsoleWriterImpl INSTANCE = new ConsoleWriterImpl();
+
+    public static ConsoleWriterImpl getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public void writeToOutputStream(String text) {

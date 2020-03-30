@@ -18,8 +18,7 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
     private Writer writer;
 
     @Autowired
-    public JdbcEmployeeDaoImpl(Connection connection,
-                               @Qualifier("consoleWriterImpl") Writer writer) {
+    public JdbcEmployeeDaoImpl(Connection connection, Writer writer) {
         this.connection = connection;
         this.writer = writer;
     }

@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public abstract class AbstractReader implements Reader {
 
     @Autowired
-    @Qualifier("consoleWriterImpl")
     Writer writer;
 
     @Override

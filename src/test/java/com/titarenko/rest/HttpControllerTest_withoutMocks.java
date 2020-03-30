@@ -31,7 +31,6 @@ public class HttpControllerTest_withoutMocks extends UnitTestParent {
     private final JsonParser JSON_PARSER = new JsonParser();
     private HttpController controller;
     @Autowired
-    @Qualifier("consoleWriterImpl")
     private Writer writer;
 
     private String incomingJson =

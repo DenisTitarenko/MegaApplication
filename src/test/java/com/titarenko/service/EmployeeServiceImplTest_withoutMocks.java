@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EmployeeServiceImplTest_withoutMocks extends UnitTestParent {
 
     @Autowired
-    @Qualifier("consoleWriterImpl")
     private Writer writer;
     private EmployeeService employeeService;
 

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/employee")
+@WebServlet(name = "firstOwnServlet", urlPatterns = "/employee")
 public class Servlet extends HttpServlet {
 
     @Autowired

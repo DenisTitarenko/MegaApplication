@@ -24,8 +24,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeValidator validator = new EmployeeValidator();
 
     @Autowired
-    public EmployeeServiceImpl(@Qualifier("hibernateEmployeeDaoImpl") EmployeeDao employeeDao,
-                               @Qualifier("consoleWriterImpl") Writer writer) {
+    public EmployeeServiceImpl(@Qualifier("hibernateEmployeeDaoImpl") EmployeeDao employeeDao, Writer writer) {
         this.employeeDao = employeeDao;
         this.writer = writer;
     }

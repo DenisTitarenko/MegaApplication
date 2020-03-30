@@ -23,9 +23,7 @@ public class MenuImpl implements Menu {
     private EmployeeService service;
 
     @Autowired
-    public MenuImpl(@Qualifier("employeeServiceImpl") EmployeeService service,
-                    @Qualifier("consoleReaderImpl") Reader reader,
-                    @Qualifier("consoleWriterImpl") Writer writer) {
+    public MenuImpl(EmployeeService service, Reader reader, Writer writer) {
         this.service = service;
         READER = reader;
         WRITER = writer;

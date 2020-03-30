@@ -1,17 +1,15 @@
 package com.titarenko.io;
 
-import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-@Component
 public class FileReaderImpl extends AbstractReader {
 
     private static final String FILE_READER_URL = "src/main/resources/input.txt";
+    private static final FileReaderImpl INSTANCE = new FileReaderImpl();
     private LinkedList<String> list = new LinkedList<>();
 
     private FileReaderImpl() {
@@ -21,6 +19,10 @@ public class FileReaderImpl extends AbstractReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static FileReaderImpl getInstance() {
+        return INSTANCE;
     }
 
     @Override
