@@ -4,7 +4,6 @@ import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
 import com.titarenko.model.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;

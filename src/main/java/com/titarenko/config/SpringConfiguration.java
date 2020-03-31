@@ -8,17 +8,38 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 @Configuration
+@EnableWebMvc
 @ComponentScan("com.titarenko")
-public class SpringConfiguration {
+public class SpringConfiguration implements WebMvcConfigurer {
 
     private static final Logger LOGGER = Logger.getLogger(SpringConfiguration.class);
+
+    @Bean
+    public ViewResolver viewResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setViewClass(JstlView.class);
+        viewResolver.setPrefix("/WEB-INF/jsp/");
+        viewResolver.setSuffix(".jsp");
+        return viewResolver;
+    }
+
+    @Override
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/js/**").addResourceLocations("/ui/js/");
+        registry.addResourceHandler("/css/**").addResourceLocations("/ui/css/");
+    }
 
     @Bean
     public SessionFactory sessionFactory() {
@@ -37,11 +58,11 @@ public class SpringConfiguration {
             if (connection != null) {
                 LOGGER.info("Connected to DB");
                 OwnFileReader fileReader = new OwnFileReader(connection);
-                fileReader.createTable();
-                fileReader.tableInitializer();
+//                fileReader.createTable();
+//                fileReader.tableInitializer();
                 return connection;
             }
-        } catch (SQLException | FileNotFoundException ignored) {}
+        } catch (SQLException ignored) {}
         LOGGER.error("Failed to connect to DB");
         throw new RuntimeException("Failed to connect to DB");
     }
@@ -58,4 +79,3 @@ public class SpringConfiguration {
 //        return FileWriterImpl.getInstance();          // for work with files
     }
 }
-
