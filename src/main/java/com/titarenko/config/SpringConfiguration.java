@@ -1,6 +1,7 @@
 package com.titarenko.config;
 
 import com.titarenko.io.*;
+import com.titarenko.model.Department;
 import com.titarenko.model.Employee;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
@@ -45,6 +46,7 @@ public class SpringConfiguration implements WebMvcConfigurer {
     public SessionFactory sessionFactory() {
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration().configure();
         configuration.addAnnotatedClass(Employee.class);
+        configuration.addAnnotatedClass(Department.class);
         StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties());
         return configuration.buildSessionFactory(serviceRegistryBuilder.build());

@@ -29,6 +29,10 @@
                 <td><form:input path="sex" /></td>
             </tr>
             <tr>
+                <td>Department:</td>
+                <td><form:input path="departmentName" /></td>
+            </tr>
+            <tr>
                 <td>Position:</td>
                 <td><form:input path="position" /></td>
             </tr>

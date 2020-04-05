@@ -11,5 +11,6 @@
         <property name="hbm2ddl.auto">update</property>                         <!-- create / create-drop / update -->
         <property name="show_sql">true</property>                               <!-- Show SQL in console -->
         <property name="format_sql">true</property>                             <!-- Show SQL formatted -->
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
     </session-factory>
 </hibernate-configuration>

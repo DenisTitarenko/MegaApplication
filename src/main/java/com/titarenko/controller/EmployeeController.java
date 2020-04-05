@@ -1,13 +1,17 @@
 package com.titarenko.controller;
 
 import com.titarenko.dao.EmployeeDao;
+import com.titarenko.dto.EmployeeDto;
 import com.titarenko.model.Employee;
 import com.titarenko.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +21,13 @@ import javax.servlet.http.HttpServletRequest;
 public class EmployeeController {
 
     private EmployeeService service;
-    private EmployeeDao dao;
+    private EmployeeDao employeeDao;
 
     @Autowired
     public EmployeeController(EmployeeService service,
-                              @Qualifier("hibernateEmployeeDaoImpl") EmployeeDao dao) {
+                              @Qualifier("hibernateEmployeeDaoImpl") EmployeeDao employeeDao) {
         this.service = service;
-        this.dao = dao;
+        this.employeeDao = employeeDao;
     }
 
     @GetMapping
@@ -34,17 +38,17 @@ public class EmployeeController {
 
     @GetMapping("/create")
     public ModelAndView create(ModelAndView model) {
-        Employee employee = new Employee();
-        model.addObject("employee", employee);
+        EmployeeDto employeeDto = new EmployeeDto();
+        model.addObject("employee", employeeDto);
         model.setViewName("EmployeeForm");
         return model;
     }
 
     @GetMapping("/update")
     public ModelAndView update(HttpServletRequest request) {
-        Employee employee = dao.get(Integer.parseInt(request.getParameter("id")));
+        EmployeeDto employeeDto = service.buildToDto(employeeDao.get(Integer.parseInt(request.getParameter("id"))));
         ModelAndView model = new ModelAndView("EmployeeForm");
-        model.addObject("employee", employee);
+        model.addObject("employee", employeeDto);
         return model;
     }
 
@@ -67,11 +71,12 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute Employee employee) {
-        if (employee.getId() == 0) {
+    public ModelAndView save(@ModelAttribute EmployeeDto employeeDto) {
+        Employee employee = service.buildToEntity(employeeDto);
+        if (employeeDto.getId() == 0) {
             service.create(employee);
         } else {
-            service.update(employee.getId(), employee);
+            service.update(employeeDto.getId(), employee);
         }
         return new ModelAndView("redirect:/employee/");
     }

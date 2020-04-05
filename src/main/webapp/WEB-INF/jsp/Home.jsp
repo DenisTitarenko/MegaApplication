@@ -29,6 +29,7 @@
         <tr>
             <th>Name</th>
             <th>Sex</th>
+            <th>Department</th>
             <th>Position</th>
             <th>Salary</th>
             <th>Date of hire</th>
@@ -36,9 +37,11 @@
         </tr>
 
         <c:forEach var="employee" items="${employees}">
+            <c:set var="dep" value="${employee.department}" />
             <tr>
                 <td>${employee.name}</td>
                 <td>${employee.sex}</td>
+                <td>${dep.name}</td>
                 <td>${employee.position}</td>
                 <td>${employee.salary}</td>
                 <td>${employee.dateOfHire}</td>

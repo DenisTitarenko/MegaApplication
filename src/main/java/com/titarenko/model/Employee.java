@@ -1,5 +1,6 @@
 package com.titarenko.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -9,10 +10,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -34,7 +35,11 @@ public class Employee {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sex")
-    private Gender sex; // enum
+    private Gender sex;
+
+    @ManyToOne
+    @JsonIgnore
+    private Department department;
 
     @Column(name = "position")
     private String position;
@@ -47,27 +52,6 @@ public class Employee {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dateOfHire;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        Employee empl = (Employee) obj;
-        return empl.salary == salary &&
-                Objects.equals(name, empl.name) &&
-                Objects.equals(sex, empl.sex) &&
-                Objects.equals(position, empl.position) &&
-                Objects.equals(dateOfHire, empl.dateOfHire);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(salary, name, sex, position, dateOfHire);
-    }
 
     @Override
     public String toString() {

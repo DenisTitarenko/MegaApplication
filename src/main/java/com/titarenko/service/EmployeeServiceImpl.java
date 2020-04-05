@@ -1,6 +1,8 @@
 package com.titarenko.service;
 
+import com.titarenko.dao.DepartmentDao;
 import com.titarenko.dao.EmployeeDao;
+import com.titarenko.dto.EmployeeDto;
 import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
 import lombok.NoArgsConstructor;
@@ -21,10 +23,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     private static final Logger LOGGER = Logger.getLogger(EmployeeServiceImpl.class);
     private Writer writer;
     private EmployeeDao employeeDao;
+    @Autowired
+    private DepartmentDao departmentDao;
     private EmployeeValidator validator = new EmployeeValidator();
 
     @Autowired
-    public EmployeeServiceImpl(@Qualifier("hibernateEmployeeDaoImpl") EmployeeDao employeeDao, Writer writer) {
+    public EmployeeServiceImpl(@Qualifier("hibernateEmployeeDaoImpl") EmployeeDao employeeDao,
+                               Writer writer) {
         this.employeeDao = employeeDao;
         this.writer = writer;
     }
@@ -113,6 +118,31 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         LOGGER.info("Salary of employee with ID=" + id + " was increased");
         return true;
+    }
+
+    @Override
+    public Employee buildToEntity(EmployeeDto employeeDto) {
+        return Employee.builder()
+                .name(employeeDto.getName())
+                .sex(employeeDto.getSex())
+                .department(departmentDao.getByName(employeeDto.getDepartmentName()))
+                .position(employeeDto.getPosition())
+                .salary(employeeDto.getSalary())
+                .dateOfHire(employeeDto.getDateOfHire())
+                .build();
+    }
+
+    @Override
+    public EmployeeDto buildToDto(Employee employee) {
+        return EmployeeDto.builder()
+                .id(employee.getId())
+                .name(employee.getName())
+                .sex(employee.getSex())
+                .departmentName(employee.getDepartment().getName())
+                .position(employee.getPosition())
+                .salary(employee.getSalary())
+                .dateOfHire(employee.getDateOfHire())
+                .build();
     }
 
     private List<Integer> getListOfId() {
