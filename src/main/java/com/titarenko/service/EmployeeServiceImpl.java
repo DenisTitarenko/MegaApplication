@@ -134,15 +134,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto buildToDto(Employee employee) {
-        return EmployeeDto.builder()
+        EmployeeDto.EmployeeDtoBuilder dto = EmployeeDto.builder()
                 .id(employee.getId())
                 .name(employee.getName())
                 .sex(employee.getSex())
-                .departmentName(employee.getDepartment().getName())
                 .position(employee.getPosition())
                 .salary(employee.getSalary())
-                .dateOfHire(employee.getDateOfHire())
-                .build();
+                .dateOfHire(employee.getDateOfHire());
+        if (employee.getDepartment() != null) {
+            dto.departmentName(employee.getDepartment().getName());
+        }
+        return dto.build();
     }
 
     private List<Integer> getListOfId() {

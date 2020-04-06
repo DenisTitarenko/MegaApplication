@@ -33,7 +33,7 @@ public class EmployeeController {
     @GetMapping
     public String getAllEmployees(Model model) {
         model.addAttribute("employees", service.getAll());
-        return "Home";
+        return "EmployeeList";
     }
 
     @GetMapping("/create")
@@ -61,13 +61,13 @@ public class EmployeeController {
     @RequestMapping("/samesalary")
     public String getWithSameSalary(Model model) {
         model.addAttribute("employees", service.getEmployeesWithSameSalary());
-        return "Home";
+        return "EmployeeList";
     }
 
     @RequestMapping("/grouped")
     public String getGroupByPosAndDate(Model model) {
         model.addAttribute("employees", service.getAllGroupByPositionAndDate());
-        return "Home";
+        return "EmployeeList";
     }
 
     @PostMapping("/save")
