@@ -5,11 +5,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.titarenko.model.enumeration.Gender;
 import com.titarenko.service.JsonParser;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -37,12 +40,16 @@ public class Employee {
     @Column(name = "sex")
     private Gender sex;
 
-    @ManyToOne
     @JsonIgnore
+    @ManyToOne
     private Department department;
 
     @Column(name = "position")
     private String position;
+
+//    @JsonIgnore
+    @ManyToMany(mappedBy = "employees", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Project> projects = new HashSet<>();
 
     @Column(name = "salary")
     private int salary;
