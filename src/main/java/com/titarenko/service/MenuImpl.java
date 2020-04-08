@@ -2,12 +2,10 @@ package com.titarenko.service;
 
 import com.titarenko.io.Reader;
 import com.titarenko.io.Writer;
-import com.titarenko.model.Operations;
+import com.titarenko.model.enumeration.Operations;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -65,7 +63,7 @@ public class MenuImpl implements Menu {
             case DELETE:
                 LOGGER.info("Attempt to delete employee");
                 WRITER.writeToOutputStream("Enter the name of the employee you want to delete: ");
-                return String.valueOf(service.delete(READER.readLine()));
+                return String.valueOf(service.delete(Integer.valueOf(READER.readLine())));
             case GET_ALL:
                 LOGGER.info("View all employees");
                 return service.getAll()

@@ -3,7 +3,7 @@ package com.titarenko.service;
 import com.titarenko.UnitTestParent;
 import com.titarenko.dao.EmployeeDao;
 import com.titarenko.model.Employee;
-import com.titarenko.model.Gender;
+import com.titarenko.model.enumeration.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,4 +1,4 @@
-package com.titarenko.model;
+package com.titarenko.model.enumeration;
 
 public enum Gender {
     M, F, OTHER;

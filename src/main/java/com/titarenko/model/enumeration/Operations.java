@@ -1,4 +1,4 @@
-package com.titarenko.model;
+package com.titarenko.model.enumeration;
 
 public enum Operations {
     ADD(1, "Add employee to DB;"),

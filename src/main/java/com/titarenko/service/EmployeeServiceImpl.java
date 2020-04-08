@@ -87,6 +87,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public boolean delete(Integer id) {
+        if (!getListOfId().contains(id)) {
+            writer.writeToOutputStream("Oops.. Seems like input id wasn't correct");
+            LOGGER.error("Employee with such id doesn't exist");
+            return false;
+        }
+        LOGGER.info("Employee with id " + id + " deleted");
+        return employeeDao.delete(id);
+    }
+
+    @Override
     public List<Employee> getAll() {
         return employeeDao.getAll();
     }

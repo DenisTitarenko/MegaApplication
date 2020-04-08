@@ -2,7 +2,7 @@ package com.titarenko;
 
 import com.titarenko.dao.EmployeeDao;
 import com.titarenko.model.Employee;
-import com.titarenko.model.Gender;
+import com.titarenko.model.enumeration.Gender;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -77,6 +77,11 @@ public class UnitTestParent {
         @Override
         public boolean delete(String name) {
             return database.remove(get(name));
+        }
+
+        @Override
+        public boolean delete(Integer id) {
+            return database.remove(get(id));
         }
 
         @Override

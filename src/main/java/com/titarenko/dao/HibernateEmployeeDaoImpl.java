@@ -65,6 +65,16 @@ public class HibernateEmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
+    public boolean delete(Integer id) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction tx1 = session.beginTransaction();
+            session.delete(get(id));
+            tx1.commit();
+            return true;
+        }
+    }
+
+    @Override
     public List<Employee> getAll() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from Employee", Employee.class).list();

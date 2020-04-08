@@ -2,7 +2,7 @@ package com.titarenko.dao;
 
 import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
-import com.titarenko.model.Gender;
+import com.titarenko.model.enumeration.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -107,11 +107,26 @@ public class JdbcEmployeeDaoImpl implements EmployeeDao {
     @Override
     public boolean delete(String name) {
         String query = "DELETE FROM employees WHERE name = ?";
-        PreparedStatement preparedStatement;
         int row = 0;
         try {
-            preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
+            row += preparedStatement.executeUpdate();
+            writer.writeToOutputStream(row + " row(s) deleted");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return row != 0;
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        String query = "DELETE FROM employees WHERE id = ?";
+//        PreparedStatement preparedStatement;
+        int row = 0;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
             row += preparedStatement.executeUpdate();
             writer.writeToOutputStream(row + " row(s) deleted");
         } catch (SQLException e) {

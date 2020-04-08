@@ -1,9 +1,8 @@
 package com.titarenko.io;
 
 import com.titarenko.model.Employee;
-import com.titarenko.model.Gender;
+import com.titarenko.model.enumeration.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

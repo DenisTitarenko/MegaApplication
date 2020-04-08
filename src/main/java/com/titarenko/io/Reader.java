@@ -1,7 +1,7 @@
 package com.titarenko.io;
 
 import com.titarenko.model.Employee;
-import com.titarenko.model.Gender;
+import com.titarenko.model.enumeration.Gender;
 
 import java.time.LocalDate;
 

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -45,8 +44,9 @@ public class DepartmentController {
     @GetMapping("/employees")
     public ModelAndView getEmployees(HttpServletRequest request) {
         Department department = departmentDao.getByName(request.getParameter("name"));
-        ModelAndView model = new ModelAndView("EmployeeList");
+        ModelAndView model = new ModelAndView("DepartmentEmployeeList");
         model.addObject("employees", department.getEmployees());
+        model.addObject("departmentName", department.getName());
         return model;
     }
 
@@ -66,7 +66,6 @@ public class DepartmentController {
 
     @PostMapping("/save")
     public ModelAndView save(@ModelAttribute Department department) {
-        System.out.println(department);
         if (department.getId() == 0) {
             service.create(department);
         } else {

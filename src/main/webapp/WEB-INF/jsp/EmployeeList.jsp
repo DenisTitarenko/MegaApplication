@@ -1,3 +1,4 @@
+<%@ page import="org.springframework.web.util.UrlPathHelper" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -37,7 +38,7 @@
                 <td>
                     <a href="update?id=${employee.id}"><button>Edit</button></a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="delete?name=${employee.name}"><button>Delete</button></a></td>
+                    <a href="delete?id=${employee.id}"><button>Delete</button></a></td>
             </tr>
         </c:forEach>
 

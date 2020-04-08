@@ -15,6 +15,8 @@ public interface EmployeeService {
 
     boolean delete(String name);
 
+    boolean delete(Integer id);
+
     List<Employee> getAll();
 
     List<Employee> getAllGroupByPositionAndDate();
