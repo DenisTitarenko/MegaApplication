@@ -1,13 +1,11 @@
 package com.titarenko.controller;
 
-import com.titarenko.dao.EmployeeDao;
 import com.titarenko.dto.EmployeeDto;
 import com.titarenko.model.Department;
 import com.titarenko.model.Employee;
 import com.titarenko.service.DepartmentService;
 import com.titarenko.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,15 +23,11 @@ import java.util.stream.Collectors;
 public class EmployeeController {
 
     private EmployeeService employeeService;
-    private EmployeeDao employeeDao;
     private DepartmentService departmentService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService,
-                              DepartmentService departmentService,
-                              @Qualifier("hibernateEmployeeDaoImpl") EmployeeDao employeeDao) {
+    public EmployeeController(EmployeeService employeeService, DepartmentService departmentService) {
         this.employeeService = employeeService;
-        this.employeeDao = employeeDao;
         this.departmentService = departmentService;
     }
 
@@ -55,7 +49,7 @@ public class EmployeeController {
 
     @GetMapping("/update")
     public ModelAndView update(HttpServletRequest request) {
-        EmployeeDto employeeDto = employeeService.buildToDto(employeeDao.get(Integer.parseInt(request.getParameter("id"))));
+        EmployeeDto employeeDto = employeeService.buildToDto(employeeService.get(Integer.parseInt(request.getParameter("id"))));
         ModelAndView model = new ModelAndView("EmployeeForm");
         List<String> list = departmentService.getAll().stream().map(Department::getName).collect(Collectors.toList());
         model.addObject("departments", list);

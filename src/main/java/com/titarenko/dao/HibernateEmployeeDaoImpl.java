@@ -47,9 +47,9 @@ public class HibernateEmployeeDaoImpl implements EmployeeDao {
     public Employee update(int id, Employee employee) {
         try (Session session = sessionFactory.openSession()) {
             employee.setId(id);
-            Transaction tx1 = session.beginTransaction();
+            session.beginTransaction();
             Object updated = session.merge(employee);
-            tx1.commit();
+            session.getTransaction().commit();
             return (Employee) updated;
         }
     }
@@ -57,9 +57,9 @@ public class HibernateEmployeeDaoImpl implements EmployeeDao {
     @Override
     public boolean delete(String name) {
         try (Session session = sessionFactory.openSession()) {
-            Transaction tx1 = session.beginTransaction();
+            session.beginTransaction();
             session.delete(get(name));
-            tx1.commit();
+            session.getTransaction().commit();
             return true;
         }
     }

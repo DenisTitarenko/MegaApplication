@@ -38,8 +38,8 @@ public class Employee {
     @Column(name = "sex")
     private Gender sex;
 
-    @ManyToOne
     @JsonIgnore
+    @ManyToOne
     private Department department;
 
     @Column(name = "position")

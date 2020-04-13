@@ -1,6 +1,5 @@
 package com.titarenko.controller;
 
-import com.titarenko.dao.DepartmentDao;
 import com.titarenko.model.Department;
 import com.titarenko.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 public class DepartmentController {
 
     private DepartmentService service;
-    private DepartmentDao departmentDao;
 
     @Autowired
-    public DepartmentController(DepartmentService service, DepartmentDao departmentDao) {
+    public DepartmentController(DepartmentService service) {
         this.service = service;
-        this.departmentDao = departmentDao;
     }
 
     @GetMapping
@@ -43,7 +40,7 @@ public class DepartmentController {
 
     @GetMapping("/employees")
     public ModelAndView getEmployees(HttpServletRequest request) {
-        Department department = departmentDao.getByName(request.getParameter("name"));
+        Department department = service.get(request.getParameter("name"));
         ModelAndView model = new ModelAndView("DepartmentEmployeeList");
         model.addObject("employees", department.getEmployees());
         model.addObject("departmentName", department.getName());
@@ -52,7 +49,7 @@ public class DepartmentController {
 
     @GetMapping("/update")
     public ModelAndView update(HttpServletRequest request) {
-        Department department = departmentDao.getByName(request.getParameter("name"));
+        Department department = service.get(request.getParameter("name"));
         ModelAndView model = new ModelAndView("DepartmentForm");
         model.addObject("department", department);
         return model;

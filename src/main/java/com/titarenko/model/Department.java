@@ -10,7 +10,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@EqualsAndHashCode
 @Entity
 @Table(name = "departments")
 public class Department {

@@ -28,8 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeValidator validator = new EmployeeValidator();
 
     @Autowired
-    public EmployeeServiceImpl(@Qualifier("hibernateEmployeeDaoImpl") EmployeeDao employeeDao,
-                               Writer writer) {
+    public EmployeeServiceImpl(@Qualifier("hibernateEmployeeDaoImpl") EmployeeDao employeeDao, Writer writer) {
         this.employeeDao = employeeDao;
         this.writer = writer;
     }
@@ -55,6 +54,15 @@ public class EmployeeServiceImpl implements EmployeeService {
             return null;
         }
         return employeeDao.get(name);
+    }
+
+    @Override
+    public Employee get(Integer id) {
+        if (!getListOfId().contains(id)) {
+            writer.writeToOutputStream("Oops.. Seems like input name wasn't correct");
+            return null;
+        }
+        return employeeDao.get(id);
     }
 
     @Override
