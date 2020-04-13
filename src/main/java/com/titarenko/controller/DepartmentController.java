@@ -1,6 +1,5 @@
 package com.titarenko.controller;
 
-import com.titarenko.dao.DepartmentDao;
 import com.titarenko.model.Department;
 import com.titarenko.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -20,12 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 public class DepartmentController {
 
     private DepartmentService service;
-    private DepartmentDao departmentDao;
 
     @Autowired
-    public DepartmentController(DepartmentService service, DepartmentDao departmentDao) {
+    public DepartmentController(DepartmentService service) {
         this.service = service;
-        this.departmentDao = departmentDao;
     }
 
     @GetMapping
@@ -44,15 +40,16 @@ public class DepartmentController {
 
     @GetMapping("/employees")
     public ModelAndView getEmployees(HttpServletRequest request) {
-        Department department = departmentDao.getByName(request.getParameter("name"));
-        ModelAndView model = new ModelAndView("EmployeeList");
+        Department department = service.get(request.getParameter("name"));
+        ModelAndView model = new ModelAndView("DepartmentEmployeeList");
         model.addObject("employees", department.getEmployees());
+        model.addObject("departmentName", department.getName());
         return model;
     }
 
     @GetMapping("/update")
     public ModelAndView update(HttpServletRequest request) {
-        Department department = departmentDao.getByName(request.getParameter("name"));
+        Department department = service.get(request.getParameter("name"));
         ModelAndView model = new ModelAndView("DepartmentForm");
         model.addObject("department", department);
         return model;
@@ -66,7 +63,6 @@ public class DepartmentController {
 
     @PostMapping("/save")
     public ModelAndView save(@ModelAttribute Department department) {
-        System.out.println(department);
         if (department.getId() == 0) {
             service.create(department);
         } else {

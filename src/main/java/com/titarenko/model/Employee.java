@@ -11,8 +11,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -46,10 +44,6 @@ public class Employee {
 
     @Column(name = "position")
     private String position;
-
-//    @JsonIgnore
-    @ManyToMany(mappedBy = "employees", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Project> projects = new HashSet<>();
 
     @Column(name = "salary")
     private int salary;

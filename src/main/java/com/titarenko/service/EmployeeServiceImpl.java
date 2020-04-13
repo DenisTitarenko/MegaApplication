@@ -58,6 +58,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Employee get(Integer id) {
+        if (!getListOfId().contains(id)) {
+            writer.writeToOutputStream("Oops.. Seems like input name wasn't correct");
+            return null;
+        }
+        return employeeDao.get(id);
+    }
+
+    @Override
     public Employee update(Integer id, Employee employee) {
         if (getListOfId().contains(id)) {
             if (validator.isValidEmployee(employee)) {
@@ -84,6 +93,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         LOGGER.info("Employee " + name + " deleted");
         return employeeDao.delete(name);
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        if (!getListOfId().contains(id)) {
+            writer.writeToOutputStream("Oops.. Seems like input id wasn't correct");
+            LOGGER.error("Employee with such id doesn't exist");
+            return false;
+        }
+        LOGGER.info("Employee with id " + id + " deleted");
+        return employeeDao.delete(id);
     }
 
     @Override
