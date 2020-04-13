@@ -13,7 +13,7 @@
             <form:hidden path="id"/>
             <tr>
                 <td>Name:</td>
-                <td><input required type="text" name="name" value="${employee.name}"></td>
+                <td><input required type="text" name="name" value="${department.name}"></td>
             </tr>
             <tr>
                 <td colspan="2" align="center"><input type="submit" value="Save"></td>
