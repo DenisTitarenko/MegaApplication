@@ -16,6 +16,8 @@ public interface EmployeeDao {
 
     boolean delete(String name);
 
+    boolean delete(Integer id);
+
     List<Employee> getAll();
 
     List<Employee> getEmployeesWithSameSalary();

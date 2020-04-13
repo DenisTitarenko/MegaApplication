@@ -4,11 +4,10 @@ import com.titarenko.UnitTestParent;
 import com.titarenko.config.SpringConfiguration;
 import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
-import com.titarenko.model.Gender;
+import com.titarenko.model.enumeration.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDate;

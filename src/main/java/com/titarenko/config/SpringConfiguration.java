@@ -1,6 +1,7 @@
 package com.titarenko.config;
 
 import com.titarenko.io.*;
+import com.titarenko.model.Department;
 import com.titarenko.model.Employee;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
@@ -37,14 +38,15 @@ public class SpringConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/js/**").addResourceLocations("/ui/js/");
-        registry.addResourceHandler("/css/**").addResourceLocations("/ui/css/");
+        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/");
+        registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/");
     }
 
     @Bean
     public SessionFactory sessionFactory() {
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration().configure();
         configuration.addAnnotatedClass(Employee.class);
+        configuration.addAnnotatedClass(Department.class);
         StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties());
         return configuration.buildSessionFactory(serviceRegistryBuilder.build());

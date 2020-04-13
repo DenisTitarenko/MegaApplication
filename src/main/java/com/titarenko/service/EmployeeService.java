@@ -1,5 +1,6 @@
 package com.titarenko.service;
 
+import com.titarenko.dto.EmployeeDto;
 import com.titarenko.model.Employee;
 
 import java.util.List;
@@ -10,9 +11,13 @@ public interface EmployeeService {
 
     Employee get(String name);
 
+    Employee get(Integer id);
+
     Employee update(Integer id, Employee employee);
 
     boolean delete(String name);
+
+    boolean delete(Integer id);
 
     List<Employee> getAll();
 
@@ -21,4 +26,8 @@ public interface EmployeeService {
     List<Employee> getEmployeesWithSameSalary();
 
     boolean increaseSalary(int id, int plusSalary);
+
+    Employee buildToEntity(EmployeeDto employeeDto);
+
+    EmployeeDto buildToDto(Employee employee);
 }
