@@ -2,9 +2,11 @@ package com.titarenko.service;
 
 import com.titarenko.dao.DepartmentDao;
 import com.titarenko.dao.EmployeeDao;
+import com.titarenko.dao.ProjectDao;
 import com.titarenko.dto.EmployeeDto;
 import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
+import com.titarenko.model.Project;
 import lombok.NoArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeDao employeeDao;
     @Autowired
     private DepartmentDao departmentDao;
+    @Autowired
+    private ProjectDao projectDao;
     private EmployeeValidator validator = new EmployeeValidator();
 
     @Autowired
@@ -147,6 +151,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .sex(employeeDto.getSex())
                 .department(departmentDao.getByName(employeeDto.getDepartmentName()))
                 .position(employeeDto.getPosition())
+                .projects(employeeDto.getProjects()
+                        .stream()
+                        .map(name -> projectDao.getByName(name))
+                        .collect(Collectors.toSet()))
                 .salary(employeeDto.getSalary())
                 .dateOfHire(employeeDto.getDateOfHire())
                 .build();

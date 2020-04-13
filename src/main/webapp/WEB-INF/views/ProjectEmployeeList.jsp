@@ -1,4 +1,3 @@
-<%@ page import="org.springframework.web.util.UrlPathHelper" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -7,16 +6,7 @@
 </head>
 <body>
 <div align="center">
-    <h1>Employee list</h1>
-
-    <h3>
-        <a href="/MegaApp/employee/"><button>Show employees without any sorting</button></a>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="samesalary"><button>Show employees with same salary</button></a>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="grouped"><button>Show employees grouped by position and date</button></a>
-    </h3>
-
+    <h1>Employee list in ${projectName.toLowerCase()} project </h1>
     <table>
         <tr>
             <th>Name</th>
@@ -25,7 +15,6 @@
             <th>Position</th>
             <th>Salary</th>
             <th>Date of hire</th>
-            <th>Action</th>
         </tr>
         <c:forEach var="employee" items="${employees}">
             <tr>
@@ -35,18 +24,10 @@
                 <td>${employee.position}</td>
                 <td>${employee.salary}</td>
                 <td>${employee.dateOfHire}</td>
-                <td>
-                    <a href="update?id=${employee.id}"><button>Edit</button></a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="delete?id=${employee.id}"><button>Delete</button></a></td>
             </tr>
         </c:forEach>
 
     </table>
-
-    <h3>
-        <a href="create"><button>Add new employee</button></a>
-    </h3>
 </div>
 </body>
 </html>

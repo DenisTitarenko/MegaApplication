@@ -3,15 +3,14 @@ package com.titarenko.controller;
 import com.titarenko.dto.EmployeeDto;
 import com.titarenko.model.Department;
 import com.titarenko.model.Employee;
+import com.titarenko.model.Project;
 import com.titarenko.service.DepartmentService;
 import com.titarenko.service.EmployeeService;
+import com.titarenko.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,11 +23,15 @@ public class EmployeeController {
 
     private EmployeeService employeeService;
     private DepartmentService departmentService;
+    private ProjectService projectService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService, DepartmentService departmentService) {
+    public EmployeeController(EmployeeService employeeService,
+                              DepartmentService departmentService,
+                              ProjectService projectService) {
         this.employeeService = employeeService;
         this.departmentService = departmentService;
+        this.projectService = projectService;
     }
 
     @GetMapping
@@ -37,12 +40,22 @@ public class EmployeeController {
         return "EmployeeList";
     }
 
+    @GetMapping("/projects")
+    public ModelAndView getEmployees(HttpServletRequest request) {
+        Employee employee = employeeService.get(request.getParameter("name"));
+        ModelAndView model = new ModelAndView("EmployeeProjectList");
+        model.addObject("projects", employee.getProjects());
+        model.addObject("employeeName", employee.getName());
+        return model;
+    }
+
     @GetMapping("/create")
     public ModelAndView create(ModelAndView model) {
         EmployeeDto employeeDto = new EmployeeDto();
         model.addObject("employee", employeeDto);
         List<String> list = departmentService.getAll().stream().map(Department::getName).collect(Collectors.toList());
         model.addObject("departments", list);
+        model.addObject("projects", projectService.getAll().stream().map(Project::getName).collect(Collectors.toList()));
         model.setViewName("EmployeeForm");
         return model;
     }
@@ -54,6 +67,7 @@ public class EmployeeController {
         List<String> list = departmentService.getAll().stream().map(Department::getName).collect(Collectors.toList());
         model.addObject("departments", list);
         model.addObject("employee", employeeDto);
+        model.addObject("projects", projectService.getAll().stream().map(Project::getName).collect(Collectors.toList()));
         return model;
     }
 

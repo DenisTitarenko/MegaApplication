@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -27,6 +28,8 @@ public class EmployeeDto {
     private String departmentName;
 
     private String position;
+
+    private Set<String> projects;
 
     private int salary;
 

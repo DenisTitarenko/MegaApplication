@@ -4,7 +4,6 @@ import com.titarenko.model.Department;
 import lombok.NoArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -40,9 +39,9 @@ public class HibernateDepartmentDaoImpl implements DepartmentDao {
     public Department update(Integer id, Department department) {
         try (Session session = sessionFactory.openSession()) {
             department.setId(id);
-            Transaction tx1 = session.beginTransaction();
+            session.beginTransaction();
             Object updated = session.merge(department);
-            tx1.commit();
+            session.getTransaction().commit();
             return (Department) updated;
         }
     }
@@ -50,9 +49,9 @@ public class HibernateDepartmentDaoImpl implements DepartmentDao {
     @Override
     public boolean delete(String name) {
         try (Session session = sessionFactory.openSession()) {
-            Transaction tx1 = session.beginTransaction();
+            session.beginTransaction();
             session.delete(getByName(name));
-            tx1.commit();
+            session.getTransaction().commit();
             return true;
         }
     }

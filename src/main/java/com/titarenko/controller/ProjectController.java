@@ -1,8 +1,5 @@
 package com.titarenko.controller;
 
-import com.titarenko.dao.ProjectDao;
-import com.titarenko.model.Department;
-import com.titarenko.model.Employee;
 import com.titarenko.model.Project;
 import com.titarenko.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ProjectController {
 
     private ProjectService service;
-    private ProjectDao projectDao;
 
     @Autowired
-    public ProjectController(ProjectService service, ProjectDao projectDao) {
+    public ProjectController(ProjectService service) {
         this.service = service;
-        this.projectDao = projectDao;
     }
 
     @GetMapping
@@ -40,37 +35,18 @@ public class ProjectController {
         return model;
     }
 
-    @GetMapping("/{name}")
-    public ModelAndView getEmployees(@PathVariable String name) {
-        Project project = projectDao.getByName(name);
+    @GetMapping("/employees")
+    public ModelAndView getEmployees(HttpServletRequest request) {
+        Project project = service.get(request.getParameter("name"));
         ModelAndView model = new ModelAndView("ProjectEmployeeList");
         model.addObject("employees", project.getEmployees());
+        model.addObject("projectName", project.getName());
         return model;
     }
-
-    @GetMapping("/{name}/create")
-    public ModelAndView create(@PathVariable String name, ModelAndView model) {
-        Project project = projectDao.getByName(name);
-        model.addObject("project", project);
-        model.setViewName("ProjectForm");
-        return model;
-    }
-
-    @PostMapping("/{name}/save")
-    public ModelAndView save(@PathVariable String name, @ModelAttribute Employee employee) {
-//        service.get(name).getEmployees().add()
-//        if (project.getId() == 0) {
-//            service.create(project);
-//        } else {
-//            service.update(project.getId(), project);
-//        }
-        return new ModelAndView("redirect:/project/");
-    }
-
 
     @GetMapping("/update")
     public ModelAndView update(HttpServletRequest request) {
-        Project project = projectDao.getByName(request.getParameter("name"));
+        Project project = service.get(request.getParameter("name"));
         ModelAndView model = new ModelAndView("ProjectForm");
         model.addObject("project", project);
         return model;

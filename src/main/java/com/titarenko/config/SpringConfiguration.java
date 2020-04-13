@@ -3,22 +3,26 @@ package com.titarenko.config;
 import com.titarenko.io.*;
 import com.titarenko.model.Department;
 import com.titarenko.model.Employee;
+import com.titarenko.model.Project;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.*;
 
+import javax.servlet.ServletContext;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableWebMvc
@@ -28,10 +32,9 @@ public class SpringConfiguration implements WebMvcConfigurer {
     private static final Logger LOGGER = Logger.getLogger(SpringConfiguration.class);
 
     @Bean
-    public ViewResolver viewResolver() {
+    public ViewResolver viewResolverJsp() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/jsp/");
+        viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
@@ -47,6 +50,7 @@ public class SpringConfiguration implements WebMvcConfigurer {
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration().configure();
         configuration.addAnnotatedClass(Employee.class);
         configuration.addAnnotatedClass(Department.class);
+        configuration.addAnnotatedClass(Project.class);
         StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties());
         return configuration.buildSessionFactory(serviceRegistryBuilder.build());
@@ -64,7 +68,8 @@ public class SpringConfiguration implements WebMvcConfigurer {
 //                fileReader.tableInitializer();
                 return connection;
             }
-        } catch (SQLException ignored) {}
+        } catch (SQLException ignored) {
+        }
         LOGGER.error("Failed to connect to DB");
         throw new RuntimeException("Failed to connect to DB");
     }
