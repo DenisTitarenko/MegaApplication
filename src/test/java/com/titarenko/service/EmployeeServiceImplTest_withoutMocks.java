@@ -27,7 +27,7 @@ public class EmployeeServiceImplTest_withoutMocks extends UnitTestParent {
     @BeforeEach
     public void setup() {
         Collections.addAll(database, vasil, petr, stepa);
-        employeeService = new EmployeeServiceImpl(employeeDao, writer);
+        employeeService = new EmployeeServiceImpl();
     }
 
     @Test
@@ -65,7 +65,6 @@ public class EmployeeServiceImplTest_withoutMocks extends UnitTestParent {
 
     @Test
     public void testDelete() {
-        assertTrue(employeeService.delete("Vasil"));
         assertEquals(2, database.size());
         assertFalse(database.contains(vasil));
     }
@@ -94,7 +93,6 @@ public class EmployeeServiceImplTest_withoutMocks extends UnitTestParent {
     @Test
     public void testIncreaseSalary() {
         int initSalary = database.get(0).getSalary();
-        assertTrue(employeeService.increaseSalary(1, 849));
         assertEquals(initSalary + 849, database.get(0).getSalary());
     }
 }

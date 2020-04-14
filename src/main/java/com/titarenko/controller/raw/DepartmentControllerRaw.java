@@ -39,7 +39,7 @@ public class DepartmentControllerRaw {
     }
 
     @DeleteMapping
-    public boolean delete(@RequestParam String name) {
+    public Department delete(@RequestParam String name) {
         return service.delete(name);
     }
 

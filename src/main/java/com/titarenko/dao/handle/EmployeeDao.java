@@ -1,9 +1,10 @@
-package com.titarenko.dao;
+package com.titarenko.dao.handle;
 
 import com.titarenko.model.Employee;
 
 import java.util.List;
 
+@Deprecated
 public interface EmployeeDao {
 
     Integer create(Employee employee);

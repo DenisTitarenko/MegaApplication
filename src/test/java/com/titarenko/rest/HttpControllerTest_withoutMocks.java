@@ -10,7 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
@@ -46,7 +45,7 @@ public class HttpControllerTest_withoutMocks extends UnitTestParent {
     @BeforeEach
     public void startHttpController() {
         Collections.addAll(database, vasil, petr, stepa);
-        controller = new HttpController(new EmployeeServiceImpl(employeeDao, writer));
+        controller = new HttpController(new EmployeeServiceImpl());
     }
 
     @AfterEach

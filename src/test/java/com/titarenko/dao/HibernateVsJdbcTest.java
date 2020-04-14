@@ -1,6 +1,7 @@
 package com.titarenko.dao;
 
 import com.titarenko.config.SpringConfiguration;
+import com.titarenko.dao.handle.EmployeeDao;
 import com.titarenko.model.Employee;
 import com.titarenko.model.enumeration.Gender;
 import org.junit.jupiter.api.Test;

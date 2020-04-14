@@ -39,7 +39,7 @@ public class EmployeeControllerRaw {
     }
 
     @DeleteMapping
-    public boolean delete(@RequestParam String name) {
+    public Employee delete(@RequestParam String name) {
         return service.delete(name);
     }
 
@@ -54,7 +54,7 @@ public class EmployeeControllerRaw {
     }
 
     @PutMapping("/increase/{id}")
-    public boolean increaseSalary(@PathVariable Integer id, @RequestParam Integer plus) {
+    public Integer increaseSalary(@PathVariable Integer id, @RequestParam Integer plus) {
         return service.increaseSalary(id, plus);
     }
 }

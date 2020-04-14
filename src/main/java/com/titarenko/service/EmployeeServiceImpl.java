@@ -1,18 +1,16 @@
 package com.titarenko.service;
 
-import com.titarenko.dao.DepartmentDao;
-import com.titarenko.dao.EmployeeDao;
-import com.titarenko.dao.ProjectDao;
+import com.titarenko.dao.DepartmentRepository;
+import com.titarenko.dao.EmployeeRepository;
+import com.titarenko.dao.ProjectRepository;
 import com.titarenko.dto.EmployeeDto;
-import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
-import com.titarenko.model.Project;
 import lombok.NoArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.ws.rs.NotFoundException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -23,28 +21,22 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private static final Logger LOGGER = Logger.getLogger(EmployeeServiceImpl.class);
-    private Writer writer;
-    private EmployeeDao employeeDao;
-    @Autowired
-    private DepartmentDao departmentDao;
-    @Autowired
-    private ProjectDao projectDao;
-    private EmployeeValidator validator = new EmployeeValidator();
 
     @Autowired
-    public EmployeeServiceImpl(@Qualifier("hibernateEmployeeDaoImpl") EmployeeDao employeeDao,
-                               Writer writer) {
-        this.employeeDao = employeeDao;
-        this.writer = writer;
-    }
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
+    @Autowired
+    private ProjectRepository projectRepository;
+
+    private EmployeeValidator validator = new EmployeeValidator();
 
     @Override
     public Integer create(Employee employee) {
         int result;
         if (validator.isValidEmployee(employee)) {
-            result = employeeDao.create(employee);
+            result = employeeRepository.save(employee).getId();
         } else {
-            writer.writeToOutputStream("Seems like input data wasn't correct");
             LOGGER.error("Employee wasn't added. Input data wasn't correct");
             return null;
         }
@@ -55,19 +47,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee get(String name) {
         if (!validator.isValidName(name)) {
-            writer.writeToOutputStream("Oops.. Seems like input name wasn't correct");
             return null;
         }
-        return employeeDao.get(name);
+        return employeeRepository.findByName(name);
     }
 
     @Override
     public Employee get(Integer id) {
         if (!getListOfId().contains(id)) {
-            writer.writeToOutputStream("Oops.. Seems like input name wasn't correct");
             return null;
         }
-        return employeeDao.get(id);
+        return employeeRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override
@@ -75,44 +65,50 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (getListOfId().contains(id)) {
             if (validator.isValidEmployee(employee)) {
                 LOGGER.info("Employee's info updated");
-                return employeeDao.update(id, employee);
+                Employee empl = employeeRepository.findById(id).orElseThrow(NotFoundException::new);
+                empl.setName(employee.getName());
+                empl.setDepartment(employee.getDepartment());
+                empl.setSex(employee.getSex());
+                empl.setSalary(employee.getSalary());
+                empl.setPosition(employee.getPosition());
+                empl.setDateOfHire(employee.getDateOfHire());
+                empl.setProjects(employee.getProjects());
+                return employeeRepository.save(empl);
             } else {
-                writer.writeToOutputStream("Oops.. Seems like input data wasn't correct");
                 LOGGER.error("Input data wasn't correct");
                 return null;
             }
         } else {
-            writer.writeToOutputStream("Employee with such id doesn't exist");
             LOGGER.error("Employee with such id doesn't exist");
             return null;
         }
     }
 
     @Override
-    public boolean delete(String name) {
+    public Employee delete(String name) {
         if (!validator.isValidName(name)) {
-            writer.writeToOutputStream("Oops.. Seems like input name wasn't correct");
             LOGGER.error("Employee with such name doesn't exist");
-            return false;
         }
+        Employee deleted = employeeRepository.findByName(name);
+        employeeRepository.delete(deleted);
         LOGGER.info("Employee " + name + " deleted");
-        return employeeDao.delete(name);
+        return deleted;
     }
 
     @Override
-    public boolean delete(Integer id) {
+    public Employee delete(Integer id) {
         if (!getListOfId().contains(id)) {
-            writer.writeToOutputStream("Oops.. Seems like input id wasn't correct");
             LOGGER.error("Employee with such id doesn't exist");
-            return false;
         }
+        Employee deleted = employeeRepository.findById(id).orElseThrow(NotFoundException::new);
+        employeeRepository.delete(deleted);
         LOGGER.info("Employee with id " + id + " deleted");
-        return employeeDao.delete(id);
+        return deleted;
     }
 
     @Override
     public List<Employee> getAll() {
-        return employeeDao.getAll();
+        return employeeRepository.findAll();
     }
 
     @Override
@@ -126,22 +122,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getEmployeesWithSameSalary() {
-        return employeeDao.getEmployeesWithSameSalary();
+        return null;
     }
 
     @Override
-    public boolean increaseSalary(int id, int plusSalary) {
+    public Integer increaseSalary(int id, int plusSalary) {
+        Employee empl = employeeRepository.findById(id).orElseThrow(NotFoundException::new);
         if (getListOfId().contains(id)) {
-            Employee newEmpl = employeeDao.get(id);
-            newEmpl.setSalary(newEmpl.getSalary() + plusSalary);
-            employeeDao.update(id, newEmpl);
+            empl.setSalary(empl.getSalary() + plusSalary);
+            employeeRepository.save(empl);
         } else {
-            writer.writeToOutputStream("Employee with such id doesn't exist");
             LOGGER.error("Employee with such id doesn't exist");
-            return false;
         }
         LOGGER.info("Salary of employee with ID=" + id + " was increased");
-        return true;
+        return empl.getSalary();
     }
 
     @Override
@@ -149,11 +143,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return Employee.builder()
                 .name(employeeDto.getName())
                 .sex(employeeDto.getSex())
-                .department(departmentDao.getByName(employeeDto.getDepartmentName()))
+                .department(departmentRepository.findByName(employeeDto.getDepartmentName()))
                 .position(employeeDto.getPosition())
                 .projects(employeeDto.getProjects()
                         .stream()
-                        .map(name -> projectDao.getByName(name))
+                        .map(name -> projectRepository.findByName(name))
                         .collect(Collectors.toSet()))
                 .salary(employeeDto.getSalary())
                 .dateOfHire(employeeDto.getDateOfHire())

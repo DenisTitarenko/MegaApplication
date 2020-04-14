@@ -1,18 +1,17 @@
-package com.titarenko.dao;
+package com.titarenko.dao.handle;
 
 import com.titarenko.model.Department;
-import lombok.NoArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-@Repository
-@NoArgsConstructor
+@Deprecated
+//@Repository
+//@NoArgsConstructor
 public class HibernateDepartmentDaoImpl implements DepartmentDao {
 
     @Autowired

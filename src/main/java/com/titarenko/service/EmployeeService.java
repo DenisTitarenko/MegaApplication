@@ -15,9 +15,9 @@ public interface EmployeeService {
 
     Employee update(Integer id, Employee employee);
 
-    boolean delete(String name);
+    Employee delete(String name);
 
-    boolean delete(Integer id);
+    Employee delete(Integer id);
 
     List<Employee> getAll();
 
@@ -25,7 +25,7 @@ public interface EmployeeService {
 
     List<Employee> getEmployeesWithSameSalary();
 
-    boolean increaseSalary(int id, int plusSalary);
+    Integer increaseSalary(int id, int plusSalary);
 
     Employee buildToEntity(EmployeeDto employeeDto);
 

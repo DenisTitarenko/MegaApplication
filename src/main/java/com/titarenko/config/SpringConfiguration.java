@@ -17,25 +17,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@Configuration
-@ComponentScan("com.titarenko")
+//@Configuration
+//@ComponentScan("com.titarenko")
+@Deprecated
 public class SpringConfiguration  {
 
     private static final Logger LOGGER = Logger.getLogger(SpringConfiguration.class);
-
-//    @Bean
-//    public ViewResolver viewResolverJsp() {
-//        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-//        viewResolver.setPrefix("/WEB-INF/views/");
-//        viewResolver.setSuffix(".jsp");
-//        return viewResolver;
-//    }
-
-//    @Override
-//    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/");
-//        registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/");
-//    }
 
     @Bean
     public SessionFactory sessionFactory() {
