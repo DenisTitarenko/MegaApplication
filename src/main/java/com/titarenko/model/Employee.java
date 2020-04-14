@@ -11,6 +11,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -44,6 +45,13 @@ public class Employee {
 
     @Column(name = "position")
     private String position;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "employee_project",
+            joinColumns = {@JoinColumn(name = "employee_id")},
+            inverseJoinColumns = {@JoinColumn(name = "project_id")})
+    private Set<Project> projects;
 
     @Column(name = "salary")
     private int salary;

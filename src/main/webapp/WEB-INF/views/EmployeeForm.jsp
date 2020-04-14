@@ -1,6 +1,4 @@
-<%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="java.util.Locale" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
@@ -12,7 +10,7 @@
 </head>
 <body>
 <div align="center">
-    <h1>New/Edit Employee</h1>
+    <h1>New/Edit employee</h1>
     <form:form action="save" method="post" modelAttribute="employee">
         <table>
             <form:hidden path="id"/>
@@ -35,6 +33,10 @@
             <tr>
                 <td>Position:</td>
                 <td><input required type="text" name="position" value="${employee.position}"></td>
+            </tr>
+            <tr>
+                <td>Projects</td>
+                <td><form:select multiple="true" path="projects" items="${projects}"/></td>
             </tr>
             <tr>
                 <td>Salary:</td>

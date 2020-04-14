@@ -4,7 +4,6 @@ import com.titarenko.model.Employee;
 import lombok.NoArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +21,10 @@ public class HibernateEmployeeDaoImpl implements EmployeeDao {
     @Override
     public Integer create(Employee employee) {
         try (Session session = sessionFactory.openSession()) {
-            return (Integer) session.save(employee);
+            session.beginTransaction();
+            Integer save = (Integer) session.save(employee);
+            session.getTransaction().commit();
+            return save;
         }
     }
 
@@ -67,9 +69,9 @@ public class HibernateEmployeeDaoImpl implements EmployeeDao {
     @Override
     public boolean delete(Integer id) {
         try (Session session = sessionFactory.openSession()) {
-            Transaction tx1 = session.beginTransaction();
+            session.beginTransaction();
             session.delete(get(id));
-            tx1.commit();
+            session.getTransaction().commit();
             return true;
         }
     }

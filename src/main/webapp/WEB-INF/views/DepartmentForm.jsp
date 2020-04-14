@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%><html>
 <head>
     <link rel="stylesheet" type="text/css" href="../css/forms.css"/>
@@ -7,7 +7,7 @@
 </head>
 <body>
 <div align="center">
-    <h1>New/Edit Department</h1>
+    <h1>New/Edit department</h1>
     <form:form action="save" method="post" modelAttribute="department">
         <table>
             <form:hidden path="id"/>

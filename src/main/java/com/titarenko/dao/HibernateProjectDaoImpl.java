@@ -1,9 +1,10 @@
 package com.titarenko.dao;
 
-import com.titarenko.model.Department;
+import com.titarenko.model.Project;
 import lombok.NoArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,53 +14,53 @@ import java.util.List;
 
 @Repository
 @NoArgsConstructor
-public class HibernateDepartmentDaoImpl implements DepartmentDao {
+public class HibernateProjectDaoImpl implements ProjectDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public Integer create(Department department) {
+    public Integer create(Project project) {
         try (Session session = sessionFactory.openSession()) {
-            return (Integer) session.save(department);
+            return (Integer) session.save(project);
         }
     }
 
     @Override
-    public Department getByName(String name) {
+    public Project getByName(String name) {
         try (Session session = sessionFactory.openSession()) {
-            CriteriaQuery<Department> criteria = session.getCriteriaBuilder().createQuery(Department.class);
-            Root<Department> root = criteria.from(Department.class);
+            CriteriaQuery<Project> criteria = session.getCriteriaBuilder().createQuery(Project.class);
+            Root<Project> root = criteria.from(Project.class);
             criteria.select(root).where(session.getCriteriaBuilder().equal(root.get("name"), name));
             return session.createQuery(criteria).uniqueResult();
         }
     }
 
     @Override
-    public Department update(Integer id, Department department) {
+    public Project update(Integer id, Project project) {
         try (Session session = sessionFactory.openSession()) {
-            department.setId(id);
-            session.beginTransaction();
-            Object updated = session.merge(department);
-            session.getTransaction().commit();
-            return (Department) updated;
+            project.setId(id);
+            Transaction tx1 = session.beginTransaction();
+            Object updated = session.merge(project);
+            tx1.commit();
+            return (Project) updated;
         }
     }
 
     @Override
     public boolean delete(String name) {
         try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
+            Transaction tx1 = session.beginTransaction();
             session.delete(getByName(name));
-            session.getTransaction().commit();
+            tx1.commit();
             return true;
         }
     }
 
     @Override
-    public List<Department> getAll() {
+    public List<Project> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Department", Department.class).list();
+            return session.createQuery("from Project", Project.class).list();
         }
     }
 }
