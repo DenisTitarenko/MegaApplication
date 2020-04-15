@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.NotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,7 +35,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project update(Integer id, Project project) {
-        Project proj = repository.findById(id).orElseThrow(NotFoundException::new);
+        Project proj = repository.findById(id).orElseThrow();
         proj.setName(project.getName());
         proj.setEmployees(project.getEmployees());
         return repository.save(proj);
@@ -62,7 +61,7 @@ public class ProjectServiceImpl implements ProjectService {
                     .stream()
                     .filter(employee -> id.equals(employee.getId()))
                     .findFirst()
-                    .orElseThrow(NotFoundException::new));
+                    .orElseThrow());
         }
         return Project.builder()
                 .name(projectDto.getName())

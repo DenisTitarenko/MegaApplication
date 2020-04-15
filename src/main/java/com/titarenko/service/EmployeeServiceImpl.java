@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.NotFoundException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -57,7 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (!getListOfId().contains(id)) {
             return null;
         }
-        return employeeRepository.findById(id).orElseThrow(NotFoundException::new);
+        return employeeRepository.findById(id).orElseThrow();
     }
 
     @Override
@@ -65,7 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (getListOfId().contains(id)) {
             if (validator.isValidEmployee(employee)) {
                 LOGGER.info("Employee's info updated");
-                Employee empl = employeeRepository.findById(id).orElseThrow(NotFoundException::new);
+                Employee empl = employeeRepository.findById(id).orElseThrow();
                 empl.setName(employee.getName());
                 empl.setDepartment(employee.getDepartment());
                 empl.setSex(employee.getSex());
@@ -100,7 +99,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (!getListOfId().contains(id)) {
             LOGGER.error("Employee with such id doesn't exist");
         }
-        Employee deleted = employeeRepository.findById(id).orElseThrow(NotFoundException::new);
+        Employee deleted = employeeRepository.findById(id).orElseThrow();
         employeeRepository.delete(deleted);
         LOGGER.info("Employee with id " + id + " deleted");
         return deleted;
@@ -127,7 +126,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Integer increaseSalary(int id, int plusSalary) {
-        Employee empl = employeeRepository.findById(id).orElseThrow(NotFoundException::new);
+        Employee empl = employeeRepository.findById(id).orElseThrow();
         if (getListOfId().contains(id)) {
             empl.setSalary(empl.getSalary() + plusSalary);
             employeeRepository.save(empl);

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.NotFoundException;
 import java.util.List;
 
 @Service
@@ -28,7 +27,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department update(Integer id, Department department) {
-        Department dep = repository.findById(id).orElseThrow(NotFoundException::new);
+        Department dep = repository.findById(id).orElseThrow();
         dep.setName(department.getName());
         dep.setEmployees(department.getEmployees());
         return repository.save(dep);
