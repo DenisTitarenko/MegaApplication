@@ -10,8 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -112,16 +110,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllGroupByPositionAndDate() {
-        Comparator<Employee> comparePositionAndDate = Comparator.comparing(Employee::getPosition)
-                .thenComparing(Employee::getDateOfHire, Collections.reverseOrder());
-        List<Employee> list = getAll();
-        list.sort(comparePositionAndDate);
-        return list;
+        return employeeRepository.findByOrderByPositionAscDateOfHireDesc();
     }
 
     @Override
     public List<Employee> getEmployeesWithSameSalary() {
-        return null;
+        return employeeRepository.getEmployeesWithSameSalary();
     }
 
     @Override

@@ -9,7 +9,7 @@
     <h1>Employee list</h1>
 
     <h3>
-        <a href="/MegaApp/employee/"><button>Show employees without any sorting</button></a>
+        <a href="/employee/"><button>Show employees without any sorting</button></a>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="samesalary"><button>Show employees with same salary</button></a>
         &nbsp;&nbsp;&nbsp;&nbsp;
