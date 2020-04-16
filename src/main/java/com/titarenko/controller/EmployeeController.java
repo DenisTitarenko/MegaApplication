@@ -2,7 +2,6 @@ package com.titarenko.controller;
 
 import com.titarenko.dto.EmployeeDto;
 import com.titarenko.model.Department;
-import com.titarenko.model.Employee;
 import com.titarenko.model.Project;
 import com.titarenko.service.DepartmentService;
 import com.titarenko.service.EmployeeService;
@@ -10,11 +9,12 @@ import com.titarenko.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -41,62 +41,53 @@ public class EmployeeController {
     }
 
     @GetMapping("/projects")
-    public ModelAndView getEmployees(HttpServletRequest request) {
-        Employee employee = employeeService.get(request.getParameter("name"));
-        ModelAndView model = new ModelAndView("EmployeeProjectList");
-        model.addObject("projects", employee.getProjects());
-        model.addObject("employeeName", employee.getName());
-        return model;
+    public String getEmployees(HttpServletRequest request, Model model) {
+        model.addAttribute("projects", employeeService.get(request.getParameter("name")).getProjects());
+        model.addAttribute("employeeName", employeeService.get(request.getParameter("name")).getName());
+        return "EmployeeProjectList";
     }
 
     @GetMapping("/create")
-    public ModelAndView create(ModelAndView model) {
-        EmployeeDto employeeDto = new EmployeeDto();
-        model.addObject("employee", employeeDto);
-        List<String> list = departmentService.getAll().stream().map(Department::getName).collect(Collectors.toList());
-        model.addObject("departments", list);
-        model.addObject("projects", projectService.getAll().stream().map(Project::getName).collect(Collectors.toList()));
-        model.setViewName("EmployeeForm");
-        return model;
+    public String create(Model model) {
+        model.addAttribute("employee", new EmployeeDto());
+        model.addAttribute("departments", departmentService.getAll().stream().map(Department::getName).collect(Collectors.toList()));
+        model.addAttribute("projects", projectService.getAll().stream().map(Project::getName).collect(Collectors.toList()));
+        return "EmployeeForm";
     }
 
     @GetMapping("/update")
-    public ModelAndView update(HttpServletRequest request) {
-        EmployeeDto employeeDto = employeeService.buildToDto(employeeService.get(Integer.parseInt(request.getParameter("id"))));
-        ModelAndView model = new ModelAndView("EmployeeForm");
-        List<String> list = departmentService.getAll().stream().map(Department::getName).collect(Collectors.toList());
-        model.addObject("departments", list);
-        model.addObject("employee", employeeDto);
-        model.addObject("projects", projectService.getAll().stream().map(Project::getName).collect(Collectors.toList()));
-        return model;
+    public String update(HttpServletRequest request, Model model) {
+        model.addAttribute("employee", employeeService.buildToDto(employeeService.get(Integer.parseInt(request.getParameter("id")))));
+        model.addAttribute("departments", departmentService.getAll().stream().map(Department::getName).collect(Collectors.toList()));
+        model.addAttribute("projects", projectService.getAll().stream().map(Project::getName).collect(Collectors.toList()));
+        return "EmployeeForm";
     }
 
     @GetMapping("/delete")
-    public ModelAndView delete(HttpServletRequest request) {
+    public String delete(HttpServletRequest request) {
         employeeService.delete(Integer.valueOf(request.getParameter("id")));
-        return new ModelAndView("redirect:/employee/");
+        return "redirect:/employee/";
     }
 
-    @RequestMapping("/samesalary")
+    @GetMapping("/samesalary")
     public String getWithSameSalary(Model model) {
         model.addAttribute("employees", employeeService.getEmployeesWithSameSalary());
         return "EmployeeList";
     }
 
-    @RequestMapping("/grouped")
+    @GetMapping("/grouped")
     public String getGroupByPosAndDate(Model model) {
         model.addAttribute("employees", employeeService.getAllGroupByPositionAndDate());
         return "EmployeeList";
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute EmployeeDto employeeDto) {
-        Employee employee = employeeService.buildToEntity(employeeDto);
+    public String save(@ModelAttribute EmployeeDto employeeDto) {
         if (employeeDto.getId() == 0) {
-            employeeService.create(employee);
+            employeeService.create(employeeService.buildToEntity(employeeDto));
         } else {
-            employeeService.update(employeeDto.getId(), employee);
+            employeeService.update(employeeDto.getId(), employeeService.buildToEntity(employeeDto));
         }
-        return new ModelAndView("redirect:/employee/");
+        return "redirect:/employee/";
     }
 }

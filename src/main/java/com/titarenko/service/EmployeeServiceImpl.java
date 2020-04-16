@@ -18,15 +18,19 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private static final Logger LOGGER = Logger.getLogger(EmployeeServiceImpl.class);
-
-    @Autowired
     private EmployeeRepository employeeRepository;
-    @Autowired
     private DepartmentRepository departmentRepository;
-    @Autowired
     private ProjectRepository projectRepository;
+    private EmployeeValidator validator;
 
-    private EmployeeValidator validator = new EmployeeValidator();
+    @Autowired
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, DepartmentRepository departmentRepository,
+                               ProjectRepository projectRepository, EmployeeValidator validator) {
+        this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
+        this.projectRepository = projectRepository;
+        this.validator = validator;
+    }
 
     @Override
     public Integer create(Employee employee) {

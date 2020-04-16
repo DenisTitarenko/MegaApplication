@@ -5,8 +5,10 @@ import com.titarenko.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,43 +30,37 @@ public class ProjectController {
     }
 
     @GetMapping("/create")
-    public ModelAndView create(ModelAndView model) {
-        Project project = new Project();
-        model.addObject("project", project);
-        model.setViewName("ProjectForm");
-        return model;
+    public String create(Model model) {
+        model.addAttribute("project", new Project());
+        return "ProjectForm";
     }
 
     @GetMapping("/employees")
-    public ModelAndView getEmployees(HttpServletRequest request) {
-        Project project = service.get(request.getParameter("name"));
-        ModelAndView model = new ModelAndView("ProjectEmployeeList");
-        model.addObject("employees", project.getEmployees());
-        model.addObject("projectName", project.getName());
-        return model;
+    public String getEmployees(HttpServletRequest request, Model model) {
+        model.addAttribute("employees", service.get(request.getParameter("name")).getEmployees());
+        model.addAttribute("projectName", service.get(request.getParameter("name")).getName());
+        return "ProjectEmployeeList";
     }
 
     @GetMapping("/update")
-    public ModelAndView update(HttpServletRequest request) {
-        Project project = service.get(request.getParameter("name"));
-        ModelAndView model = new ModelAndView("ProjectForm");
-        model.addObject("project", project);
-        return model;
+    public String update(HttpServletRequest request, Model model) {
+        model.addAttribute("project", service.get(request.getParameter("name")));
+        return "ProjectForm";
     }
 
     @GetMapping("/delete")
-    public ModelAndView delete(HttpServletRequest request) {
+    public String delete(HttpServletRequest request) {
         service.delete(request.getParameter("name"));
-        return new ModelAndView("redirect:/project/");
+        return "redirect:/project/";
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute Project project) {
+    public String save(@ModelAttribute Project project) {
         if (project.getId() == 0) {
             service.create(project);
         } else {
             service.update(project.getId(), project);
         }
-        return new ModelAndView("redirect:/project/");
+        return "redirect:/project/";
     }
 }

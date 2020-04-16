@@ -46,6 +46,7 @@ public class Employee {
     @Column(name = "position")
     private String position;
 
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "employee_project",
