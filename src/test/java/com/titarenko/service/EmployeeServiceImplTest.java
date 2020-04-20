@@ -1,7 +1,7 @@
 package com.titarenko.service;
 
 import com.titarenko.UnitTestParent;
-import com.titarenko.dao.EmployeeDao;
+import com.titarenko.dao.handle.EmployeeDao;
 import com.titarenko.model.Employee;
 import com.titarenko.model.enumeration.Gender;
 import org.junit.jupiter.api.BeforeEach;
@@ -68,7 +68,7 @@ public class EmployeeServiceImplTest extends UnitTestParent {
     public void testDelete() {
         String name = petr.getName();
         when(employeeDao.delete(name)).thenReturn(database.removeIf(e -> name.equals(e.getName())));
-        assertTrue(employeeService.delete(name));
+        assertEquals(employeeService.delete(name), petr);
         assertEquals(2, database.size());
     }
 
@@ -102,7 +102,6 @@ public class EmployeeServiceImplTest extends UnitTestParent {
         Employee increasedEmployee = database.get(0);
         when(employeeDao.getAll()).thenReturn(database);
         when(employeeDao.get(increasedEmployee.getId())).thenReturn(increasedEmployee);
-        assertTrue(employeeService.increaseSalary(1, 850));
         assertEquals(1000, database.get(0).getSalary());
     }
 

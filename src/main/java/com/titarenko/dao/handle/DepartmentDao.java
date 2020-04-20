@@ -1,9 +1,9 @@
-package com.titarenko.dao;
+package com.titarenko.dao.handle;
 
 import com.titarenko.model.Department;
 
 import java.util.List;
-
+@Deprecated
 public interface DepartmentDao {
 
     Integer create(Department department);

@@ -15,7 +15,7 @@ public interface ProjectService {
 
     Project update(Integer id, Project project);
 
-    boolean delete(String name);
+    Project delete(String name);
 
     List<Project> getAll();
 

@@ -1,6 +1,6 @@
 package com.titarenko;
 
-import com.titarenko.dao.EmployeeDao;
+import com.titarenko.dao.handle.EmployeeDao;
 import com.titarenko.model.Employee;
 import com.titarenko.model.enumeration.Gender;
 

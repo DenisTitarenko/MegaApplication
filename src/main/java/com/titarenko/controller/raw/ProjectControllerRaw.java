@@ -41,7 +41,7 @@ public class ProjectControllerRaw {
     }
 
     @DeleteMapping
-    public boolean delete(@RequestParam String name) {
+    public Project delete(@RequestParam String name) {
         return service.delete(name);
     }
 

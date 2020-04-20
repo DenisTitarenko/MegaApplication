@@ -12,7 +12,7 @@ public interface DepartmentService {
 
     Department update(Integer id, Department department);
 
-    boolean delete(String name);
+    Department delete(String name);
 
     List<Department> getAll();
 

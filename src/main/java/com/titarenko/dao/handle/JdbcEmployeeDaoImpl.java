@@ -1,16 +1,16 @@
-package com.titarenko.dao;
+package com.titarenko.dao.handle;
 
 import com.titarenko.io.Writer;
 import com.titarenko.model.Employee;
 import com.titarenko.model.enumeration.Gender;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
+@Deprecated
+//@Repository
 public class JdbcEmployeeDaoImpl implements EmployeeDao {
 
     private final Connection connection;

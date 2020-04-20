@@ -1,9 +1,10 @@
-package com.titarenko.dao;
+package com.titarenko.dao.handle;
 
 import com.titarenko.model.Project;
 
 import java.util.List;
 
+@Deprecated
 public interface ProjectDao {
 
     Integer create(Project project);
