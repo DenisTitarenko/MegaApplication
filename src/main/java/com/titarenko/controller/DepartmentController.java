@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,44 +30,37 @@ public class DepartmentController {
     }
 
     @GetMapping("/create")
-    public ModelAndView create(ModelAndView model) {
-        Department department = new Department();
-        model.addObject("department", department);
-        model.setViewName("DepartmentForm");
-        return model;
+    public String create(Model model) {
+        model.addAttribute("department", new Department());
+        return "DepartmentForm";
     }
 
     @GetMapping("/employees")
-    public ModelAndView getEmployees(HttpServletRequest request) {
-        Department department = service.get(request.getParameter("name"));
-        ModelAndView model = new ModelAndView("DepartmentEmployeeList");
-        model.addObject("employees", department.getEmployees());
-        model.addObject("departmentName", department.getName());
-        return model;
+    public String getEmployees(HttpServletRequest request, Model model) {
+        model.addAttribute("employees", service.get(request.getParameter("name")).getEmployees());
+        model.addAttribute("departmentName", service.get(request.getParameter("name")).getName());
+        return "DepartmentEmployeeList";
     }
 
     @GetMapping("/update")
-    public ModelAndView update(HttpServletRequest request) {
-        Department department = service.get(request.getParameter("name"));
-        ModelAndView model = new ModelAndView("DepartmentForm");
-        model.addObject("department", department);
-        return model;
+    public String update(HttpServletRequest request, Model model) {
+        model.addAttribute("department", service.get(request.getParameter("name")));
+        return "DepartmentForm";
     }
 
     @GetMapping("/delete")
-    public ModelAndView delete(HttpServletRequest request) {
+    public String delete(HttpServletRequest request) {
         service.delete(request.getParameter("name"));
-        return new ModelAndView("redirect:/department/");
+        return "redirect:/department/";
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute Department department) {
+    public String save(@ModelAttribute Department department) {
         if (department.getId() == 0) {
             service.create(department);
         } else {
             service.update(department.getId(), department);
         }
-        return new ModelAndView("redirect:/department/");
+        return "redirect:/department/";
     }
-
 }

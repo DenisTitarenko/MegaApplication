@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @NoArgsConstructor
@@ -21,7 +19,9 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectRepository repository;
 
     @Autowired
-    private EmployeeService employeeService;
+    public ProjectServiceImpl(ProjectRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Integer create(Project project) {

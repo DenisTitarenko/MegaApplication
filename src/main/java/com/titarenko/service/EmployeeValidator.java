@@ -1,9 +1,11 @@
 package com.titarenko.service;
 
 import com.titarenko.model.Employee;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
+@Service
 public class EmployeeValidator implements Validator {
 
     private static final LocalDate REFERENCE_POINT = LocalDate.parse("1970-01-01");

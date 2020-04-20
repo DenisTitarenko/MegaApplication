@@ -12,7 +12,12 @@ import java.util.List;
 @NoArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
 
+    private DepartmentRepository repository;
+
     @Autowired
+    public DepartmentServiceImpl(DepartmentRepository repository) {
+        this.repository = repository;
+    }
     private DepartmentRepository repository;
 
     @Override
