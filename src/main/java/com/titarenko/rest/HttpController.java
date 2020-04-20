@@ -16,7 +16,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.*;
 
-@Component
+//@Component
 @Profile("default")
 public class HttpController {
 
