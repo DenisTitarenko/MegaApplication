@@ -18,7 +18,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentServiceImpl(DepartmentRepository repository) {
         this.repository = repository;
     }
-    private DepartmentRepository repository;
 
     @Override
     public Integer create(Department department) {

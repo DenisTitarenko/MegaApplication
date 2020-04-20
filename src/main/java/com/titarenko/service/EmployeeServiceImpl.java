@@ -32,15 +32,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.validator = validator;
     }
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    private ProjectRepository projectRepository;
-
-    private EmployeeValidator validator = new EmployeeValidator();
-
     @Override
     public Integer create(Employee employee) {
         int result;
