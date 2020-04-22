@@ -1,0 +1,28 @@
+# docker compose yaml file
+version: '3'
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgres
+      POSTGRES_DB: megaAppDb
+    networks:
+      - network-air
+
+  app:
+    image: openjdk:11
+    volumes:
+      - "./target:/home/"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://db:5432/megaAppDb
+    command: ["java","-jar","/home/MegaApplication-1.0-SNAPSHOT.war"]
+    ports:
+      - 1408:1408
+    networks:
+      - network-air
+
+networks:
+  network-air:
