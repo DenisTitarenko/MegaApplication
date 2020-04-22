@@ -1,6 +1,0 @@
-1|Stephen King|M|writer|400|17.05.2004
-1|Joanne Rowling|f|writer|525|20.11.2011
-5
-8|14|200
-4|Stephen King
-0

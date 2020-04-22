@@ -34,7 +34,6 @@ public class ProjectServiceImpl implements ProjectService {
     public Project update(Integer id, Project project) {
         Project proj = repository.findById(id).orElseThrow();
         proj.setName(project.getName());
-        proj.setEmployees(project.getEmployees());
         return repository.save(proj);
     }
 

@@ -21,6 +21,10 @@ public class Project {
     @Column(name = "name", unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "projects", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "employee_project",
+            joinColumns = {@JoinColumn(name = "project_id")},
+            inverseJoinColumns = {@JoinColumn(name = "employee_id")})
     private Set<Employee> employees;
 }
