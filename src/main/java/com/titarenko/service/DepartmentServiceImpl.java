@@ -33,7 +33,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     public Department update(Integer id, Department department) {
         Department dep = repository.findById(id).orElseThrow();
         dep.setName(department.getName());
-        dep.setEmployees(department.getEmployees());
         return repository.save(dep);
     }
 

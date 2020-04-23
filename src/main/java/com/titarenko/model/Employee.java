@@ -1,12 +1,9 @@
 package com.titarenko.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.titarenko.config.GlobalConfig;
 import com.titarenko.model.enumeration.Gender;
-import com.titarenko.service.JsonParser;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,12 +18,6 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "employees")
-@NamedQuery(
-        name = "Employee_getEmployeesWithSameSalary",
-        query = "FROM Employee WHERE salary\n" +
-                "IN (SELECT salary FROM Employee GROUP by salary HAVING count(*) > 1)\n" +
-                "ORDER BY salary DESC"
-)
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,14 +31,15 @@ public class Employee {
     private Gender sex;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
     private Department department;
 
     @Column(name = "position")
     private String position;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "employee_project",
             joinColumns = {@JoinColumn(name = "employee_id")},
@@ -58,13 +50,6 @@ public class Employee {
     private int salary;
 
     @Column(name = "dateOfHire")
-    // next annotations uses for serialize/deserialize objects with LocalDate type
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonFormat(pattern = GlobalConfig.DATE_FORMAT_PATTERN)
     private LocalDate dateOfHire;
-
-    @Override
-    public String toString() {
-        return new JsonParser().serialize(this);
-    }
 }

@@ -21,9 +21,7 @@ public class Department {
     @Column(name = "name", unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JoinColumn(referencedColumnName = "id")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
     private Set<Employee> employees;
-
 }

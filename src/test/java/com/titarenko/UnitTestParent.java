@@ -1,6 +1,5 @@
 package com.titarenko;
 
-import com.titarenko.dao.handle.EmployeeDao;
 import com.titarenko.model.Employee;
 import com.titarenko.model.enumeration.Gender;
 
@@ -37,61 +36,61 @@ public class UnitTestParent {
             .dateOfHire(LocalDate.parse("2013-10-10"))
             .build();
 
-    public EmployeeDao employeeDao = new EmployeeDao() {
-        @Override
-        public Integer create(Employee employee) {
-            database.add(employee);
-            return database.get(database.size() - 1).getId();
-        }
-
-        @Override
-        public Employee get(String name) {
-            Employee returned = null;
-            for (Employee empl : database) {
-                if (name.equals(empl.getName())) {
-                    returned = empl;
-                }
-            }
-            return returned;
-        }
-
-        @Override
-        public Employee get(int id) {
-            Employee returned = null;
-            for (Employee empl : database) {
-                if (id == empl.getId()) {
-                    returned = empl;
-                }
-            }
-            return returned;
-        }
-
-        @Override
-        public Employee update(int id, Employee employee) {
-            employee.setId(id);
-            int index = database.indexOf(get(id));
-            database.set(index, employee);
-            return database.get(index);
-        }
-
-        @Override
-        public boolean delete(String name) {
-            return database.remove(get(name));
-        }
-
-        @Override
-        public boolean delete(Integer id) {
-            return database.remove(get(id));
-        }
-
-        @Override
-        public List<Employee> getAll() {
-            return database;
-        }
-
-        @Override
-        public List<Employee> getEmployeesWithSameSalary() {
-            return Arrays.asList(vasil, petr);
-        }
-    };
+//    public EmployeeDao employeeDao = new EmployeeDao() {
+//        @Override
+//        public Integer create(Employee employee) {
+//            database.add(employee);
+//            return database.get(database.size() - 1).getId();
+//        }
+//
+//        @Override
+//        public Employee get(String name) {
+//            Employee returned = null;
+//            for (Employee empl : database) {
+//                if (name.equals(empl.getName())) {
+//                    returned = empl;
+//                }
+//            }
+//            return returned;
+//        }
+//
+//        @Override
+//        public Employee get(int id) {
+//            Employee returned = null;
+//            for (Employee empl : database) {
+//                if (id == empl.getId()) {
+//                    returned = empl;
+//                }
+//            }
+//            return returned;
+//        }
+//
+//        @Override
+//        public Employee update(int id, Employee employee) {
+//            employee.setId(id);
+//            int index = database.indexOf(get(id));
+//            database.set(index, employee);
+//            return database.get(index);
+//        }
+//
+//        @Override
+//        public boolean delete(String name) {
+//            return database.remove(get(name));
+//        }
+//
+//        @Override
+//        public boolean delete(Integer id) {
+//            return database.remove(get(id));
+//        }
+//
+//        @Override
+//        public List<Employee> getAll() {
+//            return database;
+//        }
+//
+//        @Override
+//        public List<Employee> getEmployeesWithSameSalary() {
+//            return Arrays.asList(vasil, petr);
+//        }
+//    };
 }
