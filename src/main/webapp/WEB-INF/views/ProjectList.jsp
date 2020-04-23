@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -14,11 +15,18 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a class="nav-link" href="/employee/">Employee</a></li>
             <li class="nav-item"><a class="nav-link" href="/department/">Department</a></li>
-            <li class="nav-item active"><a class="nav-link" href="">Project</a></li>
+            <li class="nav-item active"><a class="nav-link" href="/project/">Project</a></li>
             <li class="nav-item dropdown disabled">
                 <a class="nav-link dropdown-toggle disabled" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Sort
                 </a>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/logout"/>">Sign out</a>
             </li>
         </ul>
     </div>

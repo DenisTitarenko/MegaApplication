@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -12,7 +13,7 @@
     <a class="navbar-brand" href="https://github.com/DenisTitarenko/MegaApplication"><h3>MegaApplication</h3></a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"><a class="nav-link" href="">Employee</a></li>
+            <li class="nav-item active"><a class="nav-link" href="/employee/">Employee</a></li>
             <li class="nav-item"><a class="nav-link" href="/department/">Department</a></li>
             <li class="nav-item"><a class="nav-link" href="/project/">Project</a></li>
             <li class="nav-item dropdown">
@@ -24,6 +25,13 @@
                     <a class="dropdown-item" href="samesalary">Show employees with same salary</a>
                     <a class="dropdown-item" href="grouped">Show employees grouped by position and date</a>
                 </div>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/logout"/>">Sign out</a>
             </li>
         </ul>
     </div>
@@ -60,20 +68,6 @@
                                     <li class="list-group-item py-1" style="background-color: lightgrey">${project.name}</li>
                                  </c:forEach>
                             </ul>
-<%--                            <table class="table table-bordered table-sm">--%>
-<%--                                <thead>--%>
-<%--                                <tr>--%>
-<%--                                    <th class="text-center" scope="col">Name</th>--%>
-<%--                                </tr>--%>
-<%--                                </thead>--%>
-<%--                                <tbody>--%>
-<%--                                <c:forEach var="project" items="${employee.projects}">--%>
-<%--                                    <tr>--%>
-<%--                                        <td>${project.name}</td>--%>
-<%--                                    </tr>--%>
-<%--                                </c:forEach>--%>
-<%--                                </tbody>--%>
-<%--                            </table>--%>
                         </div>
                     </div>
                 </td>
