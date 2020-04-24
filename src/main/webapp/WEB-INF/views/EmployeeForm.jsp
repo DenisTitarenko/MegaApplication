@@ -30,11 +30,12 @@
     <form:form action="save" method="post" modelAttribute="employee">
             <form:hidden path="id"/>
             <div class="form-group" style="width: 50%">
-                <input required type="text" class="form-control" placeholder="Enter name" name="name" value="${employee.name}">
+                <input required type="text" class="form-control" placeholder="Enter name" name="name"
+                       value="${employee.name}" pattern="[A-Za-z ]{3,100}" title="Only characters (from 3 to 100)">
             </div>
 
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="sex" id="m" value="M" >
+                <input class="form-check-input" type="radio" name="sex" id="m" value="M" required>
                 <label class="form-check-label" for="m">Male &nbsp;&nbsp;&nbsp;&nbsp;</label>
             </div>
             <div class="form-check form-check-inline">
@@ -51,7 +52,8 @@
             </div>
 
             <div class="form-group" style="width: 50%">
-                <input required type="text" class="form-control" placeholder="Enter position" name="position" value="${employee.position}">
+                <input required type="text" class="form-control" placeholder="Enter position" name="position"
+                       value="${employee.position}" pattern="[A-Za-z ]{3,100}" title="Only characters (from 3 to 100)">
             </div>
 
             <div class="form-group" style="width: 50%">
@@ -59,11 +61,13 @@
             </div>
 
             <div class="form-group" style="width: 50%">
-                <input required type="text" class="form-control" placeholder="Enter salary" name="salary" value="${employee.salary}">
+                <input required type="text" class="form-control" placeholder="Enter salary" name="salary"
+                       value="${employee.salary}" pattern="[0-9]+" title="Only integers">
             </div>
 
             <div class="form-group" style="width: 50%">
-                <input required type="text" class="form-control" placeholder="Enter date of hire" name="dateOfHire">
+                <input required type="text" class="form-control" placeholder="Enter date of hire"
+                       name="dateOfHire" pattern="\d{1,2}\.\d{1,2}\.\d{4}" title="Example: 01.01.1970">
             </div>
 
             <button type="submit" class="btn btn-outline-primary" value="Save">Submit</button>

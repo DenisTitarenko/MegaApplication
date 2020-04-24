@@ -9,13 +9,9 @@ public interface EmployeeService {
 
     Integer create(Employee employee);
 
-    Employee get(String name);
-
     Employee get(Integer id);
 
     Employee update(Integer id, Employee employee);
-
-    Employee delete(String name);
 
     Employee delete(Integer id);
 
@@ -24,8 +20,6 @@ public interface EmployeeService {
     List<Employee> getAllGroupByPositionAndDate();
 
     List<Employee> getEmployeesWithSameSalary();
-
-    Integer increaseSalary(int id, int plusSalary);
 
     Employee buildToEntity(EmployeeDto employeeDto);
 

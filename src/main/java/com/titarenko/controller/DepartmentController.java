@@ -35,22 +35,15 @@ public class DepartmentController {
         return "DepartmentForm";
     }
 
-    @GetMapping("/employees")
-    public String getEmployees(HttpServletRequest request, Model model) {
-        model.addAttribute("employees", service.get(request.getParameter("name")).getEmployees());
-        model.addAttribute("departmentName", service.get(request.getParameter("name")).getName());
-        return "DepartmentEmployeeList";
-    }
-
     @GetMapping("/update")
     public String update(HttpServletRequest request, Model model) {
-        model.addAttribute("department", service.get(request.getParameter("name")));
+        model.addAttribute("department", service.get(Integer.valueOf(request.getParameter("id"))));
         return "DepartmentForm";
     }
 
     @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
-        service.delete(request.getParameter("name"));
+        service.delete(Integer.valueOf(request.getParameter("id")));
         return "redirect:/department/";
     }
 

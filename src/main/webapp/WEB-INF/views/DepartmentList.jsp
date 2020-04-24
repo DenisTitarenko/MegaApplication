@@ -68,8 +68,8 @@
                     </div>
                 </td>
                 <td class="align-middle text-center">
-                    <a href="update?name=${department.name}"><button type="button" class="btn btn-outline-warning btn-sm">Edit</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="delete?name=${department.name}"><button type="button" class="btn btn-outline-danger btn-sm">Delete</button></a>
+                    <a href="update?id=${department.id}"><button type="button" class="btn btn-outline-warning btn-sm">Edit</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="delete?id=${department.id}"><button type="button" class="btn btn-outline-danger btn-sm">Delete</button></a>
                 </td>
             </tr>
         </c:forEach>

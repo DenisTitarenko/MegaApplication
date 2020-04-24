@@ -4,8 +4,10 @@ import com.titarenko.dao.DepartmentRepository;
 import com.titarenko.dao.EmployeeRepository;
 import com.titarenko.dao.ProjectRepository;
 import com.titarenko.dto.EmployeeDto;
+import com.titarenko.exception.ResourceNotFoundException;
 import com.titarenko.model.Employee;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
+@Slf4j
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -32,6 +35,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.validator = validator;
     }
 
+    static ResourceNotFoundException logEmployeeNotFound(Integer id) {
+        log.error("Employee with id = {} NOT_FOUND", id);
+        return new ResourceNotFoundException("Employee with id = " + id + " not found");
+    }
+
     @Override
     public Integer create(Employee employee) {
         int result;
@@ -46,62 +54,32 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee get(String name) {
-        if (!validator.isValidName(name)) {
-            return null;
-        }
-        return employeeRepository.findByName(name);
-    }
-
-    @Override
     public Employee get(Integer id) {
-        if (!getListOfId().contains(id)) {
-            return null;
-        }
-        return employeeRepository.findById(id).orElseThrow();
+        return employeeRepository.findById(id).orElseThrow(() -> logEmployeeNotFound(id));
     }
 
     @Override
     public Employee update(Integer id, Employee employee) {
-        if (getListOfId().contains(id)) {
-            if (validator.isValidEmployee(employee)) {
-                LOGGER.info("Employee's info updated");
-                Employee empl = employeeRepository.findById(id).orElseThrow();
-                empl.setName(employee.getName());
-                empl.setDepartment(employee.getDepartment());
-                empl.setSex(employee.getSex());
-                empl.setSalary(employee.getSalary());
-                empl.setPosition(employee.getPosition());
-                empl.setDateOfHire(employee.getDateOfHire());
-                empl.setProjects(employee.getProjects());
-                return employeeRepository.save(empl);
-            } else {
-                LOGGER.error("Input data wasn't correct");
-                return null;
-            }
+        if (validator.isValidEmployee(employee)) {
+            Employee empl = employeeRepository.findById(id).orElseThrow(() -> logEmployeeNotFound(id));
+            empl.setName(employee.getName());
+            empl.setDepartment(employee.getDepartment());
+            empl.setSex(employee.getSex());
+            empl.setSalary(employee.getSalary());
+            empl.setPosition(employee.getPosition());
+            empl.setDateOfHire(employee.getDateOfHire());
+            empl.setProjects(employee.getProjects());
+            LOGGER.info("Employee's info updated");
+            return employeeRepository.save(empl);
         } else {
-            LOGGER.error("Employee with such id doesn't exist");
+            LOGGER.error("Input data wasn't correct");
             return null;
         }
     }
 
     @Override
-    public Employee delete(String name) {
-        if (!validator.isValidName(name)) {
-            LOGGER.error("Employee with such name doesn't exist");
-        }
-        Employee deleted = employeeRepository.findByName(name);
-        employeeRepository.delete(deleted);
-        LOGGER.info("Employee " + name + " deleted");
-        return deleted;
-    }
-
-    @Override
     public Employee delete(Integer id) {
-        if (!getListOfId().contains(id)) {
-            LOGGER.error("Employee with such id doesn't exist");
-        }
-        Employee deleted = employeeRepository.findById(id).orElseThrow();
+        Employee deleted = employeeRepository.findById(id).orElseThrow(() -> logEmployeeNotFound(id));
         employeeRepository.delete(deleted);
         LOGGER.info("Employee with id " + id + " deleted");
         return deleted;
@@ -120,19 +98,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getEmployeesWithSameSalary() {
         return employeeRepository.getEmployeesWithSameSalary();
-    }
-
-    @Override
-    public Integer increaseSalary(int id, int plusSalary) {
-        Employee empl = employeeRepository.findById(id).orElseThrow();
-        if (getListOfId().contains(id)) {
-            empl.setSalary(empl.getSalary() + plusSalary);
-            employeeRepository.save(empl);
-        } else {
-            LOGGER.error("Employee with such id doesn't exist");
-        }
-        LOGGER.info("Salary of employee with ID=" + id + " was increased");
-        return empl.getSalary();
     }
 
     @Override
@@ -164,11 +129,5 @@ public class EmployeeServiceImpl implements EmployeeService {
             dto.departmentName(employee.getDepartment().getName());
         }
         return dto.build();
-    }
-
-    private List<Integer> getListOfId() {
-        return getAll().stream()
-                .map(Employee::getId)
-                .collect(Collectors.toList());
     }
 }

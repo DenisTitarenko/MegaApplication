@@ -8,11 +8,11 @@ public interface DepartmentService {
 
     Integer create(Department department);
 
-    Department get(String name);
+    Department get(Integer id);
 
     Department update(Integer id, Department department);
 
-    Department delete(String name);
+    Department delete(Integer id);
 
     List<Department> getAll();
 

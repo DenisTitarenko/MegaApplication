@@ -60,20 +60,6 @@
                                     <li class="list-group-item py-1" style="background-color: lightgrey">${project.name}</li>
                                  </c:forEach>
                             </ul>
-<%--                            <table class="table table-bordered table-sm">--%>
-<%--                                <thead>--%>
-<%--                                <tr>--%>
-<%--                                    <th class="text-center" scope="col">Name</th>--%>
-<%--                                </tr>--%>
-<%--                                </thead>--%>
-<%--                                <tbody>--%>
-<%--                                <c:forEach var="project" items="${employee.projects}">--%>
-<%--                                    <tr>--%>
-<%--                                        <td>${project.name}</td>--%>
-<%--                                    </tr>--%>
-<%--                                </c:forEach>--%>
-<%--                                </tbody>--%>
-<%--                            </table>--%>
                         </div>
                     </div>
                 </td>
