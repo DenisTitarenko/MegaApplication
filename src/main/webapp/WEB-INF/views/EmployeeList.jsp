@@ -21,7 +21,7 @@
                     Sort
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/employee/">Show employees without any sorting</a>
+                    <a class="dropdown-item" href="/">Show employees without any sorting</a>
                     <a class="dropdown-item" href="samesalary">Show employees with same salary</a>
                     <a class="dropdown-item" href="grouped">Show employees grouped by position and date</a>
                 </div>
