@@ -15,7 +15,7 @@
     <a class="navbar-brand" href="https://github.com/DenisTitarenko/MegaApplication"><h3>MegaApplication</h3></a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="/employee/">Employee</a></li>
+            <li class="nav-item"><a class="nav-link" href="/">Employee</a></li>
             <li class="nav-item active"><a class="nav-link" href="/department/">Department</a></li>
             <li class="nav-item"><a class="nav-link" href="/project/">Project</a></li>
             <li class="nav-item dropdown disabled">

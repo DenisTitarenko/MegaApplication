@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/employee")
+@RequestMapping(value={"/employee", "/"})
 public class EmployeeController {
 
     private EmployeeService employeeService;
@@ -88,6 +88,6 @@ public class EmployeeController {
         } else {
             employeeService.update(employeeDto.getId(), employeeService.buildToEntity(employeeDto));
         }
-        return "redirect:/employee/";
+        return "redirect:/";
     }
 }
