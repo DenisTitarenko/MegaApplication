@@ -1,3 +1,4 @@
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -28,7 +29,9 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/logout"/>">Sign out</a>
+                <a class="nav-link" href="<c:url value="/logout"/>">
+                    [<%out.print(SecurityContextHolder.getContext().getAuthentication().getName());%>] Sign out
+                </a>
             </li>
         </ul>
     </div>
