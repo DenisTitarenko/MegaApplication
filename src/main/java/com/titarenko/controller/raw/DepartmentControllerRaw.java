@@ -29,8 +29,8 @@ public class DepartmentControllerRaw {
     }
 
     @GetMapping
-    public Department get(@RequestParam String name) {
-        return service.get(name);
+    public Department get(@RequestParam Integer id) {
+        return service.get(id);
     }
 
     @PutMapping("/{id}")
@@ -39,8 +39,8 @@ public class DepartmentControllerRaw {
     }
 
     @DeleteMapping
-    public Department delete(@RequestParam String name) {
-        return service.delete(name);
+    public Department delete(@RequestParam Integer id) {
+        return service.delete(id);
     }
 
 }

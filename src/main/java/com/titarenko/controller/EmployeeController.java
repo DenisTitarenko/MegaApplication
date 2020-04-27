@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.stream.Collectors;
 
 @Controller
@@ -38,13 +39,6 @@ public class EmployeeController {
     public String getAllEmployees(Model model) {
         model.addAttribute("employees", employeeService.getAll());
         return "EmployeeList";
-    }
-
-    @GetMapping("/projects")
-    public String getEmployees(HttpServletRequest request, Model model) {
-        model.addAttribute("projects", employeeService.get(request.getParameter("name")).getProjects());
-        model.addAttribute("employeeName", employeeService.get(request.getParameter("name")).getName());
-        return "EmployeeProjectList";
     }
 
     @GetMapping("/create")

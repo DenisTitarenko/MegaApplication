@@ -35,22 +35,15 @@ public class ProjectController {
         return "ProjectForm";
     }
 
-    @GetMapping("/employees")
-    public String getEmployees(HttpServletRequest request, Model model) {
-        model.addAttribute("employees", service.get(request.getParameter("name")).getEmployees());
-        model.addAttribute("projectName", service.get(request.getParameter("name")).getName());
-        return "ProjectEmployeeList";
-    }
-
     @GetMapping("/update")
     public String update(HttpServletRequest request, Model model) {
-        model.addAttribute("project", service.get(request.getParameter("name")));
+        model.addAttribute("project", service.get(Integer.valueOf(request.getParameter("id"))));
         return "ProjectForm";
     }
 
     @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
-        service.delete(request.getParameter("name"));
+        service.delete(Integer.valueOf(request.getParameter("id")));
         return "redirect:/project/";
     }
 

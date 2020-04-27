@@ -80,8 +80,8 @@
                     </div>
                 </td>
                 <td class="align-middle text-center">
-                    <a href="update?name=${project.name}"><button type="button" class="btn btn-outline-warning btn-sm">Edit</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="delete?name=${project.name}"><button type="button" class="btn btn-outline-danger btn-sm">Delete</button></a>
+                    <a href="update?id=${project.id}"><button type="button" class="btn btn-outline-warning btn-sm">Edit</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="delete?id=${project.id}"><button type="button" class="btn btn-outline-danger btn-sm">Delete</button></a>
                 </td>
             </tr>
         </c:forEach>

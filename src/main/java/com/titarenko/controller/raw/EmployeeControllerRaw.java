@@ -29,8 +29,8 @@ public class EmployeeControllerRaw {
     }
 
     @GetMapping
-    public Employee get(@RequestParam String name) {
-        return service.get(name);
+    public Employee get(@RequestParam Integer id) {
+        return service.get(id);
     }
 
     @PutMapping("/{id}")
@@ -39,8 +39,8 @@ public class EmployeeControllerRaw {
     }
 
     @DeleteMapping
-    public Employee delete(@RequestParam String name) {
-        return service.delete(name);
+    public Employee delete(@RequestParam Integer id) {
+        return service.delete(id);
     }
 
     @GetMapping("/samesalary")
@@ -53,8 +53,4 @@ public class EmployeeControllerRaw {
         return service.getAllGroupByPositionAndDate();
     }
 
-    @PutMapping("/increase/{id}")
-    public Integer increaseSalary(@PathVariable Integer id, @RequestParam Integer plus) {
-        return service.increaseSalary(id, plus);
-    }
 }

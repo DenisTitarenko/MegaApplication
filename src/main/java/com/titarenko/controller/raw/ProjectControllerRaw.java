@@ -31,8 +31,8 @@ public class ProjectControllerRaw {
     }
 
     @GetMapping
-    public Project get(@RequestParam String name) {
-        return service.get(name);
+    public Project get(@RequestParam Integer id) {
+        return service.get(id);
     }
 
     @PutMapping("/{id}")
@@ -41,8 +41,8 @@ public class ProjectControllerRaw {
     }
 
     @DeleteMapping
-    public Project delete(@RequestParam String name) {
-        return service.delete(name);
+    public Project delete(@RequestParam Integer id) {
+        return service.delete(id);
     }
 
 }

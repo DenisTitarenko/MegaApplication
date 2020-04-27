@@ -8,11 +8,11 @@ public interface ProjectService {
 
     Integer create(Project project);
 
-    Project get(String name);
+    Project get(Integer id);
 
     Project update(Integer id, Project project);
 
-    Project delete(String name);
+    Project delete(Integer id);
 
     List<Project> getAll();
 }
