@@ -1,15 +1,13 @@
 package com.titarenko.model;
 
 import lombok.*;
-import org.springframework.stereotype.Component;
+import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Component
 public class CustomErrorResponse {
-    private Integer status;
+    private HttpStatus status;
     private String message;
 }

@@ -37,7 +37,7 @@
 </nav>
 <div class="container" align="center">
     <div class="starter-template">
-        <h1 style="padding-top: 30px; padding-bottom: 20px">Error ${error.status}</h1>
+        <h1 style="padding-top: 30px; padding-bottom: 20px">Error ${error.status.value()} - ${error.status.name().toString().replaceAll("_", " ").toLowerCase()}</h1>
         <h2 style="padding-bottom: 60px">${error.message}</h2>
         <a href="/"><button type="button" class="btn btn-outline-dark btn-lg">Back to main page</button></a>
     </div>
