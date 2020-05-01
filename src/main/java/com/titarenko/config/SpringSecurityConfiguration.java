@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -26,18 +25,14 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${user-role.password.spring.security}")
     private String user_pass;
 
-    @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/", "/grouped", "/samesalary", "/project/", "/department/", "/403").hasAnyRole(user, admin)
+                .antMatchers("/", "/grouped", "/samesalary", "/project/", "/department/").hasAnyRole(user, admin)
                 .antMatchers("/**").hasRole(admin)
                 .anyRequest().authenticated()
                 .and().formLogin().defaultSuccessUrl("/", true)
-                .and().logout().logoutSuccessUrl("/login")
-                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+                .and().logout().logoutSuccessUrl("/login");
     }
 
     @Autowired
