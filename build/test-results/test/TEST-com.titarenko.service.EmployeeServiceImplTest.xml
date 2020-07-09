@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.titarenko.service.EmployeeServiceImplTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2020-03-25T18:23:56" hostname="ZENBOOK" time="0.571">
+  <properties/>
+  <testcase name="testGet()" classname="com.titarenko.service.EmployeeServiceImplTest" time="0.555"/>
+  <testcase name="testIncreaseSalary()" classname="com.titarenko.service.EmployeeServiceImplTest" time="0.002"/>
+  <testcase name="testGetEmployeeWithSameSalary()" classname="com.titarenko.service.EmployeeServiceImplTest" time="0.001"/>
+  <testcase name="testGetAllGroupByPositionAndDate()" classname="com.titarenko.service.EmployeeServiceImplTest" time="0.002"/>
+  <testcase name="testCreate()" classname="com.titarenko.service.EmployeeServiceImplTest" time="0.001"/>
+  <testcase name="testDelete()" classname="com.titarenko.service.EmployeeServiceImplTest" time="0.002"/>
+  <testcase name="testGetAll()" classname="com.titarenko.service.EmployeeServiceImplTest" time="0.001"/>
+  <testcase name="testUpdate()" classname="com.titarenko.service.EmployeeServiceImplTest" time="0.002"/>
+  <system-out><![CDATA[Salary of employee with ID=1 was increased
+Employee Jerry added
+Employee Petr Ovich deleted
+Employee's info updated
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

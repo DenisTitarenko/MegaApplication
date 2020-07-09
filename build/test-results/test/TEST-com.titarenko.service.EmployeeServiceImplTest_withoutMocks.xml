@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.titarenko.service.EmployeeServiceImplTest_withoutMocks" tests="8" skipped="0" failures="0" errors="0" timestamp="2020-03-25T18:23:56" hostname="ZENBOOK" time="0.01">
+  <properties/>
+  <testcase name="testGet()" classname="com.titarenko.service.EmployeeServiceImplTest_withoutMocks" time="0.001"/>
+  <testcase name="testIncreaseSalary()" classname="com.titarenko.service.EmployeeServiceImplTest_withoutMocks" time="0.001"/>
+  <testcase name="testGetEmployeesWithSameSalary()" classname="com.titarenko.service.EmployeeServiceImplTest_withoutMocks" time="0.001"/>
+  <testcase name="testGetAllGroupByPositionAndDate()" classname="com.titarenko.service.EmployeeServiceImplTest_withoutMocks" time="0.0"/>
+  <testcase name="testCreate()" classname="com.titarenko.service.EmployeeServiceImplTest_withoutMocks" time="0.001"/>
+  <testcase name="testDelete()" classname="com.titarenko.service.EmployeeServiceImplTest_withoutMocks" time="0.001"/>
+  <testcase name="testGetAll()" classname="com.titarenko.service.EmployeeServiceImplTest_withoutMocks" time="0.0"/>
+  <testcase name="testUpdate()" classname="com.titarenko.service.EmployeeServiceImplTest_withoutMocks" time="0.002"/>
+  <system-out><![CDATA[Salary of employee with ID=1 was increased
+Employee new added
+Employee Vasil deleted
+Employee's info updated
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

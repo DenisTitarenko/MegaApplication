@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.titarenko.rest.ServerSocketTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-25T18:23:56" hostname="ZENBOOK" time="0.013">
+  <properties/>
+  <testcase name="testResponse()" classname="com.titarenko.rest.ServerSocketTest" time="0.013"/>
+  <system-out><![CDATA[Exit from the program
+Connected
+Connected
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

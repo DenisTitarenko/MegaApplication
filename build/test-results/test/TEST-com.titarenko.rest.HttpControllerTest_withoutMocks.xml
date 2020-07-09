@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.titarenko.rest.HttpControllerTest_withoutMocks" tests="8" skipped="0" failures="0" errors="0" timestamp="2020-03-25T18:23:55" hostname="ZENBOOK" time="0.317">
+  <properties/>
+  <testcase name="testHttpCreate()" classname="com.titarenko.rest.HttpControllerTest_withoutMocks" time="0.221"/>
+  <testcase name="testHttpDelete()" classname="com.titarenko.rest.HttpControllerTest_withoutMocks" time="0.008"/>
+  <testcase name="testHttpGetAll()" classname="com.titarenko.rest.HttpControllerTest_withoutMocks" time="0.024"/>
+  <testcase name="testHttpUpdate()" classname="com.titarenko.rest.HttpControllerTest_withoutMocks" time="0.013"/>
+  <testcase name="testHttpGetAllGroupByPositionAndDate()" classname="com.titarenko.rest.HttpControllerTest_withoutMocks" time="0.012"/>
+  <testcase name="testHttpGet()" classname="com.titarenko.rest.HttpControllerTest_withoutMocks" time="0.009"/>
+  <testcase name="testHttpGetEmployeesWithSameSalary()" classname="com.titarenko.rest.HttpControllerTest_withoutMocks" time="0.01"/>
+  <testcase name="testHttpIncreaseSalary()" classname="com.titarenko.rest.HttpControllerTest_withoutMocks" time="0.008"/>
+  <system-out><![CDATA[Employee Tom Cruz added
+Employee Petr Ovich deleted
+Employee's info updated
+Salary of employee with ID=1 was increased
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

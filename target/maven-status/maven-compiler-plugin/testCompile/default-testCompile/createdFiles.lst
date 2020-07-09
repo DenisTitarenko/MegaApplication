@@ -1,0 +1,8 @@
+com\titarenko\UnitTestParent$1.class
+com\titarenko\service\EmployeeServiceImplTest.class
+com\titarenko\rest\ServerSocketTest.class
+com\titarenko\UnitTestParent.class
+com\titarenko\rest\HttpControllerTest_withoutMocks.class
+com\titarenko\service\EmployeeServiceImplTest_withoutMocks.class
+com\titarenko\dao\HibernateVsJdbcTest.class
+com\titarenko\service\EmployeeValidatorTest.class
